@@ -1,0 +1,70 @@
+═══════════════════════════════════════════════════════════════
+  NUEVA WEB ARJÉ PARTNERS - INSTRUCCIONES DE INSTALACIÓN
+═══════════════════════════════════════════════════════════════
+
+📍 UBICACIÓN: /Users/javiergimeno/entornos/ArjeWeb/new-website
+
+🎯 DISEÑO: Inspirado en OpenAI, Clay y Cohere
+   - Moderno y minimalista
+   - Animaciones sutiles
+   - Responsive 100%
+   - Colores armonizados con logo Arjé
+
+═══════════════════════════════════════════════════════════════
+  PASO 1: INSTALAR
+═══════════════════════════════════════════════════════════════
+
+Abre Terminal y ejecuta:
+
+  cd /Users/javiergimeno/entornos/ArjeWeb/new-website
+  npm install
+
+(Espera 1-2 minutos mientras se descargan dependencias)
+
+═══════════════════════════════════════════════════════════════
+  PASO 2: EJECUTAR
+═══════════════════════════════════════════════════════════════
+
+  npm run dev
+
+Abre navegador en: http://localhost:3000
+
+═══════════════════════════════════════════════════════════════
+  PÁGINAS DISPONIBLES
+═══════════════════════════════════════════════════════════════
+
+✓ /                      - Home
+✓ /nosotros              - Nosotros
+✓ /servicios             - Servicios
+✓ /insights              - Blog
+✓ /contacto              - Contacto
+
+═══════════════════════════════════════════════════════════════
+  CONTENIDOS INCLUIDOS
+═══════════════════════════════════════════════════════════════
+
+Blog/Insights tiene 3 artículos listos:
+  1. IA en Treasury Management
+  2. Integraciones ERP como ventaja competitiva
+  3. IA vs Plataformas nuevas
+
+═══════════════════════════════════════════════════════════════
+  DOCUMENTACIÓN
+═══════════════════════════════════════════════════════════════
+
+📖 README.md          - Documentación completa del proyecto
+📖 QUICKSTART.md      - Guía rápida de uso
+📖 DEPLOYMENT.md      - Instrucciones de publicación
+
+═══════════════════════════════════════════════════════════════
+  IMPORTANTE
+═══════════════════════════════════════════════════════════════
+
+⚠️  La web actual en arjepartners.com NO se ha tocado
+⚠️  Esta es una versión nueva en carpeta separada
+⚠️  Revísala COMPLETAMENTE antes de publicar
+⚠️  Lee DEPLOYMENT.md cuando estés listo para publicar
+
+═══════════════════════════════════════════════════════════════
+
+¿Preguntas? Revisa los archivos .md o consulta a tu desarrollador.

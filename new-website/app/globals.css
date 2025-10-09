@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-arje-blue via-arje-blue-light to-arje-blue-dark bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #298CB5 0%, #3BA3D0 100%);
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20;
+  }
+}
