@@ -14,11 +14,58 @@ export default function ContactoPage() {
     aceptoComunicaciones: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí implementarías el envío del formulario
-    console.log("Form submitted:", formData);
-    alert("Mensaje enviado. Te contactaremos pronto!");
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: '¡Mensaje enviado! Te contactaremos en las próximas 24 horas.',
+        });
+        // Reset form
+        setFormData({
+          nombre: '',
+          email: '',
+          empresa: '',
+          telefono: '',
+          sistema: '',
+          mensaje: '',
+          aceptoPrivacidad: false,
+          aceptoComunicaciones: false,
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.error || 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.',
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Error de conexión. Por favor, verifica tu conexión e inténtalo de nuevo.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -59,6 +106,46 @@ export default function ContactoPage() {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Form */}
             <div>
+              {/* Status Message */}
+              {submitStatus.type && (
+                <div
+                  className={`mb-6 p-4 rounded-xl border-2 ${
+                    submitStatus.type === 'success'
+                      ? 'bg-green-50 border-green-200 text-green-800'
+                      : 'bg-red-50 border-red-200 text-red-800'
+                  }`}
+                >
+                  <div className="flex items-start">
+                    {submitStatus.type === 'success' ? (
+                      <svg
+                        className="w-6 h-6 mr-3 flex-shrink-0"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        className="w-6 h-6 mr-3 flex-shrink-0"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                    <p className="font-semibold">{submitStatus.message}</p>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
@@ -247,9 +334,40 @@ export default function ContactoPage() {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-arje-blue text-white rounded-xl font-semibold hover:bg-arje-blue-dark transition-all hover:shadow-2xl hover:scale-[1.02]"
+                  disabled={isSubmitting}
+                  className={`w-full px-8 py-4 rounded-xl font-semibold transition-all ${
+                    isSubmitting
+                      ? 'bg-arje-gray-400 cursor-not-allowed'
+                      : 'bg-arje-blue text-white hover:bg-arje-blue-dark hover:shadow-2xl hover:scale-[1.02]'
+                  }`}
                 >
-                  Enviar mensaje
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Enviando...
+                    </span>
+                  ) : (
+                    'Enviar mensaje'
+                  )}
                 </button>
               </form>
             </div>

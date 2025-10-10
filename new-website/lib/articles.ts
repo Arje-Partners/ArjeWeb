@@ -81,6 +81,7 @@ Las organizaciones que comprenden esto y actúan en consecuencia son las que est
     author: "Equipo Arjé Partners",
     readTime: "7 min",
     category: "Estrategia",
+    image: "/images/articles/manual-vs-ai-process.png",
     content: `## La evolución del Treasury Management impulsada por la IA
 
 Temenos, uno de los principales proveedores de software bancario, acaba de lanzar su nueva plataforma unificada de gestión y movimiento de dinero potenciada por inteligencia artificial. Esta solución promete integrar pagos, gestión de cuentas, análisis de riesgo y operaciones de tesorería en un solo lugar, con automatización avanzada que reduce drásticamente la intervención manual. El anuncio ha generado expectación en el mercado, pero también ha puesto sobre la mesa una pregunta fundamental que muchos CFOs se están haciendo en este momento.
@@ -147,6 +148,7 @@ Al final, la mejor tecnología no es la más avanzada, sino la que realmente se 
     author: "Equipo Arjé Partners",
     readTime: "6 min",
     category: "Tecnología",
+    image: "/images/articles/erp-integration-diagram.png",
     content: `En un mercado empresarial cada vez más interconectado, la capacidad de integración se ha convertido en el nuevo campo de batalla competitivo. Ya no basta con ofrecer características innovadoras. Las empresas necesitan soluciones que se integren perfectamente con sus sistemas existentes, y esta realidad está redefiniendo cómo evaluamos y compramos software empresarial.
 
 ## El Cambio de Paradigma: de características a conectividad
