@@ -75,28 +75,6 @@ export default function Hero() {
               Ver capacidades
             </Link>
           </div>
-
-          {/* Social Proof */}
-          <div
-            className={`pt-12 transition-all duration-700 delay-400 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <p className="text-sm text-arje-gray-500 dark:text-gray-400 mb-4">
-              Confían en nosotros
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-              <span className="text-arje-gray-400 dark:text-gray-500 font-semibold">
-                Vitaldent
-              </span>
-              <span className="text-arje-gray-400 dark:text-gray-500 font-semibold">Codorníu</span>
-              <span className="text-arje-gray-400 dark:text-gray-500 font-semibold">
-                Electrolux
-              </span>
-              <span className="text-arje-gray-400 dark:text-gray-500 font-semibold">Ruesma</span>
-              <span className="text-arje-gray-400 dark:text-gray-500 font-semibold">Pavasal</span>
-            </div>
-          </div>
         </div>
       </div>
 

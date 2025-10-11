@@ -34,10 +34,10 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
+        <div className="flex justify-between items-center h-20 md:h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">
+            <div className="relative w-16 h-16 md:w-20 md:h-20 transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">
               <Image
                 src="/images/logo-arje.png"
                 alt="Arjé Partners"
