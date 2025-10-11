@@ -84,15 +84,15 @@ export default function ContactoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 dark:text-white mb-6">
               Hablemos de tu <span className="gradient-text">proyecto</span>
             </h1>
-            <p className="text-xl text-arje-gray-600">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
               Cuéntanos tu situación y te mostraremos cómo integrarnos con tu
               sistema actual
             </p>
@@ -148,7 +148,7 @@ export default function ContactoPage() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                  <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                     Nombre *
                   </label>
                   <input
@@ -157,13 +157,13 @@ export default function ContactoPage() {
                     required
                     value={formData.nombre}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
                     placeholder="Tu nombre completo"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                  <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                     Email *
                   </label>
                   <input
@@ -172,14 +172,14 @@ export default function ContactoPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
                     placeholder="tu@empresa.com"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                       Empresa
                     </label>
                     <input
@@ -187,12 +187,12 @@ export default function ContactoPage() {
                       name="empresa"
                       value={formData.empresa}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
                       placeholder="Tu empresa"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                       Teléfono
                     </label>
                     <input
@@ -200,21 +200,21 @@ export default function ContactoPage() {
                       name="telefono"
                       value={formData.telefono}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
                       placeholder="+34 xxx xxx xxx"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                  <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                     ¿Qué sistema usas actualmente?
                   </label>
                   <select
                     name="sistema"
                     value={formData.sistema}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all"
                   >
                     <option value="">Selecciona una opción</option>
                     <option value="sap">SAP</option>
@@ -229,7 +229,7 @@ export default function ContactoPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-arje-gray-900 mb-2">
+                  <label className="block text-sm font-semibold text-arje-gray-900 dark:text-white mb-2">
                     Mensaje *
                   </label>
                   <textarea
@@ -238,13 +238,13 @@ export default function ContactoPage() {
                     value={formData.mensaje}
                     onChange={handleChange}
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-arje-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:border-arje-blue focus:ring-2 focus:ring-arje-blue/20 outline-none transition-all resize-none"
                     placeholder="Cuéntanos sobre tu proyecto y qué desafíos enfrentas..."
                   />
                 </div>
 
                 {/* RGPD Checkboxes */}
-                <div className="space-y-4 p-6 bg-arje-gray-50 rounded-xl border border-arje-gray-200">
+                <div className="space-y-4 p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-xl border border-arje-gray-200 dark:border-gray-700">
                   <div className="flex items-start">
                     <input
                       type="checkbox"
@@ -257,7 +257,7 @@ export default function ContactoPage() {
                     />
                     <label
                       htmlFor="aceptoPrivacidad"
-                      className="ml-3 text-sm text-arje-gray-700"
+                      className="ml-3 text-sm text-arje-gray-700 dark:text-gray-300"
                     >
                       Acepto el{" "}
                       <a
@@ -290,7 +290,7 @@ export default function ContactoPage() {
                     />
                     <label
                       htmlFor="aceptoComunicaciones"
-                      className="ml-3 text-sm text-arje-gray-700"
+                      className="ml-3 text-sm text-arje-gray-700 dark:text-gray-300"
                     >
                       Deseo recibir comunicaciones comerciales de productos y
                       servicios de Arjé Partners, S.L., por cualquier medio,
@@ -299,8 +299,8 @@ export default function ContactoPage() {
                     </label>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-arje-gray-300">
-                    <p className="text-xs text-arje-gray-600 leading-relaxed">
+                  <div className="mt-4 pt-4 border-t border-arje-gray-300 dark:border-gray-600">
+                    <p className="text-xs text-arje-gray-600 dark:text-gray-300 leading-relaxed">
                       En <strong>Arjé Partners, S.L.</strong> tratamos la
                       información que nos facilita con el fin de dar respuesta
                       a su solicitud y en relación con los servicios que
@@ -375,10 +375,10 @@ export default function ContactoPage() {
             {/* Contact Info */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-3xl font-bold text-arje-gray-900 mb-4">
+                <h2 className="text-3xl font-bold text-arje-gray-900 dark:text-white mb-4">
                   Información de contacto
                 </h2>
-                <p className="text-arje-gray-600 mb-8">
+                <p className="text-arje-gray-600 dark:text-gray-300 mb-8">
                   Respondemos en menos de 24 horas. También puedes contactarnos
                   directamente:
                 </p>
@@ -402,7 +402,7 @@ export default function ContactoPage() {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-arje-gray-900 mb-1">
+                    <h3 className="font-semibold text-arje-gray-900 dark:text-white mb-1">
                       Email
                     </h3>
                     <a
@@ -431,7 +431,7 @@ export default function ContactoPage() {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-arje-gray-900 mb-1">
+                    <h3 className="font-semibold text-arje-gray-900 dark:text-white mb-1">
                       Teléfono
                     </h3>
                     <a
@@ -466,10 +466,10 @@ export default function ContactoPage() {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-arje-gray-900 mb-1">
+                    <h3 className="font-semibold text-arje-gray-900 dark:text-white mb-1">
                       Oficina
                     </h3>
-                    <p className="text-arje-gray-600">
+                    <p className="text-arje-gray-600 dark:text-gray-300">
                       Calle del Mastelero 12
                       <br />
                       28033 Madrid, España
@@ -479,7 +479,7 @@ export default function ContactoPage() {
               </div>
 
               {/* Quick response badge */}
-              <div className="mt-8 p-6 bg-arje-blue/5 rounded-xl border-2 border-arje-blue/20">
+              <div className="mt-8 p-6 bg-arje-blue/5 dark:bg-arje-blue/10 rounded-xl border-2 border-arje-blue/20 dark:border-arje-blue/30">
                 <div className="flex items-center mb-2">
                   <svg
                     className="w-6 h-6 text-arje-blue mr-2"
@@ -492,11 +492,11 @@ export default function ContactoPage() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="font-semibold text-arje-gray-900">
+                  <span className="font-semibold text-arje-gray-900 dark:text-white">
                     Respuesta garantizada en 24h
                   </span>
                 </div>
-                <p className="text-sm text-arje-gray-600">
+                <p className="text-sm text-arje-gray-600 dark:text-gray-300">
                   Nuestro equipo revisará tu consulta y te contactará con una
                   propuesta personalizada
                 </p>
@@ -507,9 +507,9 @@ export default function ContactoPage() {
       </section>
 
       {/* Map */}
-      <section className="py-16 bg-arje-gray-50">
+      <section className="py-16 bg-arje-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-white dark:bg-gray-700 rounded-2xl overflow-hidden shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6070.165648802285!2d-3.6624035245140627!3d40.47343265218715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422ecaf7fc439b%3A0x2fc7027a0c9418f4!2sC.%20del%20Mastelero%2C%2012%2C%20Hortaleza%2C%2028033%20Madrid!5e0!3m2!1ses!2ses!4v1740332834360!5m2!1ses!2ses"
               width="100%"
