@@ -32,14 +32,14 @@ export default function Clients() {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="py-24 md:py-32 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-arje-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-arje-gray-900 dark:text-white mb-4">
             Confían en <span className="gradient-text">nosotros</span>
           </h2>
-          <p className="text-xl text-arje-gray-600">
+          <p className="text-xl text-arje-gray-600 dark:text-gray-300">
             Empresas líderes que han transformado su tesorería
           </p>
         </div>
@@ -68,17 +68,17 @@ export default function Clients() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl bg-arje-gray-50 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-arje-blue/20"
+              className="p-8 rounded-2xl bg-arje-gray-50 dark:bg-gray-800 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-arje-blue/20"
             >
               <div className="text-arje-blue text-4xl mb-4">"</div>
-              <p className="text-arje-gray-700 mb-6 leading-relaxed">
+              <p className="text-arje-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                 {testimonial.quote}
               </p>
-              <div className="border-t border-arje-gray-200 pt-4">
-                <p className="font-semibold text-arje-gray-900">
+              <div className="border-t border-arje-gray-200 dark:border-gray-700 pt-4">
+                <p className="font-semibold text-arje-gray-900 dark:text-white">
                   {testimonial.author}
                 </p>
-                <p className="text-sm text-arje-gray-500">
+                <p className="text-sm text-arje-gray-500 dark:text-gray-400">
                   {testimonial.company}
                 </p>
               </div>

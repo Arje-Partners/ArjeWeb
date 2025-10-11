@@ -34,15 +34,15 @@ export default function Integration() {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-gradient-to-b from-arje-gray-50 to-white">
+    <section className="py-24 md:py-32 bg-gradient-to-b from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-arje-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-arje-gray-900 dark:text-white mb-4">
             Integración con{" "}
             <span className="gradient-text">cualquier tecnología</span>
           </h2>
-          <p className="text-xl text-arje-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-arje-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Desde ERPs modernos hasta sistemas legacy de hace décadas. Si tiene
             datos, lo conectamos.
           </p>
@@ -55,14 +55,14 @@ export default function Integration() {
               key={index}
               className={`p-6 rounded-2xl border-2 ${type.color} hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
             >
-              <h3 className="text-xl font-bold text-arje-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-arje-gray-900 dark:text-white mb-4">
                 {type.category}
               </h3>
               <ul className="space-y-2">
                 {type.systems.map((system, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center text-arje-gray-700"
+                    className="flex items-center text-arje-gray-700 dark:text-gray-300"
                   >
                     <svg
                       className="w-5 h-5 mr-2 text-arje-blue flex-shrink-0"
@@ -84,15 +84,15 @@ export default function Integration() {
         </div>
 
         {/* Technologies */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg">
-          <h3 className="text-2xl font-bold text-arje-gray-900 mb-6 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+          <h3 className="text-2xl font-bold text-arje-gray-900 dark:text-white mb-6 text-center">
             Tecnologías de integración soportadas
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {technologies.map((tech, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-arje-gray-100 text-arje-gray-800 rounded-lg font-medium hover:bg-arje-blue hover:text-white transition-all cursor-default"
+                className="px-4 py-2 bg-arje-gray-100 dark:bg-gray-700 text-arje-gray-800 dark:text-gray-200 rounded-lg font-medium hover:bg-arje-blue hover:text-white transition-all cursor-default"
               >
                 {tech}
               </span>
