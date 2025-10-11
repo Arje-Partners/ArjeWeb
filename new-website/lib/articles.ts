@@ -1,18 +1,18 @@
 export const articles: Record<string, any> = {
   "ia-produccion-treasury": {
-    title: "La Integración de IA en Treasury Management: Superando los Desafíos de Implementación",
+    title: "La integración de IA en Treasury Management: superando los desafíos de implementación",
     date: "2025-10-03",
     author: "Equipo Arjé Partners",
     readTime: "8 min",
     category: "Inteligencia Artificial",
     image: "/images/articles/ia-treasury-hologram.png",
-    content: `## El Panorama Actual de la IA en Treasury
+    content: `## El panorama actual de la IA en Treasury
 
 En un mundo donde la Inteligencia Artificial promete revolucionar cada aspecto de las operaciones empresariales, el treasury management no es la excepción. Desde la automatización de predicciones de flujo de caja hasta la detección de anomalías en tiempo real, las posibilidades parecen infinitas. Sin embargo, detrás de estas promesas tecnológicas se esconde un fenómeno preocupante que muchas organizaciones prefieren no comentar públicamente.
 
 Según estudios recientes de Computer Weekly y Gartner, hasta el 80% de los proyectos de IA fracasan al intentar dar el salto de la fase de prueba de concepto a la implementación real en producción. Este dato no es un simple contratiempo técnico, sino una llamada de atención sobre cómo estamos abordando la transformación digital en el ámbito financiero.
 
-## El Problema: La Brecha entre Promesa y Realidad
+## El problema: la brecha entre promesa y realidad
 
 Imagina este escenario: tu equipo de tesorería ha invertido meses en desarrollar un modelo de IA que predice con notable precisión los flujos de caja futuros. Las demos son impresionantes, los resultados en el entorno de pruebas son excepcionales, y todos están entusiasmados. Pero cuando llega el momento de implementarlo en el sistema real, todo se desmorona.
 
@@ -20,7 +20,7 @@ Las estadísticas son reveladoras. El 87% de los proyectos de IA nunca llegan a 
 
 La respuesta no está donde la mayoría busca. No se trata de algoritmos insuficientemente sofisticados ni de falta de poder computacional. El verdadero obstáculo es mucho más fundamental y, paradójicamente, más fácil de pasar por alto.
 
-## La Causa Raíz: El Desafío de la Integración de Datos
+## La causa raíz: el desafío de la integración de datos
 
 El principal enemigo del éxito no radica en los algoritmos de IA, sino en la arquitectura subyacente sobre la que intentamos construir. Los sistemas de treasury management son inherentemente complejos. Piensa en tu propia organización: probablemente tienes datos financieros dispersos en múltiples sistemas, cada uno con su propio formato, protocolo y frecuencia de actualización.
 
@@ -28,13 +28,13 @@ Por un lado, están los sistemas ERP legacy que almacenan información transacci
 
 La arquitectura tradicional de procesamiento por lotes simplemente no fue diseñada para soportar agentes de IA que necesitan contexto completo y actualizado al instante. Es como intentar conducir un coche de Fórmula 1 en un camino de tierra: el vehículo es potente, pero la infraestructura no está preparada.
 
-## El Caso Específico de Treasury: Complejidad Amplificada
+## El caso específico de Treasury: complejidad amplificada
 
 La gestión de tesorería presenta desafíos únicos que magnifican estos problemas. A diferencia de otros departamentos, treasury opera en un entorno donde la precisión no es negociable y donde un error de timing puede costar millones. Cuando un modelo de IA sugiere una acción basándose en datos desactualizados, las consecuencias pueden ser graves.
 
 Además, los requisitos regulatorios añaden otra capa de complejidad. Cada decisión debe ser auditable, cada predicción debe poder justificarse, y cada transacción debe cumplir con normativas cada vez más estrictas. Esto significa que no basta con que la IA funcione; también debe poder explicar su razonamiento de manera comprensible para auditores y reguladores.
 
-## La Solución: Arquitectura Event-Driven con Integración Universal
+## La solución: arquitectura event-driven con integración universal
 
 Entonces, ¿cuál es el camino hacia adelante? La respuesta está en repensar fundamentalmente cómo estructuramos nuestros sistemas de datos. En lugar de seguir intentando forzar nuevas capacidades sobre arquitecturas antiguas, necesitamos adoptar un enfoque que esté diseñado desde el principio para el mundo moderno de la IA.
 
@@ -44,7 +44,7 @@ Pero no basta con capturar eventos en tiempo real. También necesitas una capa d
 
 Finalmente, la gestión de datos inteligente se convierte en el pegamento que une todo. Necesitas saber de dónde viene cada dato (linaje), cómo ha sido transformado y quién tiene permiso para acceder a él. Esto no solo es crucial para el cumplimiento regulatorio, sino también para poder confiar en las decisiones que toma tu IA.
 
-## Mejores Prácticas: El Camino Pragmático
+## Mejores prácticas: el camino pragmático
 
 La teoría es fascinante, pero ¿cómo la ponemos en práctica? La experiencia nos ha enseñado que el éxito viene de seguir un camino gradual y deliberado, no de intentar transformar todo de una vez.
 
@@ -54,13 +54,13 @@ Desde el primer día, construye pensando en arquitectura event-driven. No intent
 
 El gobierno de datos no puede ser una idea tardía. Establece desde el inicio quién es responsable de cada fuente de datos, cómo se validan las transformaciones y qué procesos de aprobación se requieren para cambios. Puede parecer burocrático, pero en realidad es lo que permite escalar con confianza.
 
-## Mirando al Futuro: Más Allá de la Tecnología
+## Mirando al futuro: más allá de la tecnología
 
 La integración exitosa de IA en treasury management no es solo una posibilidad técnica; se está convirtiendo rápidamente en una necesidad competitiva. Las organizaciones que han logrado superar estos desafíos de implementación están reportando mejoras significativas. Hablamos de reducciones del 60% en tiempo de procesamiento, mejoras del 40% en la precisión de predicciones y disminuciones del 30% en costos operativos.
 
 Pero más allá de los números, hay un cambio cualitativo. Los equipos de tesorería que trabajan con sistemas bien integrados reportan menos estrés, mayor confianza en sus decisiones y, curiosamente, más tiempo para el pensamiento estratégico. Cuando la tecnología maneja lo rutinario de manera confiable, los humanos pueden enfocarse en lo que realmente añade valor.
 
-## Conclusión: El Éxito Está en los Fundamentos
+## Conclusión: el éxito está en los fundamentos
 
 Si hay una lección que podemos extraer de los fracasos en implementación de IA, es esta: el éxito no viene de tener el algoritmo más sofisticado, sino de construir sobre fundamentos sólidos. Una arquitectura de datos bien diseñada, procesos de integración robustos y un gobierno de datos claro son más importantes que el último modelo de machine learning.
 
@@ -76,13 +76,13 @@ Las organizaciones que comprenden esto y actúan en consecuencia son las que est
   },
 
   "ia-treasury-alternativas": {
-    title: "IA en Treasury Management: ¿Necesitas una plataforma nueva o mejor integración?",
+    title: "IA en Treasury Management: ¿necesitas una plataforma nueva o mejor integración?",
     date: "2025-10-03",
     author: "Equipo Arjé Partners",
     readTime: "7 min",
     category: "Estrategia",
     image: "/images/articles/manual-vs-ai-process.png",
-    content: `## La evolución del Treasury Management impulsada por la IA
+    content: `## La evolución del Treasury Management impulsada por IA
 
 Temenos, uno de los principales proveedores de software bancario, acaba de lanzar su nueva plataforma unificada de gestión y movimiento de dinero potenciada por inteligencia artificial. Esta solución promete integrar pagos, gestión de cuentas, análisis de riesgo y operaciones de tesorería en un solo lugar, con automatización avanzada que reduce drásticamente la intervención manual. El anuncio ha generado expectación en el mercado, pero también ha puesto sobre la mesa una pregunta fundamental que muchos CFOs se están haciendo en este momento.
 
@@ -143,7 +143,7 @@ Al final, la mejor tecnología no es la más avanzada, sino la que realmente se 
   },
 
   "integraciones-erp-ventaja": {
-    title: "Por qué las Integraciones ERP son el Nuevo Diferenciador Competitivo",
+    title: "Por qué las integraciones ERP son el nuevo diferenciador competitivo",
     date: "2025-10-03",
     author: "Equipo Arjé Partners",
     readTime: "6 min",
@@ -151,7 +151,7 @@ Al final, la mejor tecnología no es la más avanzada, sino la que realmente se 
     image: "/images/articles/erp-integration-diagram.png",
     content: `En un mercado empresarial cada vez más interconectado, la capacidad de integración se ha convertido en el nuevo campo de batalla competitivo. Ya no basta con ofrecer características innovadoras. Las empresas necesitan soluciones que se integren perfectamente con sus sistemas existentes, y esta realidad está redefiniendo cómo evaluamos y compramos software empresarial.
 
-## El Cambio de Paradigma: de características a conectividad
+## El cambio de paradigma: de características a conectividad
 
 El panorama del software empresarial está experimentando una transformación fundamental que muchos aún no han percibido completamente. Hace una década, las empresas competían principalmente por características y funcionalidades. Los vendors llenaban sus presentaciones con listas interminables de features, cada uno intentando superar al otro en número de capacidades. Los compradores tomaban decisiones creando hojas de cálculo comparativas donde marcaban casillas de verificación.
 
@@ -159,13 +159,13 @@ Hoy, ese juego ha cambiado radicalmente. La verdadera ventaja competitiva radica
 
 Este cambio refleja una madurez creciente en cómo las organizaciones entienden la tecnología. Se han dado cuenta de que el software no existe en el vacío. Existe dentro de un ecosistema complejo de sistemas, datos, procesos y personas. Y el valor real no está en lo que un sistema individual puede hacer aisladamente, sino en cómo se conecta con todo lo demás.
 
-## La Inversión Sigue al Valor: números que cuentan una historia
+## La inversión sigue al valor: números que cuentan una historia
 
 Las cifras de inversión corporativa cuentan una historia reveladora. En los últimos dos años, las empresas están invirtiendo un sesenta por ciento más en soluciones de integración que en el desarrollo de nuevas características. Piensa en eso por un momento. No están poniendo su dinero en más funcionalidades dentro de sus sistemas. Lo están poniendo en hacer que sus sistemas hablen entre sí.
 
 Este cambio dramático en la asignación de presupuestos refleja una comprensión más profunda de dónde está el valor real. Los CEOs y CFOs han aprendido, frecuentemente de manera dolorosa, que un sistema brillante que no puede comunicarse con el resto de tu infraestructura tecnológica es fundamentalmente menos valioso que un sistema mediocre que se integra perfectamente.
 
-## El Problema Legacy: fragmentación como enemigo operacional
+## El problema legacy: fragmentación como enemigo operacional
 
 Los sistemas legacy representan uno de los mayores desafíos en la transformación digital, pero no por las razones que típicamente se mencionan. El problema no es que sean antiguos. Muchos sistemas antiguos funcionan perfectamente bien para lo que fueron diseñados. El problema es la fragmentación que crean.
 
@@ -173,7 +173,7 @@ Imagina una organización típica mid-market. Tiene un sistema ERP que fue imple
 
 Esta fragmentación no es solo una molestia técnica o un problema estético de arquitectura. Tiene consecuencias operacionales y financieras muy reales. Reduce dramáticamente la eficiencia operativa porque las personas pierden horas o días moviendo datos manualmente entre sistemas. Aumenta los riesgos operacionales porque los errores de transcripción son inevitables cuando los humanos copian datos de un sistema a otro. Y crea riesgos de cumplimiento porque es casi imposible mantener auditorías consistentes cuando la información está dispersa.
 
-## El Caso Especial de Treasury: cuando la fragmentación cuesta millones
+## El caso especial de Treasury: cuando la fragmentación cuesta millones
 
 La gestión de tesorería representa un caso particularmente crítico donde la fragmentación de sistemas no es solo ineficiente sino potencialmente catastrófica. Las operaciones de treasury requieren visibilidad en tiempo real de posiciones de efectivo consolidadas a través de múltiples bancos y entidades. Necesitan reconciliación automática de transacciones porque el volumen hace imposible la verificación manual sin errores. Demandan gestión centralizada de riesgos de tipo de cambio, tasa de interés y contraparte. Y deben mantener cumplimiento regulatorio continuo con normativas cada vez más exigentes.
 
@@ -191,13 +191,13 @@ El intercambio de archivos automatizado puede parecer anticuado, pero sigue sien
 
 Finalmente, las integraciones personalizadas resuelven los casos complejos que no encajan en patrones estándar. Permiten adaptación precisa a necesidades específicas de tu negocio. Pueden implementar flujos de trabajo únicos que te dan ventaja competitiva. Y posibilitan optimización de procesos de maneras que las integraciones genéricas simplemente no pueden.
 
-## El Enfoque Universal: arquitectura que abraza la diversidad
+## El enfoque universal: arquitectura que abraza la diversidad
 
 La clave para integraciones exitosas no está en elegir una sola tecnología y forzar todo a través de ella. Está en desarrollar un framework de integración que sea fundamentalmente adaptable a múltiples protocolos y formatos. Que sea escalable según las necesidades evolucionen, sin requerir rediseño arquitectónico cada vez que creces. Que sea seguro por diseño, no como característica añadida posteriormente. Y que sea fácil de mantener y actualizar porque la tecnología nunca se detiene.
 
 Este enfoque reconoce una realidad fundamental: tu panorama tecnológico nunca será homogéneo. Siempre tendrás sistemas nuevos junto a sistemas antiguos. Siempre tendrás vendors que usan APIs REST junto a otros que solo ofrecen conectores SOAP. Intentar forzar homogeneidad es una batalla perdida. La arquitectura ganadora es la que abraza la diversidad y la gestiona elegantemente.
 
-## El ROI de las Integraciones Bien Ejecutadas: números que justifican inversión
+## El ROI de las integraciones bien ejecutadas: números que justifican inversión
 
 Cuando las integraciones se ejecutan correctamente, los beneficios son tan dramáticos que frecuentemente sorprenden incluso a quienes las implementaron. Las organizaciones reportan consistentemente reducciones del setenta por ciento en tiempo de procesamiento de tareas que antes requerían intervención manual. Ven disminuciones del noventa por ciento en errores que anteriormente eran inevitables con procesos manuales. Experimentan mejoras del cincuenta por ciento en visibilidad de datos porque la información fluye automáticamente donde se necesita. Y miden ROI promedio del trescientos por ciento en el primer año, una cifra que pocas inversiones tecnológicas pueden igualar.
 
@@ -228,7 +228,7 @@ Las empresas exitosas del futuro no serán necesariamente las que tengan el mejo
   },
 
   "doce-millones-razones-abandonar-excel-treasury": {
-    title: "Doce Millones de Razones Para Abandonar Excel (Y Por Qué No Lo Has Hecho)",
+    title: "Doce millones de razones para abandonar Excel (y por qué no lo has hecho)",
     date: "2025-10-15",
     author: "Equipo Arjé Partners",
     readTime: "12 min",
@@ -245,7 +245,7 @@ No estás solo. El 60% de empresas mid-market con facturación entre €60 millo
 
 La pregunta no es "¿sabemos que Excel es un problema?" La respuesta a eso es obvia. La pregunta real es: "¿Por qué seguimos usándolo si conocemos el coste?"
 
-## La Conversación Incómoda Que Nadie Quiere Tener
+## La conversación incómoda que nadie quiere tener
 
 Imagina esta escena. Es martes por la tarde y estás en una reunión del comité de dirección. El CEO te mira y pregunta algo aparentemente simple: "¿Cuánto cash tenemos disponible hoy para cerrar la adquisición de la que hablamos el viernes?"
 
@@ -259,7 +259,7 @@ No es que Excel sea malo en sí mismo. De hecho, es brillante para lo que fue di
 
 Estamos usando un destornillador para clavar clavos. Funciona, técnicamente. Pero hay mejores herramientas.
 
-## Por Qué Excel Sigue Siendo el Rey (Y No Es Por Comodidad)
+## Por qué Excel sigue siendo el rey (y no es por comodidad)
 
 Ahora viene la parte incómoda. Si Excel es tan problemático, ¿por qué el 96% de profesionales de FP&A lo siguen usando para planning, y el 60% de empresas mid-market lo tienen como columna vertebral de su tesorería?
 
@@ -283,7 +283,7 @@ Esta historia se repite con variaciones en miles de empresas. No es que los CFOs
 
 Comparado con eso, Excel empieza a parecer el mal menor. Al menos es el diablo que conoces.
 
-## El Coste Real (Que Nadie Está Sumando)
+## El coste real (que nadie está sumando)
 
 Volvamos a esos €12 millones que mencionábamos al principio. Merece la pena desagregarlos, porque una de las razones por las que Excel persiste es que su coste está disperso y semi-oculto.
 
@@ -301,7 +301,7 @@ Ana es responsable de tesorería en una empresa de distribución de €140 millo
 
 El 19% de profesionales de finanzas admiten que no confían plenamente en sus datos cuando presentan al board. Imagina hacer tu trabajo sabiendo que casi uno de cada cinco presentaciones podría tener un error significativo que aún no has detectado.
 
-## La Falsa Dicotomía del Cloud
+## La falsa dicotomía del cloud
 
 Aquí es donde la conversación se pone interesante, porque el mercado tecnológico ha vendido durante años una narrativa muy específica: "El futuro es cloud. On-premise está muerto. Migra todo o quédate atrás."
 
@@ -329,7 +329,7 @@ Hay un camino intermedio que casi nadie está comunicando claramente. Tu ERP pue
 
 Se llama integración. Y es radicalmente menos disruptivo que la alternativa.
 
-## El Camino del Medio Que Nadie Te Está Contando
+## El camino del medio que nadie te está contando
 
 Aquí viene la parte que los grandes vendors no quieren que sepas: no tienes que elegir entre Excel y un proyecto de transformación de €3 millones y dos años de duración.
 
@@ -357,7 +357,7 @@ Esta aproximación tiene un nombre menos glamuroso que "transformación digital"
 
 Es el equivalente a cambiar los neumáticos de tu coche mientras conduces. Suena imposible, pero con la arquitectura adecuada, es perfectamente factible. Y radicalmente menos arriesgado que parar el coche, desmontarlo entero, y rezar para poder volver a montarlo en dieciocho meses.
 
-## Lo Que Realmente Necesitas (Y No Es Lo Que Te Están Vendiendo)
+## Lo que realmente necesitas (y no es lo que te están vendiendo)
 
 Vamos a ser brutalmente honestos sobre lo que la mayoría de empresas mid-market necesitan en tesorería.
 
@@ -381,7 +381,7 @@ Roberto, CFO de una empresa de componentes industriales de €190 millones, lo r
 
 El 80% de los problemas con el 20% del esfuerzo. Eso no es un eslogan de consultoría. Es la realidad de la integración bien hecha.
 
-## El Momento de la Verdad
+## El momento de la verdad
 
 Volvamos a nuestra CFO del principio, aquella que cada mes cierra números con un nudo en el estómago.
 
@@ -401,7 +401,7 @@ Al final del mes, cuando le tocó preparar los números para el board, el proces
 
 "Y resulta que no. Resulta que la tecnología para eliminar ese dolor existe, es accesible, y no requiere que destruyas todo lo que has construido."
 
-## La Pregunta Que Deberías Estar Haciéndote
+## La pregunta que deberías estar haciéndote
 
 Este artículo empezó con una cifra: €12 millones. El coste anual de gestionar tesorería en Excel en una empresa de €200 millones.
 
