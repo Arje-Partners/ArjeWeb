@@ -1,43 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { articles as articlesData } from "@/lib/articles";
 
 export default function InsightsPage() {
-  const articles = [
-    {
-      id: "ia-produccion-treasury",
-      title:
-        "La Integración de IA en Treasury Management: Superando los Desafíos de Implementación",
-      excerpt:
-        "El 80% de los proyectos de IA fracasan al pasar a producción. Descubre por qué y cómo evitarlo en treasury management.",
-      date: "2025-10-03",
-      category: "Inteligencia Artificial",
-      readTime: "8 min",
-      tags: ["IA", "Integración", "Treasury"],
-    },
-    {
-      id: "integraciones-erp-ventaja",
-      title:
-        "Por qué las Integraciones ERP son el Nuevo Diferenciador Competitivo",
-      excerpt:
-        "El diferenciador ya no son los features, son las integraciones. Aprende cómo convertir tu capacidad de integración en ventaja competitiva.",
-      date: "2025-10-03",
-      category: "Tecnología",
-      readTime: "6 min",
-      tags: ["ERP", "Integración", "Competitividad"],
-    },
-    {
-      id: "ia-treasury-alternativas",
-      title:
-        "IA en Treasury Management: ¿Necesitas una plataforma nueva o mejor integración?",
-      excerpt:
-        "Análisis comparativo entre adoptar nuevas plataformas vs mejorar integraciones. ROI y casos de uso reales.",
-      date: "2025-10-03",
-      category: "Estrategia",
-      readTime: "7 min",
-      tags: ["IA", "ROI", "Estrategia"],
-    },
-  ];
+  const articles = Object.entries(articlesData).map(([slug, article]) => ({
+    id: slug,
+    title: article.title,
+    excerpt: article.content.split('\n\n')[1] || article.content.substring(0, 200) + '...',
+    date: article.date,
+    category: article.category,
+    readTime: article.readTime,
+    image: article.image,
+    tags: ["IA", "Integración", "Treasury"], // Podrías añadir tags al articles.ts si quieres
+  }));
 
   const categories = [
     "Todos",
@@ -96,6 +73,18 @@ export default function InsightsPage() {
                 className="group block"
               >
                 <article className="h-full bg-white rounded-2xl border border-arje-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                  {/* Featured Image */}
+                  {article.image && (
+                    <div className="relative h-48 w-full overflow-hidden">
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+
                   {/* Category Badge */}
                   <div className="p-6 pb-0">
                     <span className="inline-block px-3 py-1 bg-arje-blue/10 text-arje-blue text-sm font-semibold rounded-lg">

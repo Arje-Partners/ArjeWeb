@@ -1,5 +1,67 @@
 import Link from "next/link";
+import Image from "next/image";
 import { articles } from "@/lib/articles";
+
+// Helper function to parse basic markdown
+function parseMarkdown(text: string) {
+  const parts: (string | JSX.Element)[] = [];
+  let currentIndex = 0;
+  let key = 0;
+
+  // Process bold (**text**)
+  const boldRegex = /\*\*(.+?)\*\*/g;
+  let match;
+  let lastIndex = 0;
+
+  while ((match = boldRegex.exec(text)) !== null) {
+    // Add text before match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // Add bold text
+    parts.push(
+      <strong key={`bold-${key++}`} className="font-bold text-arje-gray-900">
+        {match[1]}
+      </strong>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  // Process italic (*text*) on the parts that are strings
+  const finalParts: (string | JSX.Element)[] = [];
+  parts.forEach((part, idx) => {
+    if (typeof part === "string") {
+      const italicRegex = /\*(.+?)\*/g;
+      let italicMatch;
+      let italicLastIndex = 0;
+
+      while ((italicMatch = italicRegex.exec(part)) !== null) {
+        if (italicMatch.index > italicLastIndex) {
+          finalParts.push(part.slice(italicLastIndex, italicMatch.index));
+        }
+        finalParts.push(
+          <em key={`italic-${key++}`} className="italic">
+            {italicMatch[1]}
+          </em>
+        );
+        italicLastIndex = italicMatch.index + italicMatch[0].length;
+      }
+
+      if (italicLastIndex < part.length) {
+        finalParts.push(part.slice(italicLastIndex));
+      }
+    } else {
+      finalParts.push(part);
+    }
+  });
+
+  return finalParts.length > 0 ? finalParts : [text];
+}
 
 // Generar las rutas estáticas
 export async function generateStaticParams() {
@@ -106,6 +168,20 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
+          {/* Featured Image */}
+          {article.image && (
+            <div className="mb-12 rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src={article.image}
+                alt={article.title}
+                width={1200}
+                height={630}
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
+          )}
+
           {/* Content */}
           <div className="prose prose-lg max-w-none prose-headings:text-arje-gray-900 prose-p:text-arje-gray-700 prose-a:text-arje-blue prose-strong:text-arje-gray-900 prose-ul:text-arje-gray-700 prose-ol:text-arje-gray-700">
             {article.content.split("\n").map((paragraph: string, idx: number) => {
@@ -142,7 +218,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               } else if (paragraph.trim() && !paragraph.startsWith("---")) {
                 return (
                   <p key={idx} className="text-lg text-arje-gray-700 mb-4 leading-relaxed">
-                    {paragraph}
+                    {parseMarkdown(paragraph)}
                   </p>
                 );
               }

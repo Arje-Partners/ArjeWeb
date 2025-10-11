@@ -1,0 +1,33 @@
+Team Images - Unsplash Credits (Free for commercial use)
+========================================================
+
+consulting.jpg
+- Photo by Kobu Agency on Unsplash
+- URL: https://unsplash.com/photos/7okkFhxrxNw
+- Description: Professional business meeting, strategy and consulting
+
+training.jpg
+- Photo by Kenny Eliason on Unsplash
+- URL: https://unsplash.com/photos/zFSo6bnZJTw
+- Description: Corporate training and education session
+
+implementation.jpg
+- Photo by Marvin Meyer on Unsplash
+- URL: https://unsplash.com/photos/SYTO3xs06fU
+- Description: Technology implementation and team collaboration
+
+support.jpg
+- Photo by Brooke Cagle on Unsplash
+- URL: https://unsplash.com/photos/g1Kr4Ozfoac
+- Description: Customer support and assistance professional
+
+========================================================
+
+Comment to add at the top of nosotros/page.tsx:
+/*
+ * Team Images (Unsplash - Free for commercial use):
+ * - consulting.jpg: Photo by Kobu Agency on Unsplash
+ * - training.jpg: Photo by Kenny Eliason on Unsplash
+ * - implementation.jpg: Photo by Marvin Meyer on Unsplash
+ * - support.jpg: Photo by Brooke Cagle on Unsplash
+ */

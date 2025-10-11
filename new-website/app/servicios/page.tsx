@@ -1,8 +1,19 @@
+/*
+ * Image Sources (Unsplash - Free for commercial use):
+ * - treasury-management.jpg: Photo by Carlos Muza on Unsplash (Analytics dashboard)
+ * - erp-integration.jpg: Photo by JJ Ying on Unsplash (Network/Technology)
+ * - financial-consulting.jpg: Photo by Isaac Smith on Unsplash (Business analytics)
+ * - training-support.jpg: Photo by You X Ventures on Unsplash (Team collaboration)
+ * - etl-pipelines.jpg: Photo by JJ Ying on Unsplash (Data infrastructure)
+ * - data-quality.jpg: Photo by Lukas Blazek on Unsplash (Data quality metrics)
+ * - ai-analytics.jpg: Photo by Possessed Photography on Unsplash (AI/ML technology)
+ */
+
 export default function ServiciosPage() {
   const services = [
     {
       title: "Treasury Management System",
-      icon: "💰",
+      image: "/images/services/treasury-management.jpg",
       description:
         "Solución completa de tesorería con capacidades de integración universal.",
       features: [
@@ -15,7 +26,7 @@ export default function ServiciosPage() {
     },
     {
       title: "Integración con ERPs",
-      icon: "🔗",
+      image: "/images/services/erp-integration.jpg",
       description:
         "Conectamos con cualquier sistema: estándar, custom o legacy.",
       features: [
@@ -29,7 +40,7 @@ export default function ServiciosPage() {
     },
     {
       title: "Consultoría Financiera",
-      icon: "📊",
+      image: "/images/services/financial-consulting.jpg",
       description: "Análisis y optimización de procesos de tesorería.",
       features: [
         "Auditoría de procesos actuales",
@@ -41,7 +52,7 @@ export default function ServiciosPage() {
     },
     {
       title: "Formación y Soporte",
-      icon: "🎯",
+      image: "/images/services/training-support.jpg",
       description: "Capacitación continua y soporte técnico especializado.",
       features: [
         "Onboarding personalizado",
@@ -50,6 +61,45 @@ export default function ServiciosPage() {
         "Documentación completa",
         "Updates y mejoras constantes",
       ],
+    },
+  ];
+
+  const dataServices = [
+    {
+      title: "ETL & Data Pipelines",
+      image: "/images/services/etl-pipelines.jpg",
+      description: "Extracción, transformación y carga de datos desde cualquier fuente a tu data warehouse o datalake",
+      features: [
+        "Integración multi-fuente en tiempo real",
+        "Transformaciones complejas automatizadas",
+        "Orquestación y scheduling avanzado",
+      ],
+      gradient: "from-blue-50 to-white",
+      border: "border-blue-200",
+    },
+    {
+      title: "Calidad de Datos",
+      image: "/images/services/data-quality.jpg",
+      description: "Garantizamos la integridad, precisión y consistencia de tus datos corporativos",
+      features: [
+        "Validación y limpieza automática",
+        "Detección de duplicados y anomalías",
+        "Monitoreo continuo de métricas DQ",
+      ],
+      gradient: "from-purple-50 to-white",
+      border: "border-purple-200",
+    },
+    {
+      title: "IA & Analytics",
+      image: "/images/services/ai-analytics.jpg",
+      description: "Inteligencia artificial para previsiones, detección de patrones y toma de decisiones",
+      features: [
+        "Modelos predictivos de cash flow",
+        "Detección de fraudes y anomalías",
+        "Dashboards inteligentes y alertas",
+      ],
+      gradient: "from-green-50 to-white",
+      border: "border-green-200",
     },
   ];
 
@@ -80,7 +130,14 @@ export default function ServiciosPage() {
                 key={index}
                 className="p-8 bg-white rounded-2xl border-2 border-arje-gray-200 hover:border-arje-blue hover:shadow-2xl transition-all duration-300"
               >
-                <div className="text-6xl mb-6">{service.icon}</div>
+                <div className="mb-6 rounded-xl overflow-hidden h-48 relative group">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
                 <h2 className="text-2xl font-bold text-arje-gray-900 mb-4">
                   {service.title}
                 </h2>
@@ -171,77 +228,35 @@ export default function ServiciosPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 hover:shadow-2xl transition-all duration-300">
-              <div className="text-5xl mb-4">🔄</div>
-              <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
-                ETL & Data Pipelines
-              </h3>
-              <p className="text-arje-gray-600 mb-6">
-                Extracción, transformación y carga de datos desde cualquier fuente a tu data warehouse o datalake
-              </p>
-              <ul className="space-y-2 text-sm text-arje-gray-700">
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Integración multi-fuente en tiempo real</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Transformaciones complejas automatizadas</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Orquestación y scheduling avanzado</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-8 bg-gradient-to-br from-purple-50 to-white rounded-2xl border-2 border-purple-200 hover:shadow-2xl transition-all duration-300">
-              <div className="text-5xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
-                Calidad de Datos
-              </h3>
-              <p className="text-arje-gray-600 mb-6">
-                Garantizamos la integridad, precisión y consistencia de tus datos corporativos
-              </p>
-              <ul className="space-y-2 text-sm text-arje-gray-700">
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Validación y limpieza automática</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Detección de duplicados y anomalías</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Monitoreo continuo de métricas DQ</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-8 bg-gradient-to-br from-green-50 to-white rounded-2xl border-2 border-green-200 hover:shadow-2xl transition-all duration-300">
-              <div className="text-5xl mb-4">🤖</div>
-              <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
-                IA & Analytics
-              </h3>
-              <p className="text-arje-gray-600 mb-6">
-                Inteligencia artificial para previsiones, detección de patrones y toma de decisiones
-              </p>
-              <ul className="space-y-2 text-sm text-arje-gray-700">
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Modelos predictivos de cash flow</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Detección de fraudes y anomalías</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-arje-blue mr-2">✓</span>
-                  <span>Dashboards inteligentes y alertas</span>
-                </li>
-              </ul>
-            </div>
+            {dataServices.map((dataService, index) => (
+              <div
+                key={index}
+                className={`p-8 bg-gradient-to-br ${dataService.gradient} rounded-2xl border-2 ${dataService.border} hover:shadow-2xl transition-all duration-300`}
+              >
+                <div className="mb-4 rounded-lg overflow-hidden h-40 relative group">
+                  <img
+                    src={dataService.image}
+                    alt={dataService.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
+                <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
+                  {dataService.title}
+                </h3>
+                <p className="text-arje-gray-600 mb-6">
+                  {dataService.description}
+                </p>
+                <ul className="space-y-2 text-sm text-arje-gray-700">
+                  {dataService.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <span className="text-arje-blue mr-2">✓</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           <div className="mt-12 p-8 bg-gradient-to-r from-arje-blue/10 to-arje-blue-light/10 rounded-2xl border-2 border-arje-blue/20">

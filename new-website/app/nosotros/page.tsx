@@ -1,3 +1,11 @@
+/*
+ * Team Images (Unsplash - Free for commercial use):
+ * - consulting.jpg: Photo by LinkedIn Sales Navigator on Unsplash
+ * - training.jpg: Photo by Annie Spratt on Unsplash
+ * - implementation.jpg: Photo by Marvin Meyer on Unsplash
+ * - support.jpg: Photo by Headway on Unsplash
+ */
+
 export default function NosotrosPage() {
   return (
     <div className="min-h-screen bg-white">
@@ -76,25 +84,25 @@ export default function NosotrosPage() {
             {[
               {
                 role: "Consultoría tecnológica y financiera",
-                icon: "💼",
+                image: "/images/team/consulting.jpg",
                 description:
                   "Diseñamos estrategias que optimizan procesos y alinean tecnología con objetivos de negocio",
               },
               {
                 role: "Capacitación y formación",
-                icon: "🎓",
+                image: "/images/team/training.jpg",
                 description:
                   "Llevamos tu equipo al siguiente nivel con formación personalizada y práctica",
               },
               {
                 role: "Implantación tecnológica",
-                icon: "🚀",
+                image: "/images/team/implementation.jpg",
                 description:
                   "Soluciones adaptadas con integraciones fluidas y transición sin complicaciones",
               },
               {
                 role: "Soporte continuo",
-                icon: "🛟",
+                image: "/images/team/support.jpg",
                 description:
                   "Estamos contigo cuando más nos necesites, para que tu negocio nunca se detenga",
               },
@@ -103,7 +111,14 @@ export default function NosotrosPage() {
                 key={index}
                 className="p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300"
               >
-                <div className="text-5xl mb-4">{item.icon}</div>
+                <div className="mb-4 rounded-lg overflow-hidden h-48 relative group">
+                  <img
+                    src={item.image}
+                    alt={item.role}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
                 <h3 className="text-xl font-bold text-arje-gray-900 mb-3">
                   {item.role}
                 </h3>
