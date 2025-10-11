@@ -201,7 +201,7 @@ export async function POST(request: NextRequest) {
           filterGroups: [{
             filters: [{
               propertyName: 'email',
-              operator: 'EQ',
+              operator: 'EQ' as any, // HubSpot SDK type quirk
               value: data.email
             }]
           }],
