@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Removed 'output: export' to enable API routes and server-side features
   images: { unoptimized: true },
   trailingSlash: true,
 };
