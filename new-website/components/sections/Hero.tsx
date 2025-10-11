@@ -49,9 +49,13 @@ export default function Hero() {
           >
             No importa si tu ERP es{" "}
             <span className="text-arje-blue font-semibold">
-              Navision, Microsoft Business Central, Movex
-            </span>{" "}
-            o un sistema{" "}
+              SAP, Navision, Microsoft Business Central, Movex
+            </span>
+            , tu TMS es{" "}
+            <span className="text-arje-blue font-semibold">
+              Sage XRT Advanced o Embat
+            </span>
+            , o un sistema{" "}
             <span className="text-arje-blue font-semibold">legacy de 1995</span>
             . Nuestra tesorería se integra con todo.
           </p>

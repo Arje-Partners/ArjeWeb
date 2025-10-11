@@ -4,8 +4,17 @@ export default function Integration() {
   const integrationTypes = [
     {
       category: "ERPs estándar",
-      systems: ["Navision", "Axapta", "Infor M3", "Microsoft Business Central", "IFS", "JD Edwards"],
-      color: "bg-blue-50 border-blue-200",
+      systems: ["SAP", "Navision", "Axapta", "Infor M3", "Microsoft Business Central", "IFS", "JD Edwards"],
+      color: "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-700",
+    },
+    {
+      category: "TMS (Treasury Management)",
+      systems: [
+        "Sage XRT Advanced",
+        "Embat",
+        "Otros TMS",
+      ],
+      color: "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-700",
     },
     {
       category: "Sistemas custom",
@@ -20,7 +29,7 @@ export default function Integration() {
     {
       category: "Legacy Systems",
       systems: ["AS/400", "Mainframe", "COBOL", "Sistemas antiguos"],
-      color: "bg-purple-50 border-purple-200",
+      color: "bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-700",
     },
   ];
 
@@ -49,7 +58,7 @@ export default function Integration() {
         </div>
 
         {/* Integration Types */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {integrationTypes.map((type, index) => (
             <div
               key={index}
