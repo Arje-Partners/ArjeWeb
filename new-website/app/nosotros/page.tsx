@@ -1,3 +1,5 @@
+"use client";
+
 /*
  * Team Images (Unsplash - Free for commercial use):
  * - consulting.jpg: Photo by LinkedIn Sales Navigator on Unsplash
@@ -8,16 +10,16 @@
 
 export default function NosotrosPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 dark:text-white mb-6">
               Transformamos desafíos en{" "}
               <span className="gradient-text">Oportunidades</span>
             </h1>
-            <p className="text-xl text-arje-gray-600">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
               En Arjé Partners, impulsamos la innovación y optimizamos la gestión
               financiera con soluciones a medida. Desde la implantación
               tecnológica hasta la automatización de procesos, te ayudamos a tomar
@@ -32,14 +34,14 @@ export default function NosotrosPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-arje-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-arje-gray-900 dark:text-white mb-6">
                 Nuestra misión
               </h2>
-              <p className="text-lg text-arje-gray-700 mb-4">
+              <p className="text-lg text-arje-gray-700 dark:text-gray-300 mb-4">
                 Hacer que los datos corporativos dejen de ser silos aislados y sean
                 accesibles para cualquier proceso de la empresa.
               </p>
-              <p className="text-lg text-arje-gray-700">
+              <p className="text-lg text-arje-gray-700 dark:text-gray-300">
                 Creemos que ninguna empresa debería tener que reemplazar su ERP o
                 sistema custom solo para tener una tesorería eficiente. Por eso
                 construimos la solución de treasury management más flexible del
@@ -47,21 +49,21 @@ export default function NosotrosPage() {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6">
-              <div className="p-6 bg-arje-gray-50 rounded-2xl">
+              <div className="p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-2xl">
                 <div className="text-4xl font-bold text-arje-blue mb-2">15+</div>
-                <p className="text-arje-gray-700">Años de experiencia</p>
+                <p className="text-arje-gray-700 dark:text-gray-300">Años de experiencia</p>
               </div>
-              <div className="p-6 bg-arje-gray-50 rounded-2xl">
+              <div className="p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-2xl">
                 <div className="text-4xl font-bold text-arje-blue mb-2">50+</div>
-                <p className="text-arje-gray-700">Integraciones realizadas</p>
+                <p className="text-arje-gray-700 dark:text-gray-300">Integraciones realizadas</p>
               </div>
-              <div className="p-6 bg-arje-gray-50 rounded-2xl">
+              <div className="p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-2xl">
                 <div className="text-4xl font-bold text-arje-blue mb-2">95%</div>
-                <p className="text-arje-gray-700">Tasa de retención</p>
+                <p className="text-arje-gray-700 dark:text-gray-300">Tasa de retención</p>
               </div>
-              <div className="p-6 bg-arje-gray-50 rounded-2xl">
+              <div className="p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-2xl">
                 <div className="text-4xl font-bold text-arje-blue mb-2">100%</div>
-                <p className="text-arje-gray-700">Éxito en proyectos</p>
+                <p className="text-arje-gray-700 dark:text-gray-300">Éxito en proyectos</p>
               </div>
             </div>
           </div>
@@ -69,13 +71,13 @@ export default function NosotrosPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-arje-gray-50">
+      <section className="py-24 bg-arje-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-arje-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-arje-gray-900 dark:text-white mb-4">
               Nuestro equipo
             </h2>
-            <p className="text-xl text-arje-gray-600">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
               Expertos en tecnología y finanzas trabajando juntos
             </p>
           </div>
@@ -109,7 +111,7 @@ export default function NosotrosPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300"
+                className="p-8 bg-white dark:bg-gray-700 rounded-2xl hover:shadow-xl transition-all duration-300"
               >
                 <div className="mb-4 rounded-lg overflow-hidden h-48 relative group">
                   <img
@@ -119,10 +121,10 @@ export default function NosotrosPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
-                <h3 className="text-xl font-bold text-arje-gray-900 mb-3">
+                <h3 className="text-xl font-bold text-arje-gray-900 dark:text-white mb-3">
                   {item.role}
                 </h3>
-                <p className="text-arje-gray-600">{item.description}</p>
+                <p className="text-arje-gray-600 dark:text-gray-300">{item.description}</p>
               </div>
             ))}
           </div>

@@ -1,3 +1,5 @@
+"use client";
+
 /*
  * Image Sources (Unsplash - Free for commercial use):
  * - treasury-management.jpg: Photo by Carlos Muza on Unsplash (Analytics dashboard)
@@ -104,16 +106,16 @@ export default function ServiciosPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 dark:text-white mb-6">
               Servicios de{" "}
               <span className="gradient-text">Treasury Management</span>
             </h1>
-            <p className="text-xl text-arje-gray-600">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
               Desde implantación hasta soporte continuo. Todo lo que necesitas
               para modernizar tu tesorería sin cambiar tu ERP.
             </p>
@@ -128,7 +130,7 @@ export default function ServiciosPage() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="p-8 bg-white rounded-2xl border-2 border-arje-gray-200 hover:border-arje-blue hover:shadow-2xl transition-all duration-300"
+                className="p-8 bg-white dark:bg-gray-800 rounded-2xl border-2 border-arje-gray-200 dark:border-gray-700 hover:border-arje-blue hover:shadow-2xl transition-all duration-300"
               >
                 <div className="mb-6 rounded-xl overflow-hidden h-48 relative group">
                   <img
@@ -138,10 +140,10 @@ export default function ServiciosPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
-                <h2 className="text-2xl font-bold text-arje-gray-900 mb-4">
+                <h2 className="text-2xl font-bold text-arje-gray-900 dark:text-white mb-4">
                   {service.title}
                 </h2>
-                <p className="text-arje-gray-600 mb-6">{service.description}</p>
+                <p className="text-arje-gray-600 dark:text-gray-300 mb-6">{service.description}</p>
                 <ul className="space-y-3">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
@@ -156,7 +158,7 @@ export default function ServiciosPage() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="text-arje-gray-700">{feature}</span>
+                      <span className="text-arje-gray-700 dark:text-gray-300">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -167,13 +169,13 @@ export default function ServiciosPage() {
       </section>
 
       {/* Process */}
-      <section className="py-24 bg-arje-gray-50">
+      <section className="py-24 bg-arje-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-arje-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-arje-gray-900 dark:text-white mb-4">
               Proceso de implementación
             </h2>
-            <p className="text-xl text-arje-gray-600">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
               De la consulta inicial a la puesta en producción en semanas
             </p>
           </div>
@@ -205,10 +207,10 @@ export default function ServiciosPage() {
                 <div className="w-16 h-16 bg-arje-blue text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   {phase.step}
                 </div>
-                <h3 className="text-xl font-bold text-arje-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-arje-gray-900 dark:text-white mb-2">
                   {phase.title}
                 </h3>
-                <p className="text-arje-gray-600">{phase.description}</p>
+                <p className="text-arje-gray-600 dark:text-gray-300">{phase.description}</p>
               </div>
             ))}
           </div>
@@ -219,10 +221,10 @@ export default function ServiciosPage() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-arje-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-arje-gray-900 dark:text-white mb-4">
               Gestión inteligente de <span className="gradient-text">datos corporativos</span>
             </h2>
-            <p className="text-xl text-arje-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-arje-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Transformamos silos de datos en información accionable con tecnologías ETL, datalakes y análisis inteligente
             </p>
           </div>
@@ -231,7 +233,7 @@ export default function ServiciosPage() {
             {dataServices.map((dataService, index) => (
               <div
                 key={index}
-                className={`p-8 bg-gradient-to-br ${dataService.gradient} rounded-2xl border-2 ${dataService.border} hover:shadow-2xl transition-all duration-300`}
+                className={`p-8 bg-gradient-to-br ${dataService.gradient} dark:from-gray-800 dark:to-gray-700 rounded-2xl border-2 ${dataService.border} dark:border-gray-600 hover:shadow-2xl transition-all duration-300`}
               >
                 <div className="mb-4 rounded-lg overflow-hidden h-40 relative group">
                   <img
@@ -241,13 +243,13 @@ export default function ServiciosPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
-                <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-arje-gray-900 dark:text-white mb-4">
                   {dataService.title}
                 </h3>
-                <p className="text-arje-gray-600 mb-6">
+                <p className="text-arje-gray-600 dark:text-gray-300 mb-6">
                   {dataService.description}
                 </p>
-                <ul className="space-y-2 text-sm text-arje-gray-700">
+                <ul className="space-y-2 text-sm text-arje-gray-700 dark:text-gray-300">
                   {dataService.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
                       <span className="text-arje-blue mr-2">✓</span>
@@ -259,11 +261,11 @@ export default function ServiciosPage() {
             ))}
           </div>
 
-          <div className="mt-12 p-8 bg-gradient-to-r from-arje-blue/10 to-arje-blue-light/10 rounded-2xl border-2 border-arje-blue/20">
-            <h3 className="text-2xl font-bold text-arje-gray-900 mb-4 text-center">
+          <div className="mt-12 p-8 bg-gradient-to-r from-arje-blue/10 to-arje-blue-light/10 dark:from-gray-800 dark:to-gray-700 rounded-2xl border-2 border-arje-blue/20 dark:border-gray-600">
+            <h3 className="text-2xl font-bold text-arje-gray-900 dark:text-white mb-4 text-center">
               Datalakes & Data Warehouses
             </h3>
-            <p className="text-arje-gray-700 text-center max-w-3xl mx-auto">
+            <p className="text-arje-gray-700 dark:text-gray-300 text-center max-w-3xl mx-auto">
               Implementamos arquitecturas modernas de datos que unifican información de múltiples fuentes,
               permitiendo análisis avanzados y democratización del acceso a la información en toda la organización.
             </p>
@@ -274,10 +276,10 @@ export default function ServiciosPage() {
       {/* CTA */}
       <section className="py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-arje-gray-900 mb-6">
+          <h2 className="text-4xl font-bold text-arje-gray-900 dark:text-white mb-6">
             ¿Listo para empezar?
           </h2>
-          <p className="text-xl text-arje-gray-600 mb-8">
+          <p className="text-xl text-arje-gray-600 dark:text-gray-300 mb-8">
             Agenda una demo personalizada y descubre cómo podemos ayudarte
           </p>
           <a
