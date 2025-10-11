@@ -21,8 +21,10 @@ export default function Footer() {
               <span className="font-bold text-xl">Arjé Partners</span>
             </div>
             <p className="text-arje-gray-200 dark:text-gray-300 mb-4 max-w-md">
-              Soluciones de tesorería con capacidad de integración universal.
-              Conectamos con cualquier sistema: ERPs, custom, legacy.
+              Con RosettaAI, integramos sistemas de tesorería de forma universal. Conectamos TMS con ERPs, sistemas legacy y desarrollos a medida mediante nuestra plataforma especializada.
+            </p>
+            <p className="text-arje-gray-300 dark:text-gray-400 text-sm italic">
+              Expertos en arquitecturas de integración para tesorería corporativa
             </p>
             <div className="flex items-center space-x-4">
               <a
