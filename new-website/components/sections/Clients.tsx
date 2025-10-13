@@ -4,14 +4,14 @@ import Image from "next/image";
 
 export default function Clients() {
   const clients = [
-    { name: "Vitaldent", logo: "logo-vitaldent-1206x678.png" },
-    { name: "Codorníu", logo: "logo-codorniu-1206x678.png" },
-    { name: "Electrolux", logo: "logo-electrolux-1206x678.png" },
-    { name: "UGround", logo: "logo-uground-1206x678.png" },
-    { name: "Adlantia", logo: "logo-adlantia-1206x678.png" },
-    { name: "MaaS", logo: "logo-maas-1206x678.png" },
-    { name: "Pavasal", logo: "logo-pavasal-1206x678.png" },
-    { name: "Ruesma", logo: "logo-ruesma-1206x678.png" },
+    { name: "Vitaldent", logo: "logo-vitaldent-1206x678.png", scale: 1 },
+    { name: "Codorníu", logo: "logo-codorniu-1206x678.png", scale: 1 },
+    { name: "Electrolux", logo: "logo-electrolux-1206x678.png", scale: 1 },
+    { name: "UGround", logo: "logo-uground-1206x678.png", scale: 1.5 },
+    { name: "Adlantia", logo: "logo-adlantia-1206x678.png", scale: 1.5 },
+    { name: "MaaS", logoLight: "logo-maas-light.jpg", logoDark: "logo-maas-dark.jpg", scale: 1 },
+    { name: "Pavasal", logo: "logo-pavasal-1206x678.png", scale: 1 },
+    { name: "Ruesma", logo: "logo-ruesma-1206x678.png", scale: 1 },
   ];
 
   const testimonials = [
@@ -63,13 +63,37 @@ export default function Clients() {
                 className="flex-shrink-0 mx-4 w-64"
               >
                 <div className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md border border-arje-gray-200 dark:border-gray-700 h-32">
-                  <div className="relative w-full h-20">
-                    <Image
-                      src={`/images/clients/${client.logo}`}
-                      alt={client.name}
-                      fill
-                      className="object-contain"
-                    />
+                  <div
+                    className="relative w-full h-20"
+                    style={{ transform: `scale(${client.scale || 1})` }}
+                  >
+                    {/* Light mode logo */}
+                    {client.logoLight && (
+                      <Image
+                        src={`/images/clients/${client.logoLight}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain dark:hidden"
+                      />
+                    )}
+                    {/* Dark mode logo */}
+                    {client.logoDark && (
+                      <Image
+                        src={`/images/clients/${client.logoDark}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain hidden dark:block"
+                      />
+                    )}
+                    {/* Single logo for both modes */}
+                    {client.logo && (
+                      <Image
+                        src={`/images/clients/${client.logo}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -81,13 +105,37 @@ export default function Clients() {
                 className="flex-shrink-0 mx-4 w-64"
               >
                 <div className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md border border-arje-gray-200 dark:border-gray-700 h-32">
-                  <div className="relative w-full h-20">
-                    <Image
-                      src={`/images/clients/${client.logo}`}
-                      alt={client.name}
-                      fill
-                      className="object-contain"
-                    />
+                  <div
+                    className="relative w-full h-20"
+                    style={{ transform: `scale(${client.scale || 1})` }}
+                  >
+                    {/* Light mode logo */}
+                    {client.logoLight && (
+                      <Image
+                        src={`/images/clients/${client.logoLight}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain dark:hidden"
+                      />
+                    )}
+                    {/* Dark mode logo */}
+                    {client.logoDark && (
+                      <Image
+                        src={`/images/clients/${client.logoDark}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain hidden dark:block"
+                      />
+                    )}
+                    {/* Single logo for both modes */}
+                    {client.logo && (
+                      <Image
+                        src={`/images/clients/${client.logo}`}
+                        alt={client.name}
+                        fill
+                        className="object-contain"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
