@@ -8,6 +8,10 @@ export default function Clients() {
     { name: "Codorníu", logo: "logo-codorniu-1206x678.png" },
     { name: "Electrolux", logo: "logo-electrolux-1206x678.png" },
     { name: "UGround", logo: "logo-uground-1206x678.png" },
+    { name: "Adlantia", logo: "logo-adlantia-1206x678.png" },
+    { name: "MaaS", logo: "logo-maas-1206x678.png" },
+    { name: "Pavasal", logo: "logo-pavasal-1206x678.png" },
+    { name: "Ruesma", logo: "logo-ruesma-1206x678.png" },
   ];
 
   const testimonials = [
@@ -44,24 +48,71 @@ export default function Clients() {
           </p>
         </div>
 
-        {/* Client Logos Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-20 max-w-6xl mx-auto">
-          {clients.map((client, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 border border-arje-gray-200 dark:border-gray-700"
-            >
-              <div className="relative w-full h-24">
-                <Image
-                  src={`/images/clients/${client.logo}`}
-                  alt={client.name}
-                  fill
-                  className="object-contain"
-                />
+        {/* Client Logos Carousel */}
+        <div className="relative overflow-hidden mb-20">
+          {/* Gradient overlays */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent z-10"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10"></div>
+
+          {/* Carousel container */}
+          <div className="flex animate-scroll hover:pause">
+            {/* First set of logos */}
+            {clients.map((client, index) => (
+              <div
+                key={`first-${index}`}
+                className="flex-shrink-0 mx-4 w-64"
+              >
+                <div className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md border border-arje-gray-200 dark:border-gray-700 h-32">
+                  <div className="relative w-full h-20">
+                    <Image
+                      src={`/images/clients/${client.logo}`}
+                      alt={client.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+            {/* Duplicate set for infinite scroll */}
+            {clients.map((client, index) => (
+              <div
+                key={`second-${index}`}
+                className="flex-shrink-0 mx-4 w-64"
+              >
+                <div className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md border border-arje-gray-200 dark:border-gray-700 h-32">
+                  <div className="relative w-full h-20">
+                    <Image
+                      src={`/images/clients/${client.logo}`}
+                      alt={client.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        <style jsx>{`
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+
+          .animate-scroll {
+            animation: scroll 30s linear infinite;
+          }
+
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
 
         {/* Testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
