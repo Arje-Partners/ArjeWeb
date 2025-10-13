@@ -26,11 +26,6 @@ export default function Integration() {
       ],
       color: "bg-arje-blue/10 border-arje-blue/30",
     },
-    {
-      category: "Legacy Systems",
-      systems: ["AS/400", "Mainframe", "COBOL", "Sistemas antiguos"],
-      color: "bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-700",
-    },
   ];
 
   const technologies = [
@@ -58,7 +53,7 @@ export default function Integration() {
         </div>
 
         {/* Integration Types */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {integrationTypes.map((type, index) => (
             <div
               key={index}

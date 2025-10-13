@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   title: "Arjé Partners | Treasury Management & Integration Solutions",
   description: "Soluciones de tesorería con capacidad de integración universal. Conectamos con cualquier sistema: ERPs estándar, sistemas custom y aplicaciones legacy.",
   keywords: "treasury management, integración ERP, sistemas custom, tesorería, Arjé Partners",
+  icons: {
+    icon: [
+      { url: '/images/logo-arje-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/images/logo-arje-128x128.png', sizes: '128x128', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/images/logo-arje-128x128.png', sizes: '128x128', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -57,7 +57,7 @@ export default function Hero() {
             </span>
             , o un sistema{" "}
             <span className="text-arje-blue font-semibold">legacy de 1995</span>
-            . Nuestra tesorería se integra con todo.
+            . Integramos todo.
           </p>
 
           {/* CTAs */}

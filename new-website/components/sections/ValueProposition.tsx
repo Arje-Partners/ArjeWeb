@@ -96,9 +96,9 @@ export default function ValueProposition() {
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold text-arje-blue mb-2">
-              Unas
+              -50%
             </div>
-            <p className="text-arje-gray-600 dark:text-gray-300">semanas de implementación</p>
+            <p className="text-arje-gray-600 dark:text-gray-300">Reducción de tiempo de integración</p>
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold text-arje-blue mb-2">

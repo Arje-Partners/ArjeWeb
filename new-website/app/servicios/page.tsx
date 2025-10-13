@@ -35,7 +35,6 @@ export default function ServiciosPage() {
         "Navision, Axapta, Microsoft Business Central",
         "Infor M3, IFS, JD Edwards",
         "Sistemas custom y desarrollos propios",
-        "Legacy systems (AS/400, COBOL)",
         "APIs REST, SOAP, direct DB",
         "Implementación en unas semanas",
       ],
@@ -59,7 +58,6 @@ export default function ServiciosPage() {
       features: [
         "Onboarding personalizado",
         "Formación continua del equipo",
-        "Soporte técnico 24/7",
         "Documentación completa",
         "Updates y mejoras constantes",
       ],

@@ -45,13 +45,13 @@ export default function Clients() {
         </div>
 
         {/* Client Logos Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-16 md:gap-20 mb-20 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-20 max-w-6xl mx-auto">
           {clients.map((client, index) => (
             <div
               key={index}
-              className="flex items-center justify-center p-8 transition-all duration-300 hover:scale-110"
+              className="flex items-center justify-center bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 border border-arje-gray-200 dark:border-gray-700"
             >
-              <div className="relative w-full h-24 md:h-28">
+              <div className="relative w-full h-24">
                 <Image
                   src={`/images/clients/${client.logo}`}
                   alt={client.name}
