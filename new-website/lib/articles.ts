@@ -10,13 +10,13 @@ export const articles: Record<string, any> = {
 
 En un mundo donde la Inteligencia Artificial promete revolucionar cada aspecto de las operaciones empresariales, el treasury management no es la excepción. Desde la automatización de predicciones de flujo de caja hasta la detección de anomalías en tiempo real, las posibilidades parecen infinitas. Sin embargo, detrás de estas promesas tecnológicas se esconde un fenómeno preocupante que muchas organizaciones prefieren no comentar públicamente.
 
-Según estudios recientes de Computer Weekly y Gartner, hasta el 80% de los proyectos de IA fracasan al intentar dar el salto de la fase de prueba de concepto a la implementación real en producción. Este dato no es un simple contratiempo técnico, sino una llamada de atención sobre cómo estamos abordando la transformación digital en el ámbito financiero.
+Según múltiples estudios de investigación (Computer Weekly, Gartner, VentureBeat), entre el 70% y el 85% de los proyectos de IA fracasan al intentar dar el salto de la fase de prueba de concepto a la implementación real en producción. Este dato no es un simple contratiempo técnico, sino una llamada de atención sobre cómo estamos abordando la transformación digital en el ámbito financiero.
 
 ## El problema: la brecha entre promesa y realidad
 
 Imagina este escenario: tu equipo de tesorería ha invertido meses en desarrollar un modelo de IA que predice con notable precisión los flujos de caja futuros. Las demos son impresionantes, los resultados en el entorno de pruebas son excepcionales, y todos están entusiasmados. Pero cuando llega el momento de implementarlo en el sistema real, todo se desmorona.
 
-Las estadísticas son reveladoras. El 87% de los proyectos de IA nunca llegan a la fase de producción. De ese pequeño 13% que lo intenta, muchos fracasan en los primeros meses. Además, el tiempo promedio de implementación suele superar en tres veces las estimaciones iniciales. La pregunta es inevitable: ¿por qué sucede esto en un sector que aparentemente cuenta con todos los recursos necesarios?
+Las estadísticas son reveladoras. Entre el 70% y el 85% de los proyectos de IA nunca llegan a la fase de producción, según diversos estudios de Gartner, VentureBeat y otras fuentes de investigación. Solo un pequeño porcentaje logra escalar a operaciones completas, y muchos fracasan en los primeros meses. Además, el tiempo promedio de implementación suele superar en tres veces las estimaciones iniciales. La pregunta es inevitable: ¿por qué sucede esto en un sector que aparentemente cuenta con todos los recursos necesarios?
 
 La respuesta no está donde la mayoría busca. No se trata de algoritmos insuficientemente sofisticados ni de falta de poder computacional. El verdadero obstáculo es mucho más fundamental y, paradójicamente, más fácil de pasar por alto.
 
@@ -69,9 +69,10 @@ Las organizaciones que comprenden esto y actúan en consecuencia son las que est
 ---
 
 **Fuentes:**
-- Computer Weekly: "Why AI agent projects are stalling in production"
-- Gartner Research: "AI Implementation Challenges in Enterprise 2023"
-- McKinsey Global Survey: "The State of AI in 2023"
+- [Computer Weekly: "Why AI agent projects are stalling in production"](https://www.computerweekly.com/news/366632235/Why-AI-agent-projects-are-stalling-in-production)
+- [Gartner: "30% of Generative AI Projects Will Be Abandoned After PoC By End of 2025"](https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025)
+- [McKinsey: "The State of AI in 2023: Generative AI's breakout year"](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023-generative-ais-breakout-year)
+- [VentureBeat: "Why do 87% of data science projects never make it into production"](https://venturebeat.com/ai/why-do-87-of-data-science-projects-never-make-it-into-production/)
 `
   },
 
