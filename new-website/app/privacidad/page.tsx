@@ -20,16 +20,16 @@ export default function PrivacidadPage() {
 
             <h2>1. Información al Usuario</h2>
             <p>
-              Arjé Partners, como Responsable del Tratamiento, le informa que, según lo dispuesto en el
+              Arjé Partners S.L., como Responsable del Tratamiento, le informa que, según lo dispuesto en el
               Reglamento (UE) 2016/679, de 27 de abril (RGPD), y en la L.O. 3/2018, de 5 de diciembre (LOPDGDD),
               trataremos su datos tal y como reflejamos en la presente Política de Privacidad.
             </p>
 
             <h2>2. Responsable del Tratamiento</h2>
             <ul>
-              <li><strong>Identidad:</strong> Arjé Partners</li>
-              <li><strong>Dirección postal:</strong> [Dirección completa]</li>
-              <li><strong>Teléfono:</strong> [Teléfono]</li>
+              <li><strong>Identidad:</strong> Arjé Partners S.L.</li>
+              <li><strong>Dirección postal:</strong> C/ Mastelero 12 Bajo - 20033 Madrid</li>
+              <li><strong>Teléfono:</strong> +34 915 62 08 00</li>
               <li><strong>Email:</strong> info@arjepartners.com</li>
             </ul>
 
@@ -47,7 +47,7 @@ export default function PrivacidadPage() {
 
             <h2>4. ¿Con Qué Finalidad Tratamos Sus Datos?</h2>
             <p>
-              En Arjé Partners tratamos la información que nos facilitan las personas interesadas con los
+              En Arjé Partners S.L. tratamos la información que nos facilitan las personas interesadas con los
               siguientes fines:
             </p>
             <ul>
@@ -114,7 +114,7 @@ export default function PrivacidadPage() {
 
             <h2>9. Medidas de Seguridad</h2>
             <p>
-              Arjé Partners tratará los datos del usuario en todo momento de forma absolutamente confidencial
+              Arjé Partners S.L. tratará los datos del usuario en todo momento de forma absolutamente confidencial
               y guardando el preceptivo deber de secreto respecto de los mismos, de conformidad con lo previsto
               en la normativa de aplicación, adoptando al efecto las medidas de índole técnica y organizativas
               necesarias que garanticen la seguridad de sus datos y eviten su alteración, pérdida, tratamiento
@@ -124,14 +124,14 @@ export default function PrivacidadPage() {
             <h2>10. Enlaces a Sitios Web de Terceros</h2>
             <p>
               LA WEB puede incluir hipervínculos o enlaces que permiten acceder a páginas web de terceros
-              distintos de Arjé Partners. Los titulares de dichos sitios web dispondrán de sus propias
+              distintos de Arjé Partners S.L. Los titulares de dichos sitios web dispondrán de sus propias
               políticas de privacidad, siendo ellos mismos, en cada caso, responsables de sus propios ficheros
               y de sus propias prácticas de privacidad.
             </p>
 
             <h2>11. Actualización de la Política de Privacidad</h2>
             <p>
-              Arjé Partners se reserva el derecho a modificar la presente Política de Privacidad para adaptarla
+              Arjé Partners S.L. se reserva el derecho a modificar la presente Política de Privacidad para adaptarla
               a novedades legislativas o jurisprudenciales, así como a prácticas de la industria. En dichos
               supuestos, anunciará en esta página los cambios introducidos con razonable antelación a su puesta
               en práctica.
@@ -145,7 +145,7 @@ export default function PrivacidadPage() {
               </p>
               <ul className="mt-2 text-sm text-arje-gray-700 dark:text-gray-300">
                 <li>Email: <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">info@arjepartners.com</a></li>
-                <li>Teléfono: [Teléfono]</li>
+                <li>Teléfono: <a href="tel:+34915620800" className="text-arje-blue hover:underline">+34 915 62 08 00</a></li>
               </ul>
             </div>
           </div>
