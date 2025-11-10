@@ -117,7 +117,9 @@ export default function Footer() {
                 Aviso Legal
               </Link>
               {" · "}
-              Cumplimiento RGPD
+              <Link href="/cumplimiento-rgpd" className="hover:text-arje-blue transition-colors">
+                Cumplimiento RGPD
+              </Link>
             </p>
           </div>
         </div>
