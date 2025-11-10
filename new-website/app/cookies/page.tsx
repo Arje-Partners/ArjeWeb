@@ -327,8 +327,8 @@ export default function CookiesPage() {
             <h2>MÁS INFORMACIÓN</h2>
             <p>
               Para cualquier duda sobre el uso de cookies en nuestro sitio web, puede dirigirse a{' '}
-              <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">
-                j.gimeno@arjepartners.com
+              <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">
+                info@arjepartners.com
               </a>
             </p>
             <p>
@@ -342,7 +342,7 @@ export default function CookiesPage() {
                 <li><strong>Responsable:</strong> ARJE PARTNERS SL</li>
                 <li><strong>NIF:</strong> B84130590</li>
                 <li><strong>Dirección:</strong> C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID)</li>
-                <li><strong>Email:</strong> <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">j.gimeno@arjepartners.com</a></li>
+                <li><strong>Email:</strong> <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">info@arjepartners.com</a></li>
                 <li><strong>Teléfono:</strong> <a href="tel:+34915620800" className="text-arje-blue hover:underline">915620800</a></li>
               </ul>
             </div>

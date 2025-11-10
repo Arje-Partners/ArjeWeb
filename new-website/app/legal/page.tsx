@@ -101,8 +101,8 @@ export default function LegalPage() {
             </p>
             <p>
               La empresa, pone a disposición de los Usuarios una dirección de correo electrónico{' '}
-              <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">
-                j.gimeno@arjepartners.com
+              <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">
+                info@arjepartners.com
               </a>{' '}
               para que cualquier contenido que pueda afectar a la actividad de otros usuarios sea puesto de manifiesto, con la
               voluntad de rectificar el mismo en caso de ser apropiado.
@@ -165,7 +165,7 @@ export default function LegalPage() {
                 <li><strong>NIF:</strong> B84130590</li>
                 <li><strong>Dirección:</strong> C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID)</li>
                 <li><strong>Teléfono:</strong> <a href="tel:+34915620800" className="text-arje-blue hover:underline">915620800</a></li>
-                <li><strong>Email:</strong> <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">j.gimeno@arjepartners.com</a></li>
+                <li><strong>Email:</strong> <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">info@arjepartners.com</a></li>
               </ul>
             </div>
           </div>

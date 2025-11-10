@@ -26,7 +26,7 @@ export default function PrivacidadPage() {
             </p>
             <p>Usted podrá contactar con el responsable mediante:</p>
             <ul>
-              <li><strong>Email:</strong> <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">j.gimeno@arjepartners.com</a></li>
+              <li><strong>Email:</strong> <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">info@arjepartners.com</a></li>
               <li><strong>Teléfono:</strong> <a href="tel:+34915620800" className="text-arje-blue hover:underline">915620800</a></li>
               <li><strong>Dirección:</strong> C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID)</li>
               <li><strong>NIF:</strong> B84130590</li>
@@ -140,8 +140,8 @@ export default function PrivacidadPage() {
             <p>
               Para ejercer sus derechos puede enviar un escrito dirigido al responsable del tratamiento a la dirección de
               correo electrónico{' '}
-              <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">
-                j.gimeno@arjepartners.com
+              <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">
+                info@arjepartners.com
               </a>.
               Es posible que en algún caso se le solicite más información para poder verificar su identidad.
             </p>
@@ -210,7 +210,7 @@ export default function PrivacidadPage() {
                 Para cualquier duda o consulta sobre esta Política de Protección de Datos, puede contactar con nosotros:
               </p>
               <ul className="space-y-2 text-sm">
-                <li><strong>Email:</strong> <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">j.gimeno@arjepartners.com</a></li>
+                <li><strong>Email:</strong> <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">info@arjepartners.com</a></li>
                 <li><strong>Teléfono:</strong> <a href="tel:+34915620800" className="text-arje-blue hover:underline">915620800</a></li>
                 <li><strong>Dirección:</strong> C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID)</li>
               </ul>
