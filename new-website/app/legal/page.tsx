@@ -18,112 +18,155 @@ export default function LegalPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg dark:prose-invert max-w-none">
 
-            <h2>1. Datos Identificativos</h2>
-            <p>
-              En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la
-              Sociedad de la Información y Comercio Electrónico, se informa a los usuarios del sitio web
-              <strong> arjepartners.com</strong> de los datos identificativos de la empresa:
+            <p className="lead">
+              ARJE PARTNERS SL (en adelante "la empresa"), con domicilio en C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID),
+              y con NIF B84130590, INFORMA:
             </p>
+
+            <p>
+              La utilización del nombre de dominio www.arjepartners.com se encuentra debidamente registrado por la empresa,
+              con todas las garantías, tal y como dispone en la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad
+              de la Información y del Comercio Electrónico. No obstante, se pone de manifiesto la plena adecuación de los
+              presentes Términos Legales a la normativa vigente en materia de Protección de Datos, Comercio Electrónico,
+              Condiciones Contratación, Propiedad Intelectual y demás disposiciones subsidiarias.
+            </p>
+
+            <h2>1. ACEPTACIÓN DE LOS TÉRMINOS LEGALES</h2>
+            <p>
+              El acceso a este sitio web o su utilización en cualquier forma implica la aceptación de todas y cada una de
+              los presentes Términos Legales, reservándose la empresa el derecho a modificarlos en cualquier momento. En
+              consecuencia, será responsabilidad de todo visitante y/o Usuario, la atenta lectura de los Términos Legales
+              de uso vigente en cada una de las ocasiones en que acceda a este sitio web, por lo que, si éste no está de
+              acuerdo con cualquiera de los mismos aquí dispuestos, deberá abstenerse respecto al uso de la presente página web.
+            </p>
+
+            <h2>2. OBJETO</h2>
+            <p>
+              Por medio de la web www.arjepartners.com, se facilita a los Usuarios el acceso a diversos contenidos, servicios,
+              información y datos (los "contenidos"), puestos a su disposición. La empresa se reserva el derecho de modificar
+              en cualquier momento la presentación, configuración y localización de la página web, así como los contenidos,
+              productos y servicios en él dispuestos.
+            </p>
+
+            <h2>3. CONDICIONES DE ACCESO</h2>
+            <p>
+              El acceso a la información de los distintos productos y servicios existentes en el sitio web, así como a su
+              navegación será libre y gratuita no exigiéndose por tanto a los Usuarios el pertinente registro con la consecuente
+              entrega de sus datos personales, ni la utilización de claves o contraseñas.
+            </p>
+            <p>
+              Cuando para el acceso a determinados contenidos o servicios sea necesario facilitar datos de carácter personal,
+              los Usuarios garantizarán su veracidad, exactitud, autenticidad y vigencia. La empresa, dará a dichos datos el
+              tratamiento automatizado que corresponda en función de su naturaleza o finalidad, en los términos indicados en
+              la sección de Política de Protección de Datos.
+            </p>
+
+            <h2>4. CONDICIONES DE UTILIZACIÓN</h2>
+            <p>
+              El Usuario se compromete a hacer un uso adecuado y lícito del sitio web así como de los contenidos y servicios,
+              de conformidad con la legislación aplicable en cada momento, los Términos Legales del sitio web, la moral y buenas
+              costumbres generalmente aceptadas y el orden público.
+            </p>
+            <p>El Usuario deberá abstenerse de:</p>
             <ul>
-              <li><strong>Denominación social:</strong> Arjé Partners S.L.</li>
-              <li><strong>Domicilio social:</strong> C/ Mastelero 12 Bajo - 20033 Madrid</li>
-              <li><strong>CIF:</strong> B84130590</li>
-              <li><strong>Email:</strong> info@arjepartners.com</li>
-              <li><strong>Teléfono:</strong> +34 915 62 08 00</li>
+              <li>Hacer un uso no autorizado o fraudulento del sitio web y/o de los contenidos con fines o efectos ilícitos,
+                prohibidos en los presentes Términos Legales, lesivos de los derechos e intereses de terceros, o que de
+                cualquier forma puedan dañar, inutilizar, sobrecargar, deteriorar o impedir la normal utilización de los
+                servicios o los documentos, archivos y toda clase de contenidos almacenados en cualquier equipo informático</li>
+              <li>Acceder o intentar acceder a recursos o áreas restringidas del sitio web, sin cumplir las condiciones
+                exigidas para dicho acceso</li>
+              <li>Provocar daños en los sistemas físicos o lógicos del sitio web, de sus proveedores o de terceros</li>
+              <li>Introducir o difundir en la red virus informáticos o cualesquiera otros sistemas físicos o lógicos que sean
+                susceptibles de provocar daños en los sistemas físicos o lógicos de la empresa, de sus proveedores o de terceros</li>
+              <li>Intentar acceder, utilizar y/o manipular los datos de la empresa, terceros proveedores y otros Usuarios</li>
+              <li>Reproducir o copiar, distribuir, permitir el acceso del público a través de cualquier modalidad de comunicación
+                pública, transformar o modificar los contenidos, a menos que se cuente con la autorización expresa del titular
+                de los correspondientes derechos o ello resulte legalmente permitido</li>
+              <li>Suprimir, ocultar o manipular las notas sobre derechos de propiedad intelectual o industrial y demás datos
+                identificativos de los derechos de la empresa o de terceros incorporados a los contenidos, así como los
+                dispositivos técnicos de protección o cualesquiera mecanismos de información que puedan insertarse en los contenidos</li>
+              <li>Intentar obtener datos personales distintos a los que está autorizado a conocer, empleando para ello medios o
+                procedimientos ilícitos, fraudulentos o que puedan causar cualquier tipo de daño</li>
             </ul>
 
-            <h2>2. Objeto</h2>
+            <h2>5. RESPONSABILIDADES</h2>
             <p>
-              El presente aviso legal regula el uso del sitio web <strong>arjepartners.com</strong> (en adelante,
-              LA WEB), del que es titular Arjé Partners S.L.
+              La empresa no garantiza el acceso continuado, ni la correcta visualización, descarga o utilidad de los elementos e
+              informaciones contenidas en las páginas de la empresa, que pueden verse impedidos, dificultados o interrumpidos por
+              factores o circunstancias que están fuera de su control.
             </p>
             <p>
-              La navegación por LA WEB atribuye la condición de usuario de la misma e implica la aceptación
-              plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal,
-              que pueden sufrir modificaciones.
-            </p>
-
-            <h2>3. Uso del Sitio Web</h2>
-            <p>
-              El usuario se compromete a hacer un uso adecuado de los contenidos y servicios que Arjé Partners S.L.
-              ofrece a través de LA WEB y con carácter enunciativo pero no limitativo, a no emplearlos para:
-            </p>
-            <ul>
-              <li>Incurrir en actividades ilícitas, ilegales o contrarias a la buena fe y al orden público.</li>
-              <li>Difundir contenidos o propaganda de carácter racista, xenófobo, pornográfico-ilegal, de apología del terrorismo o atentatorio contra los derechos humanos.</li>
-              <li>Provocar daños en los sistemas físicos y lógicos de Arjé Partners, de sus proveedores o de terceras personas.</li>
-              <li>Introducir o difundir en la red virus informáticos o cualesquiera otros sistemas físicos o lógicos que sean susceptibles de provocar los daños anteriormente mencionados.</li>
-            </ul>
-
-            <h2>4. Propiedad Intelectual e Industrial</h2>
-            <p>
-              Arjé Partners S.L. es titular de todos los derechos de propiedad intelectual e industrial de LA WEB,
-              así como de los elementos contenidos en la misma (a título enunciativo, imágenes, sonido, audio,
-              vídeo, software o textos; marcas o logotipos, combinaciones de colores, estructura y diseño,
-              selección de materiales usados, programas de ordenador necesarios para su funcionamiento, acceso
-              y uso, etc.).
+              La empresa, podrá interrumpir el servicio o resolver de modo inmediato la relación con el Usuario si detecta un uso
+              de su Portal o de cualquiera de los servicios ofertados en el mismo son contrarios a los presentes Términos Legales.
             </p>
             <p>
-              Todos los derechos reservados. En virtud de lo dispuesto en los artículos 8 y 32.1, párrafo segundo,
-              de la Ley de Propiedad Intelectual, quedan expresamente prohibidas la reproducción, la distribución
-              y la comunicación pública, incluida su modalidad de puesta a disposición, de la totalidad o parte
-              de los contenidos de esta página web, con fines comerciales, en cualquier soporte y por cualquier
-              medio técnico, sin la autorización de Arjé Partners S.L.
+              La empresa, pone a disposición de los Usuarios una dirección de correo electrónico{' '}
+              <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">
+                j.gimeno@arjepartners.com
+              </a>{' '}
+              para que cualquier contenido que pueda afectar a la actividad de otros usuarios sea puesto de manifiesto, con la
+              voluntad de rectificar el mismo en caso de ser apropiado.
+            </p>
+            <p>
+              La empresa excluye cualquier responsabilidad por los daños y perjuicios de toda naturaleza que pudieran deberse a
+              la mala utilización de los servicios de libre disposición y uso por parte de los usuarios de la Web.
             </p>
 
-            <h2>5. Exclusión de Garantías y Responsabilidad</h2>
+            <h2>6. PROPIEDAD INTELECTUAL E INDUSTRIAL</h2>
             <p>
-              Arjé Partners S.L. no se hace responsable, en ningún caso, de los daños y perjuicios de cualquier
-              naturaleza que pudieran ocasionar, a título enunciativo: errores u omisiones en los contenidos,
-              falta de disponibilidad del portal o la transmisión de virus o programas maliciosos o lesivos en
-              los contenidos, a pesar de haber adoptado todas las medidas tecnológicas necesarias para evitarlo.
+              El Usuario reconoce y acepta que todas las marcas, nombres comerciales o signos distintivos, todos los derechos de
+              propiedad industrial e intelectual, sobre los contenidos y/o cualesquiera otros elementos insertados en el página,
+              son propiedad exclusiva de la empresa y/o de terceros, quienes tiene el derecho exclusivo de utilizarlos en el
+              tráfico económico.
+            </p>
+            <p>
+              Los contenidos, textos, fotografías, diseños, logotipos, imágenes, programas de ordenador, códigos fuente y, en
+              general, cualquier creación intelectual existente en este sitio, así como el propio sitio en su conjunto, como obra
+              artística multimedia, están protegidos como derechos de autor por la legislación en materia de propiedad intelectual.
             </p>
 
-            <h2>6. Modificaciones</h2>
+            <h2>7. PROTECCIÓN DE DATOS</h2>
             <p>
-              Arjé Partners S.L. se reserva el derecho de efectuar sin previo aviso las modificaciones que considere
-              oportunas en LA WEB, pudiendo cambiar, suprimir o añadir tanto los contenidos y servicios que se
-              presten a través de la misma como la forma en la que éstos aparezcan presentados o localizados.
+              Cuando sea necesario recabar datos de carácter personal, para la utilización de algún Servicio, se proporcionará la
+              información previa sobre cómo se tratarán esos datos. Puede encontrar información adicional sobre cómo se tratan sus
+              datos personales en la sección <a href="/privacidad" className="text-arje-blue hover:underline">"Política de Protección de Datos"</a>.
             </p>
 
-            <h2>7. Enlaces</h2>
+            <h2>8. DURACIÓN Y TERMINACIÓN</h2>
             <p>
-              En el caso de que en LA WEB se dispusiesen enlaces o hipervínculos hacia otros sitios de Internet,
-              Arjé Partners S.L. no ejercerá ningún tipo de control sobre dichos sitios y contenidos. En ningún caso
-              Arjé Partners S.L. asumirá responsabilidad alguna por los contenidos de algún enlace perteneciente a un
-              sitio web ajeno, ni garantizará la disponibilidad técnica, calidad, fiabilidad, exactitud, amplitud,
-              veracidad, validez y constitucionalidad de cualquier material o información contenida en ninguno
-              de dichos hipervínculos u otros sitios de Internet.
+              La prestación del servicio del presente sitio Web y los demás servicios tienen en principio una duración indefinida.
+              No obstante, la empresa, podrá dar por terminada o suspender cualquiera de los servicios del portal.
             </p>
 
-            <h2>8. Derecho de Exclusión</h2>
+            <h2>9. FUERZA MAYOR</h2>
             <p>
-              Arjé Partners S.L. se reserva el derecho a denegar o retirar el acceso a LA WEB y/o los servicios
-              ofrecidos sin necesidad de preaviso, a instancia propia o de un tercero, a aquellos usuarios que
-              incumplan las presentes Condiciones Generales de Uso.
+              La empresa, no será responsable en todo en caso de imposibilidad de prestar servicio, si ésta se debe a interrupciones
+              prolongadas del suministro eléctrico, líneas de telecomunicaciones, conflictos sociales, huelgas, rebelión, explosiones,
+              inundaciones, actos y omisiones del Gobierno, y en general todos los supuestos de fuerza mayor.
             </p>
 
-            <h2>9. Generalidades</h2>
+            <h2>10. COOKIES UTILIZADAS EN ESTE SITIO WEB</h2>
             <p>
-              Arjé Partners S.L. perseguirá el incumplimiento de las presentes condiciones así como cualquier
-              utilización indebida de LA WEB ejerciendo todas las acciones civiles y penales que le puedan
-              corresponder en derecho.
+              Siguiendo las directrices de la Agencia Española de Protección de Datos podrá consultar nuestra política de cookies
+              en la sección <a href="/cookies" className="text-arje-blue hover:underline">"Política de Cookies"</a>.
             </p>
 
-            <h2>10. Legislación Aplicable y Jurisdicción</h2>
+            <h2>11. LEY APLICABLE Y JURISDICCIÓN</h2>
             <p>
-              La relación entre Arjé Partners S.L. y el usuario se regirá por la normativa española vigente y
-              cualquier controversia se someterá a los Juzgados y Tribunales de la ciudad de Madrid.
+              Los presentes Términos Legales se rigen por la Ley española. En la medida en que así lo permita la ley, las partes
+              con renuncia expresa a cualquier otro fuero que pudiera corresponderles, acuerdan someterse a la jurisdicción de los
+              Juzgados y Tribunales de Madrid.
             </p>
 
             <div className="mt-12 p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-lg">
-              <p className="text-sm text-arje-gray-600 dark:text-gray-400">
-                <strong>Nota:</strong> Este aviso legal es un documento informativo. Para cualquier
-                consulta específica sobre aspectos legales, por favor contacte con nosotros en{' '}
-                <a href="mailto:info@arjepartners.com" className="text-arje-blue hover:underline">
-                  info@arjepartners.com
-                </a>
-              </p>
+              <h3 className="text-lg font-bold mb-4">Datos de contacto</h3>
+              <ul className="space-y-2 text-sm">
+                <li><strong>Responsable:</strong> ARJE PARTNERS SL</li>
+                <li><strong>NIF:</strong> B84130590</li>
+                <li><strong>Dirección:</strong> C/ MASTELERO. 12 BAJO, 28033, MADRID (MADRID)</li>
+                <li><strong>Teléfono:</strong> <a href="tel:+34915620800" className="text-arje-blue hover:underline">915620800</a></li>
+                <li><strong>Email:</strong> <a href="mailto:j.gimeno@arjepartners.com" className="text-arje-blue hover:underline">j.gimeno@arjepartners.com</a></li>
+              </ul>
             </div>
           </div>
         </div>
