@@ -245,6 +245,32 @@ export default function ContactoPage() {
 
                 {/* RGPD Checkboxes */}
                 <div className="space-y-4 p-6 bg-arje-gray-50 dark:bg-gray-800 rounded-xl border border-arje-gray-200 dark:border-gray-700">
+                  {/* Información básica sobre protección de datos - Primera Capa */}
+                  <div className="mb-4 pb-4 border-b border-arje-gray-300 dark:border-gray-600">
+                    <p className="text-xs text-arje-gray-600 dark:text-gray-400 leading-relaxed">
+                      <strong>Responsable:</strong> ARJE PARTNERS SL.{" "}
+                      <strong>Finalidad:</strong> Responder a su solicitud y gestionar el envío de comunicaciones comerciales y publicitarias.{" "}
+                      <strong>Legitimación:</strong> Consentimiento.{" "}
+                      <strong>Destinatarios:</strong> Sus datos no se facilitarán a terceros, salvo los servicios auxiliares necesarios para el normal funcionamiento de la página web.{" "}
+                      <strong>Transferencias internacionales:</strong> Los datos recogidos mediante la página web serán facilitados a organizaciones de terceros países establecidos fuera del Espacio Económico Europeo y con un nivel de garantías adecuadas al Reglamento General de Protección de Datos (EU) 2016/679. Países: Estados Unidos.{" "}
+                      <strong>Derechos:</strong> Acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.{" "}
+                      <strong>Información adicional:</strong> Puede tener acceso a información adicional sobre cómo tratamos sus datos en la sección{" "}
+                      <a
+                        href="/privacidad"
+                        className="text-arje-blue hover:underline"
+                        target="_blank"
+                      >
+                        Política de Protección de Datos
+                      </a>, o en el correo:{" "}
+                      <a
+                        href="mailto:info@arjepartners.com"
+                        className="text-arje-blue hover:underline"
+                      >
+                        info@arjepartners.com
+                      </a>.
+                    </p>
+                  </div>
+
                   <div className="flex items-start">
                     <input
                       type="checkbox"
@@ -257,25 +283,9 @@ export default function ContactoPage() {
                     />
                     <label
                       htmlFor="aceptoPrivacidad"
-                      className="ml-3 text-sm text-arje-gray-700 dark:text-gray-300"
+                      className="ml-3 text-sm font-semibold text-arje-gray-900 dark:text-white"
                     >
-                      Acepto el{" "}
-                      <a
-                        href="/legal"
-                        className="text-arje-blue hover:underline font-semibold"
-                        target="_blank"
-                      >
-                        aviso legal
-                      </a>{" "}
-                      de esta web y su{" "}
-                      <a
-                        href="/privacidad"
-                        className="text-arje-blue hover:underline font-semibold"
-                        target="_blank"
-                      >
-                        política de privacidad
-                      </a>{" "}
-                      *
+                      HE SIDO INFORMADO, ENTIENDO Y AUTORIZO EL TRATAMIENTO DE DATOS PERSONALES *
                     </label>
                   </div>
 
@@ -292,42 +302,20 @@ export default function ContactoPage() {
                       htmlFor="aceptoComunicaciones"
                       className="ml-3 text-sm text-arje-gray-700 dark:text-gray-300"
                     >
-                      Deseo recibir comunicaciones comerciales de productos y
-                      servicios de Arjé Partners, S.L., por cualquier medio,
-                      incluido el electrónico, hasta la revocación del
-                      consentimiento por mi parte.
+                      ACEPTO Y CONSIENTO QUE MIS DATOS PERSONALES SEAN UTILIZADOS PARA EL ENVÍO DE COMUNICACIONES COMERCIALES Y PUBLICITARIAS
                     </label>
                   </div>
 
                   <div className="mt-4 pt-4 border-t border-arje-gray-300 dark:border-gray-600">
-                    <p className="text-xs text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                      En <strong>Arjé Partners, S.L.</strong> tratamos la
-                      información que nos facilita con el fin de dar respuesta
-                      a su solicitud y en relación con los servicios que
-                      prestamos y los productos que suministramos. Los datos
-                      proporcionados se conservarán mientras se mantenga el
-                      contacto siendo eliminados una vez finalizado salvo en
-                      los casos en que exista una obligación legal. Usted tiene
-                      derecho a obtener confirmación sobre si en Arjé Partners,
-                      S.L. estamos tratando sus datos personales, por tanto,
-                      tiene derecho a acceder a sus datos personales, rectificar
-                      los datos inexactos o solicitar su supresión cuando los
-                      datos ya no sean necesarios. Asimismo, podrá oponerse al
-                      tratamiento y la portabilidad de sus datos. Si considera
-                      que sus datos personales no han sido tratados conforme a
-                      la normativa, puede contactar con el RGPD en{" "}
+                    <p className="text-xs text-arje-gray-500 dark:text-gray-400 text-center">
+                      Puede consultar información detallada en nuestra{" "}
                       <a
-                        href="http://www.aepd.es"
-                        className="text-arje-blue hover:underline"
+                        href="/cumplimiento-rgpd"
+                        className="text-arje-blue hover:underline font-semibold"
                         target="_blank"
-                        rel="noopener noreferrer"
                       >
-                        www.aepd.es
+                        Página de Cumplimiento RGPD
                       </a>
-                      . Asimismo podrá presentar una reclamación ante la Agencia
-                      Española de Protección de Datos, especialmente cuando no
-                      haya obtenido la satisfacción en el ejercicio de sus
-                      derechos.
                     </p>
                   </div>
                 </div>
