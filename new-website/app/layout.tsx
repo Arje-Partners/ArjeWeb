@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Epilogue, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
-const inter = Inter({ subsets: ["latin"] });
+const epilogue = Epilogue({
+  subsets: ["latin"],
+  variable: "--font-epilogue",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Arjé Partners | Treasury Management & Integration Solutions",
-  description: "Soluciones de tesorería con capacidad de integración universal. Conectamos con cualquier sistema: ERPs estándar, sistemas custom y aplicaciones legacy.",
-  keywords: "treasury management, integración ERP, sistemas custom, tesorería, Arjé Partners",
+  title: "Arjé Partners | Conectamos cualquier sistema con cualquier sistema",
+  description: "Con Rosetta IA conectamos cualquier sistema con cualquier sistema: ERP, bancos, tesorería, plataformas sectoriales o sistemas propios, sin tocarlos. Especialistas en tesorería corporativa.",
+  keywords: "treasury management, Rosetta IA, integración ERP, sistemas custom, tesorería, conciliación bancaria, Arjé Partners",
   icons: {
     icon: [
       { url: '/images/logo-arje-96x96.png', sizes: '96x96', type: 'image/png' },
@@ -29,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="es" suppressHydrationWarning className={`${inter.variable} ${epilogue.variable}`}>
+      <body className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-arje-gray-900 dark:text-gray-100 transition-colors duration-200`}>
         <GoogleAnalytics />
         <ThemeProvider>
           <Navbar />

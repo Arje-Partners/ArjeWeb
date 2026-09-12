@@ -11,6 +11,8 @@
  * - ai-analytics.jpg: Photo by Possessed Photography on Unsplash (AI/ML technology)
  */
 
+import Link from "next/link";
+
 export default function ServiciosPage() {
   const services = [
     {
@@ -106,17 +108,40 @@ export default function ServiciosPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-arje-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-6xl font-bold text-arje-gray-900 dark:text-white mb-6">
+            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Soluciones Especializadas</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-6">
               Servicios de{" "}
               <span className="gradient-text">Treasury Management</span>
             </h1>
-            <p className="text-xl text-arje-gray-600 dark:text-gray-300">
-              Desde implantación hasta soporte continuo. Todo lo que necesitas
-              para modernizar tu tesorería sin cambiar tu ERP.
+            <p className="text-lg sm:text-xl text-arje-gray-600 dark:text-gray-300 leading-relaxed">
+              Desde la consultoría y diseño de flujos hasta la implantación técnica y soporte continuo. Potenciados por nuestra plataforma de integración <strong className="text-arje-blue dark:text-arje-blue-light">Rosetta IA</strong> para modernizar tu tesorería sin tocar tu ERP.
             </p>
+          </div>
+
+          {/* Rosetta IA Banner */}
+          <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-arje-blue/10 via-teal-500/10 to-arje-blue/5 dark:from-gray-800 dark:to-gray-800/80 border border-arje-blue/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-arje-blue text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                IA
+              </div>
+              <div>
+                <h2 className="font-bold font-heading text-arje-gray-900 dark:text-white text-base">
+                  ¿Necesitas conectar tus sistemas?
+                </h2>
+                <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300">
+                  Descubre <strong>Rosetta IA</strong>: conecta cualquier sistema con cualquier sistema, con cálculos deterministas y validación humana en los puntos críticos.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/rosetta-ia"
+              className="px-5 py-2.5 bg-arje-blue hover:bg-arje-blue-dark text-white rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap shadow-sm"
+            >
+              Conocer Rosetta IA →
+            </Link>
           </div>
         </div>
       </section>
@@ -280,12 +305,12 @@ export default function ServiciosPage() {
           <p className="text-xl text-arje-gray-600 dark:text-gray-300 mb-8">
             Agenda una demo personalizada y descubre cómo podemos ayudarte
           </p>
-          <a
+          <Link
             href="/contacto"
             className="inline-block px-8 py-4 bg-arje-blue text-white rounded-xl font-semibold hover:bg-arje-blue-dark transition-all hover:shadow-2xl hover:scale-105"
           >
             Solicitar demo
-          </a>
+          </Link>
         </div>
       </section>
     </div>

@@ -13,11 +13,11 @@ export default function CTA() {
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-          ¿Listo para modernizar tu tesorería sin cambiar tu ERP?
+          ¿Qué sistemas necesitas conectar?
         </h2>
         <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-          Agenda una demo personalizada y descubre cómo integrarnos con tu
-          sistema actual en semanas, no meses.
+          En una sesión de una hora revisamos tu escenario y te decimos qué es
+          integrable, por dónde empezar y qué esperar.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

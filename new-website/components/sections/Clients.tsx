@@ -17,21 +17,24 @@ export default function Clients() {
   const testimonials = [
     {
       quote:
-        "Integraron nuestro ERP custom de 15 años en menos de 3 semanas. Increíble.",
-      author: "CFO, Empresa Industrial",
-      company: "60M€ facturación",
+        "Integraron nuestro ERP custom de más de 15 años con el sistema de tesorería en menos de 3 semanas. Cero interrupciones operativas.",
+      author: "Director Financiero (CFO)",
+      company: "Grupo Industrial Nacional · 60M€ facturación",
+      tag: "⚡ 3 semanas de implantación",
     },
     {
       quote:
-        "No tuvimos que cambiar nuestro sistema. Arjé se adaptó a nosotros, no al revés.",
-      author: "CIO, Grupo Empresarial",
-      company: "Múltiples ERPs",
+        "Teníamos 3 ERPs distintos y filiales internacionales. Arjé se adaptó a nuestra arquitectura sin obligarnos a costosos desarrollos a medida.",
+      author: "Director de Sistemas (CIO)",
+      company: "Grupo Empresarial Multisectorial",
+      tag: "🔗 3 ERPs integrados",
     },
     {
       quote:
-        "La única solución que nos permitió mantener nuestros desarrollos internos.",
-      author: "Director IT",
-      company: "Retail",
+        "La conciliación bancaria que antes nos tomaba 2 días enteros ahora se ejecuta de forma desatendida cada mañana con precisión absoluta.",
+      author: "Responsable de Tesorería",
+      company: "Compañía Líder del Sector Retail",
+      tag: "⏱️ -80% tiempo de conciliación",
     },
   ];
 
@@ -167,17 +170,29 @@ export default function Clients() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl bg-arje-gray-50 dark:bg-gray-800 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-arje-blue/20"
+              className="p-8 rounded-3xl bg-arje-gray-50 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 hover:shadow-2xl transition-all duration-300 border border-gray-200/80 dark:border-gray-700 hover:border-arje-blue/30 flex flex-col justify-between"
             >
-              <div className="text-arje-blue text-4xl mb-4">"</div>
-              <p className="text-arje-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                {testimonial.quote}
-              </p>
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex text-amber-400 gap-1 text-sm">
+                    {"★".repeat(5)}
+                  </div>
+                  {testimonial.tag && (
+                    <span className="text-[11px] font-bold text-arje-blue bg-arje-blue/10 dark:bg-arje-blue/20 px-2.5 py-1 rounded-full">
+                      {testimonial.tag}
+                    </span>
+                  )}
+                </div>
+                <p className="text-arje-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-6 italic">
+                  "{testimonial.quote}"
+                </p>
+              </div>
+
               <div className="border-t border-arje-gray-200 dark:border-gray-700 pt-4">
-                <p className="font-semibold text-arje-gray-900 dark:text-white">
+                <p className="font-bold font-heading text-arje-gray-900 dark:text-white">
                   {testimonial.author}
                 </p>
-                <p className="text-sm text-arje-gray-500 dark:text-gray-400">
+                <p className="text-xs text-arje-gray-500 dark:text-gray-400 mt-0.5">
                   {testimonial.company}
                 </p>
               </div>

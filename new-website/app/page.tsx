@@ -2,8 +2,8 @@
 
 import Hero from "@/components/sections/Hero";
 import ValueProposition from "@/components/sections/ValueProposition";
+import RosettaShowcase from "@/components/sections/RosettaShowcase";
 import Integration from "@/components/sections/Integration";
-import Clients from "@/components/sections/Clients";
 import FeaturedInsights from "@/components/sections/FeaturedInsights";
 import CTA from "@/components/sections/CTA";
 
@@ -12,8 +12,8 @@ export default function Home() {
     <>
       <Hero />
       <ValueProposition />
+      <RosettaShowcase />
       <Integration />
-      <Clients />
       <FeaturedInsights />
       <CTA />
     </>

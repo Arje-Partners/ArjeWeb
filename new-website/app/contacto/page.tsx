@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 export default function ContactoPage() {
   const [formData, setFormData] = useState({
@@ -19,9 +20,21 @@ export default function ContactoPage() {
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Verificar que el captcha esté completado
+    if (!turnstileToken) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Por favor, completa la verificación de seguridad.',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
@@ -31,7 +44,10 @@ export default function ContactoPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
       });
 
       const data = await response.json();
@@ -52,6 +68,9 @@ export default function ContactoPage() {
           aceptoPrivacidad: false,
           aceptoComunicaciones: false,
         });
+        // Reset Turnstile
+        setTurnstileToken(null);
+        turnstileRef.current?.reset();
       } else {
         setSubmitStatus({
           type: 'error',
@@ -318,6 +337,27 @@ export default function ContactoPage() {
                       </a>
                     </p>
                   </div>
+                </div>
+
+                {/* Cloudflare Turnstile Captcha */}
+                <div className="flex justify-center">
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => {
+                      setTurnstileToken(null);
+                      setSubmitStatus({
+                        type: 'error',
+                        message: 'Error en la verificación de seguridad. Por favor, recarga la página.',
+                      });
+                    }}
+                    onExpire={() => setTurnstileToken(null)}
+                    options={{
+                      theme: 'light',
+                      language: 'es',
+                    }}
+                  />
                 </div>
 
                 <button

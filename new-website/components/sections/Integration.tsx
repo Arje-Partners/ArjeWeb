@@ -1,123 +1,162 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Integration() {
   const integrationTypes = [
     {
-      category: "ERPs estándar",
-      systems: ["SAP", "Navision", "Axapta", "Infor M3", "Microsoft Business Central", "IFS", "JD Edwards"],
-      color: "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-700",
+      category: "ERPs Estándar & Tier 1",
+      systems: [
+        "SAP S/4HANA & ECC",
+        "Microsoft Dynamics 365 Business Central",
+        "Navision (todas las versiones)",
+        "Axapta / Dynamics AX",
+        "Infor M3 & Movex",
+        "IFS Applications",
+        "JD Edwards EnterpriseOne",
+        "Odoo Enterprise",
+      ],
+      badge: "Conectores Nativos",
+      color: "bg-blue-50/70 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800",
     },
     {
-      category: "TMS (Treasury Management)",
+      category: "TMS & Soluciones de Tesorería",
       systems: [
-        "Sage XRT Advanced",
-        "Embat",
-        "Otros TMS",
+        "Sage XRT Advanced (todas las versiones)",
+        "Embat Treasury Platform",
+        "Kyriba",
+        "Cash Pooling & Netting",
+        "Conectividad Bancaria Directa (SWIFT / SEPA / EBICS)",
+        "Extractos Multibanco N43 & CAMT.053",
       ],
-      color: "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-700",
+      badge: "Sincronización Total",
+      color: "bg-teal-50/70 border-teal-200 dark:bg-teal-950/20 dark:border-teal-800",
     },
     {
-      category: "Sistemas custom",
+      category: "Sistemas Propios & Legacy",
       systems: [
-        "Desarrollo interno",
-        "ERP propio",
-        "Aplicación a medida",
-        "Cualquier stack",
+        "Desarrollos in-house a medida",
+        "ERPs corporativos propios (C++, Java, .NET)",
+        "Sistemas host y AS400 / iSeries",
+        "Archivos secuenciales y COBOL",
+        "Bases de datos SQL Server, Oracle, DB2, PostgreSQL",
+        "Cualquier stack tecnológico sin APIs nativas",
       ],
-      color: "bg-arje-blue/10 border-arje-blue/30",
+      badge: "Especialidad Arjé",
+      color: "bg-indigo-50/70 border-indigo-200 dark:bg-indigo-950/20 dark:border-indigo-800",
     },
   ];
 
   const technologies = [
-    "REST API",
-    "SOAP/XML",
-    "Direct Database",
-    "File-Based",
-    "WebHooks",
-    "Custom Protocols",
+    { name: "REST API & JSON", icon: "🌐" },
+    { name: "SOAP & WS-Security", icon: "🔒" },
+    { name: "Direct Database (SQL/ODBC)", icon: "🗄️" },
+    { name: "ISO 20022 XML (PAIN/CAMT)", icon: "🏦" },
+    { name: "Cuaderno 43 / MT940", icon: "📄" },
+    { name: "WebHooks en tiempo real", icon: "⚡" },
+    { name: "SFTP & Managed File Transfer", icon: "📁" },
+    { name: "Verifactu / SII AEAT", icon: "🏛️" },
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-gradient-to-b from-arje-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+    <section className="py-24 md:py-32 bg-gradient-to-b from-arje-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-arje-gray-900 dark:text-white mb-4">
-            Integración con{" "}
-            <span className="gradient-text">cualquier tecnología</span>
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Compatibilidad Universal</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
+            Integración probada con <span className="gradient-text">cualquier tecnología</span>
           </h2>
-          <p className="text-xl text-arje-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Desde ERPs modernos hasta sistemas legacy de hace décadas. Si tiene
-            datos, lo conectamos.
+          <p className="text-lg text-arje-gray-600 dark:text-gray-300">
+            Desde ERPs en la nube de última generación hasta sistemas legacy de hace más de 25 años. Si gestiona datos financieros, lo integramos.
           </p>
         </div>
 
         {/* Integration Types */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {integrationTypes.map((type, index) => (
             <div
               key={index}
-              className={`p-6 rounded-2xl border-2 ${type.color} hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
+              className={`p-8 rounded-3xl border-2 ${type.color} hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between`}
             >
-              <h3 className="text-xl font-bold text-arje-gray-900 dark:text-white mb-4">
-                {type.category}
-              </h3>
-              <ul className="space-y-2">
-                {type.systems.map((system, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center text-arje-gray-700 dark:text-gray-300"
-                  >
-                    <svg
-                      className="w-5 h-5 mr-2 text-arje-blue flex-shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-arje-blue px-3 py-1 rounded-full bg-white dark:bg-gray-800 border border-arje-blue/20">
+                    {type.badge}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mb-5">
+                  {type.category}
+                </h3>
+                <ul className="space-y-2.5">
+                  {type.systems.map((system, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-start text-sm text-arje-gray-700 dark:text-gray-300"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {system}
-                  </li>
-                ))}
-              </ul>
+                      <svg
+                        className="w-4 h-4 mr-2.5 text-arje-blue flex-shrink-0 mt-0.5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>{system}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Technologies */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
-          <h3 className="text-2xl font-bold text-arje-gray-900 dark:text-white mb-6 text-center">
-            Tecnologías de integración soportadas
+        {/* Technologies Supported Bar */}
+        <div className="bg-white dark:bg-gray-800/90 rounded-3xl p-8 md:p-10 shadow-lg border border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl md:text-2xl font-bold font-heading text-arje-gray-900 dark:text-white mb-2 text-center">
+            Formatos y Protocolos de Comunicación Nativos
           </h3>
+          <p className="text-sm text-arje-gray-500 dark:text-gray-400 text-center mb-8 max-w-2xl mx-auto">
+            Gestionados por Rosetta IA con trazabilidad completa, validación del formato y reintentos controlados.
+          </p>
           <div className="flex flex-wrap justify-center gap-3">
             {technologies.map((tech, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-arje-gray-100 dark:bg-gray-700 text-arje-gray-800 dark:text-gray-200 rounded-lg font-medium hover:bg-arje-blue hover:text-white transition-all cursor-default"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 dark:bg-gray-700/60 text-arje-gray-800 dark:text-gray-200 rounded-xl text-xs sm:text-sm font-medium border border-gray-200/80 dark:border-gray-600 hover:border-arje-blue hover:text-arje-blue dark:hover:text-arje-blue-light transition-all cursor-default"
               >
-                {tech}
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
               </span>
             ))}
           </div>
         </div>
 
         {/* CTA Box */}
-        <div className="mt-16 bg-gradient-to-r from-arje-blue to-arje-blue-light rounded-2xl p-8 md:p-12 text-white text-center">
-          <h3 className="text-3xl font-bold mb-4">
-            ¿Tu sistema no está en la lista?
+        <div className="mt-16 bg-gradient-to-r from-arje-blue to-arje-blue-dark rounded-3xl p-8 md:p-12 text-white text-center shadow-xl">
+          <h3 className="text-2xl sm:text-3xl font-bold font-heading mb-4">
+            ¿Tu ERP o software propio no aparece en la lista?
           </h3>
-          <p className="text-xl mb-6 opacity-90">
-            No hay problema. Llevamos 0 sistemas que no hayamos podido integrar.
+          <p className="text-base sm:text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+            Ningún problema. En más de 15 años de trayectoria nunca nos hemos encontrado con un sistema que no hayamos podido conectar.
           </p>
-          <a
-            href="/contacto"
-            className="inline-block px-8 py-4 bg-white text-arje-blue rounded-xl font-semibold hover:shadow-2xl transition-all hover:scale-105"
-          >
-            Cuéntanos tu caso
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contacto"
+              className="px-8 py-3.5 bg-white text-arje-blue font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all text-center"
+            >
+              Consultar viabilidad técnica de mi sistema
+            </Link>
+            <Link
+              href="/rosetta-ia"
+              className="px-8 py-3.5 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all text-center"
+            >
+              Ver arquitectura de Rosetta IA
+            </Link>
+          </div>
         </div>
       </div>
     </section>

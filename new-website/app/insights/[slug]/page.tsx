@@ -2,10 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { articles } from "@/lib/articles";
 
-// Helper function to parse basic markdown
+// Helper function to parse basic markdown with bold and italic
 function parseMarkdown(text: string) {
   const parts: (string | JSX.Element)[] = [];
-  let currentIndex = 0;
   let key = 0;
 
   // Process bold (**text**)
@@ -14,27 +13,24 @@ function parseMarkdown(text: string) {
   let lastIndex = 0;
 
   while ((match = boldRegex.exec(text)) !== null) {
-    // Add text before match
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
-    // Add bold text
     parts.push(
-      <strong key={`bold-${key++}`} className="font-bold text-arje-gray-900">
+      <strong key={`bold-${key++}`} className="font-bold text-arje-gray-900 dark:text-white">
         {match[1]}
       </strong>
     );
     lastIndex = match.index + match[0].length;
   }
 
-  // Add remaining text
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex));
   }
 
-  // Process italic (*text*) on the parts that are strings
+  // Process italic (*text*)
   const finalParts: (string | JSX.Element)[] = [];
-  parts.forEach((part, idx) => {
+  parts.forEach((part) => {
     if (typeof part === "string") {
       const italicRegex = /\*(.+?)\*/g;
       let italicMatch;
@@ -45,7 +41,7 @@ function parseMarkdown(text: string) {
           finalParts.push(part.slice(italicLastIndex, italicMatch.index));
         }
         finalParts.push(
-          <em key={`italic-${key++}`} className="italic">
+          <em key={`italic-${key++}`} className="italic text-arje-gray-800 dark:text-gray-200">
             {italicMatch[1]}
           </em>
         );
@@ -77,21 +73,21 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     category: "General",
     author: "Arjé Partners",
     date: "2025-10-04",
-    readTime: "5 min"
+    readTime: "5 min",
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <article className="pt-32 pb-16">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-arje-gray-900 dark:text-gray-100 transition-colors">
+      {/* Article Header */}
+      <article className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back button */}
           <Link
             href="/insights"
-            className="inline-flex items-center text-arje-blue hover:text-arje-blue-dark mb-8 transition-colors"
+            className="inline-flex items-center text-sm font-semibold text-arje-blue hover:text-arje-blue-dark dark:text-arje-blue-light mb-8 transition-colors"
           >
             <svg
-              className="w-5 h-5 mr-2"
+              className="w-4 h-4 mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -107,139 +103,126 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           </Link>
 
           {/* Category badge */}
-          <span className="inline-block px-4 py-2 bg-arje-blue/10 text-arje-blue text-sm font-semibold rounded-lg mb-6">
-            {article.category}
-          </span>
+          <div>
+            <span className="inline-block px-3.5 py-1.5 bg-arje-blue/10 dark:bg-arje-blue/20 text-arje-blue dark:text-arje-blue-light text-xs font-bold rounded-lg uppercase tracking-wider mb-4">
+              {article.category}
+            </span>
+          </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-arje-gray-900 mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mb-6 leading-tight">
             {article.title}
           </h1>
 
-          {/* Meta */}
-          <div className="flex flex-wrap items-center gap-6 text-arje-gray-600 mb-12 pb-8 border-b border-arje-gray-200">
+          {/* Meta Info */}
+          <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-arje-gray-500 dark:text-gray-400 mb-10 pb-6 border-b border-gray-200 dark:border-gray-800">
             <div className="flex items-center">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
               {article.author}
             </div>
             <div className="flex items-center">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               {article.date}
             </div>
             <div className="flex items-center">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              {article.readTime} lectura
+              {article.readTime} de lectura
             </div>
           </div>
 
           {/* Featured Image */}
           {article.image && (
-            <div className="mb-12 rounded-2xl overflow-hidden shadow-xl">
+            <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700 relative h-[350px] sm:h-[450px]">
               <Image
                 src={article.image}
                 alt={article.title}
-                width={1200}
-                height={630}
-                className="w-full h-auto object-cover"
+                fill
+                className="object-cover"
                 priority
               />
             </div>
           )}
 
-          {/* Content */}
-          <div className="prose prose-lg max-w-none prose-headings:text-arje-gray-900 prose-p:text-arje-gray-700 prose-a:text-arje-blue prose-strong:text-arje-gray-900 prose-ul:text-arje-gray-700 prose-ol:text-arje-gray-700">
-            {article.content.split("\n").map((paragraph: string, idx: number) => {
-              if (paragraph.startsWith("## ")) {
+          {/* Article Body Content */}
+          <div className="space-y-6 leading-relaxed">
+            {article.content.split("\n\n").map((block: string, idx: number) => {
+              const trimmed = block.trim();
+              if (!trimmed) return null;
+
+              if (trimmed.startsWith("## ")) {
                 return (
                   <h2
                     key={idx}
-                    className="text-3xl font-bold mt-12 mb-6 text-arje-gray-900"
+                    className="text-2xl sm:text-3xl font-bold font-heading text-arje-gray-900 dark:text-white mt-12 mb-4 pt-4 border-t border-gray-100 dark:border-gray-800"
                   >
-                    {paragraph.replace("## ", "")}
+                    {trimmed.replace("## ", "")}
                   </h2>
                 );
-              } else if (paragraph.startsWith("### ")) {
+              }
+
+              if (trimmed.startsWith("### ")) {
                 return (
                   <h3
                     key={idx}
-                    className="text-2xl font-bold mt-8 mb-4 text-arje-gray-900"
+                    className="text-xl sm:text-2xl font-bold font-heading text-arje-gray-800 dark:text-gray-100 mt-8 mb-3"
                   >
-                    {paragraph.replace("### ", "")}
+                    {trimmed.replace("### ", "")}
                   </h3>
                 );
-              } else if (paragraph.startsWith("- ")) {
+              }
+
+              // Unordered list
+              if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+                const items = trimmed.split("\n").filter((l) => l.startsWith("- ") || l.startsWith("* "));
                 return (
-                  <li key={idx} className="text-arje-gray-700 mb-2 ml-6">
-                    {paragraph.replace("- ", "")}
-                  </li>
-                );
-              } else if (paragraph.match(/^\d+\./)) {
-                return (
-                  <li key={idx} className="text-arje-gray-700 mb-2 ml-6">
-                    {paragraph.replace(/^\d+\.\s/, "")}
-                  </li>
-                );
-              } else if (paragraph.trim() && !paragraph.startsWith("---")) {
-                return (
-                  <p key={idx} className="text-lg text-arje-gray-700 mb-4 leading-relaxed">
-                    {parseMarkdown(paragraph)}
-                  </p>
+                  <ul key={idx} className="space-y-2.5 my-4 pl-5 list-disc text-arje-gray-700 dark:text-gray-300 text-base sm:text-lg">
+                    {items.map((item, i) => (
+                      <li key={i}>{parseMarkdown(item.replace(/^[-*]\s+/, ""))}</li>
+                    ))}
+                  </ul>
                 );
               }
-              return null;
+
+              // Standard paragraph
+              return (
+                <p key={idx} className="text-base sm:text-lg text-arje-gray-700 dark:text-gray-300 leading-relaxed">
+                  {parseMarkdown(trimmed)}
+                </p>
+              );
             })}
           </div>
 
-          {/* CTA */}
-          <div className="mt-16 p-8 bg-arje-gray-50 rounded-2xl text-center">
-            <h3 className="text-2xl font-bold text-arje-gray-900 mb-4">
-              ¿Interesado en implementar estas soluciones?
-            </h3>
-            <p className="text-arje-gray-600 mb-6">
-              Agenda una consulta gratuita con nuestros expertos
-            </p>
-            <Link
-              href="/contacto"
-              className="inline-block px-8 py-4 bg-arje-blue text-white rounded-xl font-semibold hover:bg-arje-blue-dark transition-all hover:shadow-lg hover:scale-105"
-            >
-              Solicitar Consulta
-            </Link>
+          {/* Post Article Rosetta IA Banner */}
+          <div className="mt-16 p-8 rounded-3xl bg-gradient-to-br from-arje-blue/10 via-teal-500/10 to-arje-blue-light/10 dark:from-gray-800 dark:to-gray-800/80 border-2 border-arje-blue/30 space-y-4 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-arje-blue">Plataforma de Integración</span>
+              <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mt-1">
+                Acelera la integración de tu tesorería con Rosetta IA
+              </h3>
+              <p className="text-sm text-arje-gray-600 dark:text-gray-300 mt-1 max-w-xl">
+                Conecta tu ERP con Sage XRT, Embat o banca internacional sin desarrollos a medida.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/rosetta-ia"
+                className="px-6 py-3 bg-arje-blue hover:bg-arje-blue-dark text-white rounded-xl text-sm font-semibold transition-all whitespace-nowrap shadow-md text-center"
+              >
+                Conocer Rosetta IA
+              </Link>
+              <Link
+                href="/contacto"
+                className="px-6 py-3 bg-white dark:bg-gray-700 text-arje-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-center"
+              >
+                Contactar
+              </Link>
+            </div>
           </div>
         </div>
       </article>

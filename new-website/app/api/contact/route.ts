@@ -11,6 +11,36 @@ interface ContactFormData {
   mensaje: string;
   aceptoPrivacidad: boolean;
   aceptoComunicaciones: boolean;
+  turnstileToken?: string;
+}
+
+// Verificación de Cloudflare Turnstile
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+
+  if (!secretKey) {
+    console.error('TURNSTILE_SECRET_KEY not configured');
+    return false;
+  }
+
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+      }),
+    });
+
+    const data = await response.json();
+    return data.success === true;
+  } catch (error) {
+    console.error('Error verifying Turnstile token:', error);
+    return false;
+  }
 }
 
 // Mapeo de sistemas
@@ -192,6 +222,22 @@ export async function POST(request: NextRequest) {
     if (!data.aceptoPrivacidad) {
       return NextResponse.json(
         { error: 'Debes aceptar la política de privacidad' },
+        { status: 400 }
+      );
+    }
+
+    // 2. Verificación de Turnstile (captcha)
+    if (!data.turnstileToken) {
+      return NextResponse.json(
+        { error: 'Por favor, completa la verificación de seguridad' },
+        { status: 400 }
+      );
+    }
+
+    const isValidCaptcha = await verifyTurnstileToken(data.turnstileToken);
+    if (!isValidCaptcha) {
+      return NextResponse.json(
+        { error: 'La verificación de seguridad ha fallado. Por favor, recarga la página e inténtalo de nuevo.' },
         { status: 400 }
       );
     }

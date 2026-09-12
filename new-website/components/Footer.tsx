@@ -20,18 +20,18 @@ export default function Footer() {
               />
               <span className="font-bold text-xl">Arjé Partners</span>
             </div>
-            <p className="text-arje-gray-200 dark:text-gray-300 mb-4 max-w-md">
-              Con RosettaAI, integramos sistemas de tesorería de forma universal. Conectamos TMS con ERPs, sistemas legacy y desarrollos a medida mediante nuestra plataforma especializada.
+            <p className="text-arje-gray-300 dark:text-gray-300 mb-4 max-w-md text-sm leading-relaxed">
+              Con nuestra plataforma propietaria <strong>Rosetta IA</strong>, conectamos cualquier sistema con cualquier sistema: ERP, bancos, tesorería, plataformas sectoriales y aplicaciones propias, sin tocar ninguno de ellos.
             </p>
-            <p className="text-arje-gray-300 dark:text-gray-400 text-sm italic">
-              Expertos en arquitecturas de integración para tesorería corporativa
+            <p className="text-arje-gray-400 dark:text-gray-400 text-xs italic">
+              Con especial experiencia en tesorería corporativa
             </p>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mt-4">
               <a
                 href="https://www.linkedin.com/company/arje-partners"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-arje-gray-200 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                className="text-arje-gray-300 dark:text-gray-300 hover:text-arje-blue transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -43,30 +43,47 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Enlaces</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider text-white">Enlaces</h3>
+            <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/nosotros"
-                  className="text-arje-gray-200 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                  href="/rosetta-ia"
+                  className="text-arje-blue font-semibold hover:text-arje-blue-light transition-colors flex items-center gap-1.5"
                 >
-                  Nosotros
+                  <span>Rosetta IA</span>
+                  <span className="px-1.5 py-0.2 text-[9px] font-bold uppercase bg-arje-blue text-white rounded">Nuevo</span>
                 </Link>
               </li>
               <li>
                 <Link
                   href="/servicios"
-                  className="text-arje-gray-200 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                  className="text-arje-gray-300 dark:text-gray-300 hover:text-arje-blue transition-colors"
                 >
                   Servicios
                 </Link>
               </li>
               <li>
                 <Link
+                  href="/nosotros"
+                  className="text-arje-gray-300 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                >
+                  Nosotros
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/insights"
-                  className="text-arje-gray-200 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                  className="text-arje-gray-300 dark:text-gray-300 hover:text-arje-blue transition-colors"
                 >
                   Insights
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contacto"
+                  className="text-arje-gray-300 dark:text-gray-300 hover:text-arje-blue transition-colors"
+                >
+                  Contacto
                 </Link>
               </li>
             </ul>
