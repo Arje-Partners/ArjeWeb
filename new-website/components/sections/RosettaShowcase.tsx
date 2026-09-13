@@ -1,8 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
 import Link from "next/link";
-import { CIRCUIT_NEON, circuitSystems } from "@/lib/integrations";
 
 // Avance de Rosetta IA en Inicio: solo nombra y enlaza; el desarrollo completo está en /rosetta-ia
 export default function RosettaShowcase() {
@@ -58,53 +56,48 @@ export default function RosettaShowcase() {
             </div>
           </div>
 
-          {/* Right: avance neón del circuito; el completo está en /rosetta-ia#circuito */}
+          {/* Right: avance del circuito. Dos corrientes que se juntan: la factura nunca pasa por el banco */}
           <div className="lg:col-span-6">
             <Link
               href="/rosetta-ia#circuito"
-              className="group relative block p-6 md:p-8 rounded-3xl bg-[#05070a] border border-gray-800 shadow-2xl overflow-hidden"
+              className="group block p-6 md:p-8 rounded-lg bg-ros-navy border border-ros-line shadow-2xl"
             >
-              <div className="absolute inset-0 mesh-grid opacity-60 pointer-events-none" aria-hidden="true" />
+              <span className="text-xs font-bold uppercase tracking-wider text-ros-light">Un ejemplo en marcha</span>
+              <h3 className="text-lg md:text-xl font-bold font-heading text-white mt-1 mb-6">
+                Dos corrientes que se juntan: la factura y el extracto
+              </h3>
 
-              <div className="relative">
-                <span className="text-xs font-bold uppercase tracking-wider text-arje-blue-light">Un ejemplo en marcha</span>
-                <h3 className="text-lg md:text-xl font-bold font-heading text-white mt-1 mb-6">
-                  Una factura de proveedor atraviesa cinco sistemas y nadie la teclea
-                </h3>
-
-                <ol className="relative space-y-3">
-                  {/* Línea y láser que la recorre en bucle, por detrás de los nodos */}
-                  <div className="absolute top-5 bottom-5 left-5 w-px bg-white/25" aria-hidden="true">
-                    <span
-                      className="neon-run-y"
-                      style={{ "--neon": CIRCUIT_NEON.ERP, "--run": "4s", "--loops": "infinite" } as CSSProperties}
-                    />
-                  </div>
-
-                  {circuitSystems.map((sys, idx) => (
-                    <li
-                      key={sys}
-                      style={{ "--neon": CIRCUIT_NEON[sys] } as CSSProperties}
-                      className="relative flex items-center gap-4"
-                    >
-                      <span
-                        data-active="true"
-                        className="neon-node relative z-10 w-10 h-10 rounded-full text-white flex items-center justify-center font-bold text-sm flex-shrink-0"
-                      >
-                        {idx + 1}
-                      </span>
-                      <span className="neon-node flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-200 flex items-center gap-2">
-                        <span className="neon-dot w-1.5 h-1.5 rounded-full" aria-hidden="true" />
+              <div className="space-y-3">
+                <div className="p-4 rounded-md bg-ros-panel border border-ros-line">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-light mb-3">La factura · cuando llega</div>
+                  <ol className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-white">
+                    {["Correo", "Carpeta", "Invofox", "ERP"].map((sys, idx) => (
+                      <li key={sys} className="flex items-center gap-2">
+                        {idx > 0 && <span className="text-ros-soft" aria-hidden="true">→</span>}
                         {sys}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2de2ff] group-hover:gap-2.5 transition-all">
-                  Ver el circuito completo <span aria-hidden="true">→</span>
-                </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <div className="p-4 rounded-md bg-ros-panel border border-ros-line">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-light mb-3">El banco · a diario, por su cuenta</div>
+                  <p className="text-sm text-white">Se descarga el extracto de todos tus bancos</p>
+                </div>
+                <div className="flex justify-center text-ros-light" aria-hidden="true">
+                  <svg width="64" height="22" viewBox="0 0 64 22" fill="none" stroke="currentColor" strokeWidth="1.6">
+                    <path d="M2 2h14q16 0 16 16v2M62 2H48q-16 0-16 16v2" />
+                  </svg>
+                </div>
+                <div className="p-4 rounded-md bg-ros-panel border border-ros-light">
+                  <p className="text-sm text-white">
+                    Cada movimiento encuentra su factura y el documento queda compensado en el ERP.
+                  </p>
+                </div>
               </div>
+
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ros-light group-hover:gap-2.5 transition-all">
+                Ver el circuito completo <span aria-hidden="true">→</span>
+              </span>
             </Link>
           </div>
         </div>

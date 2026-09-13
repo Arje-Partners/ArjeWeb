@@ -1,51 +1,84 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { faqs } from "./faqs";
-import { CIRCUIT_NEON, circuitSystems, integrationCategories } from "@/lib/integrations";
+import { integrationCategories } from "@/lib/integrations";
+import AnimatedPiece from "@/components/rosetta/AnimatedPiece";
 
-const REVIEW_NEON = "#ffa53d";
-const CIRCUIT_STEP_MS = 1800;
+// Sistema visual (maqueta «Rosetta IA · Página de producto»):
+// - Tres niveles de sección que se alternan: nivel 1 navy (hero, circuito, llamada final),
+//   nivel 2 blanco y nivel 3 gris claro. Dos secciones seguidas nunca comparten fondo.
+// - Azul de marca y azul claro para todo lo normal y para el recorrido del dato.
+// - Ámbar solo para la intervención humana: bandeja de revisión, salidas a revisión y pasos donde interviene una persona.
 
-const neonVars = (system: string): CSSProperties => {
-  const [first, second = first] = system.split(" + ");
-  return { "--neon": CIRCUIT_NEON[first], "--neon2": CIRCUIT_NEON[second] } as CSSProperties;
+// Una sola familia de iconos: trazo 1,6 sobre rejilla de 24, extremos redondeados
+const Icon = ({ d, className = "w-5 h-5" }: { d: ReactNode; className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {d}
+  </svg>
+);
+
+const icons = {
+  mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></>,
+  folder: <path d="M3 7h6l2 2h10v10H3z" />,
+  doc: <><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9 8h6M9 12h6M9 16h3" /></>,
+  erp: <><rect x="3" y="4" width="18" height="6" rx="1" /><rect x="3" y="14" width="18" height="6" rx="1" /></>,
+  bank: <path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6" />,
+  ledger: <><path d="M4 6h16M4 12h10M4 18h7" /><circle cx="18" cy="17" r="3.5" /></>,
+  payment: <path d="M12 3v18M8 7h6.5a2.5 2.5 0 010 5h-5a2.5 2.5 0 000 5H17" />,
+  card: <><rect x="2.5" y="5" width="19" height="14" rx="2" /><path d="M2.5 10h19M6 15h4" /></>,
+  swap: <><path d="M4 7h10M4 7l3-3M4 7l3 3" /><path d="M20 17H10m10 0l-3-3m3 3l-3 3" /></>,
+  tray: <><path d="M3 13h5l2 3h4l2-3h5" /><path d="M5 5h14l2 8v6H3v-6z" /></>,
+  check: <path d="M4 12.5l5 5L20 6.5" />,
+  cross: <path d="M6 6l12 12M18 6L6 18" />,
+  isolate: <><rect x="3" y="4" width="8" height="16" rx="1" /><rect x="14" y="4" width="7" height="7" rx="1" /></>,
+  lock: <><rect x="4" y="10" width="16" height="10" rx="2" /><path d="M8 10V7a4 4 0 018 0v3" /></>,
+  key: <><circle cx="9" cy="12" r="4" /><path d="M13 12h8m-3 0v3" /></>,
+  eye: <><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" /><circle cx="12" cy="12" r="2.5" /></>,
+  log: <><path d="M6 3h12v18l-6-4-6 4z" /><path d="M9 8h6M9 12h4" /></>,
 };
+
+const Eyebrow = ({ children, onNavy = false, className = "" }: { children: ReactNode; onNavy?: boolean; className?: string }) => (
+  <span
+    className={`block text-[13px] font-semibold uppercase tracking-[0.14em] ${onNavy ? "text-ros-light" : "text-ros-brand dark:text-ros-light"} ${className}`}
+  >
+    {children}
+  </span>
+);
 
 export default function RosettaIAPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0); // Primera abierta por defecto segun §1.4
 
-  // El documento recorre el circuito paso a paso; al pasar el ratón por un paso queda fijado
-  const circuitRef = useRef<HTMLElement>(null);
-  const [circuitStep, setCircuitStep] = useState(1);
-  const [pinnedStep, setPinnedStep] = useState<number | null>(null);
-  const [circuitRunning, setCircuitRunning] = useState(false);
-  const [circuitStatic, setCircuitStatic] = useState(false); // Movimiento reducido: todo encendido y quieto
+  // Confluencia del circuito: las dos líneas salen del centro real de cada corriente y se unen a media altura
+  const streamsRef = useRef<HTMLDivElement>(null);
+  const invoiceBandRef = useRef<HTMLDivElement>(null);
+  const bankBandRef = useRef<HTMLDivElement>(null);
+  const [confluence, setConfluence] = useState({ h: 100, a: 25, b: 75 });
 
   useEffect(() => {
-    const section = circuitRef.current;
-    if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setCircuitStatic(true);
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => setCircuitRunning(entry.isIntersecting), { threshold: 0.2 });
-    observer.observe(section);
+    const wrap = streamsRef.current;
+    const bandA = invoiceBandRef.current;
+    const bandB = bankBandRef.current;
+    if (!wrap || !bandA || !bandB) return;
+    const measure = () =>
+      setConfluence({
+        h: wrap.offsetHeight,
+        a: bandA.offsetTop + bandA.offsetHeight / 2,
+        b: bandB.offsetTop + bandB.offsetHeight / 2,
+      });
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(wrap);
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!circuitRunning || pinnedStep !== null) return;
-    const timer = setInterval(() => setCircuitStep((s) => (s % 7) + 1), CIRCUIT_STEP_MS);
-    return () => clearInterval(timer);
-  }, [circuitRunning, pinnedStep]);
-
-  const activeCircuitStep = pinnedStep ?? circuitStep;
-  const isStepLit = (step: number) => circuitStatic || step === activeCircuitStep;
-  const laserVars = (system: string): CSSProperties =>
-    ({ ...neonVars(system), "--run": `${CIRCUIT_STEP_MS}ms`, "--loops": pinnedStep !== null ? "infinite" : 1 }) as CSSProperties;
+  // Figura del hero: un sistema ↔ cualquier otro sistema, con Rosetta IA en medio
+  const heroSides = [
+    { label: "Un sistema", items: ["ERP", "Bancos", "Correo y documentos", "Sistemas propios"] },
+    { label: "Cualquier otro", items: ["Tesorería", "ERP", "BI y almacenes", "Organismos y bancos"] },
+  ];
 
   const applications = [
     {
@@ -58,11 +91,7 @@ export default function RosettaIAPage() {
         "Las conexiones se renuevan, se vigilan y avisan antes de caducar. Un error de credenciales pausa la conexión, no entra en bucle.",
         "Un extracto único y normalizado de todos tus bancos, consultable y exportable.",
       ],
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
-        </svg>
-      ),
+      icon: icons.bank,
     },
     {
       id: "contabilizacion",
@@ -74,29 +103,7 @@ export default function RosettaIAPage() {
         "Reglas de negocio propias de cada cliente, que se ajustan sin tocar programación.",
         "Multi-sociedad y multidivisa, con trazabilidad de quién decidió qué y marcha atrás.",
       ],
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
-    {
-      id: "facturas",
-      title: "Digitalización y registro de facturas de proveedor",
-      headline: "La factura llega por correo y aparece registrada en el ERP",
-      description: "Rosetta IA recoge las facturas de la carpeta donde caen, las pasa por el servicio de digitalización, recupera el contenido extraído y registra el documento en el ERP.",
-      bullets: [
-        "Del buzón de correo a la carpeta, y de la carpeta al ERP, sin que nadie abra el PDF ni teclee una línea.",
-        "La extracción del documento la realiza Invofox; Rosetta IA orquesta todo el circuito y traduce lo extraído a los maestros del cliente: proveedor, cuenta contable, dimensiones y centros de coste.",
-        "Registro directo en Microsoft Dynamics 365 Business Central, y en cualquier otro ERP conectado por el mismo camino.",
-      ],
-      highlight:
-        "Tú decides si el documento se registra solo o pasa antes por revisión. Se configura por cliente, por tipo de documento o por proveedor: automático donde hay confianza, revisado donde conviene mirarlo.",
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
+      icon: icons.ledger,
     },
     {
       id: "pagos",
@@ -108,11 +115,7 @@ export default function RosettaIAPage() {
         "La aprobación y el envío al banco se quedan en tu circuito de tesorería.",
         "Confirmación real de la aceptación en destino, no solo de que la comunicación no falló.",
       ],
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      ),
+      icon: icons.payment,
     },
     {
       id: "tpv",
@@ -124,121 +127,30 @@ export default function RosettaIAPage() {
         "Varios establecimientos y varios bancos sobre el mismo proceso.",
         "Lo que no cuadra aparece como excepción con su motivo, no como un descuadre sin explicación.",
       ],
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      icon: icons.card,
     },
   ];
 
-  const circuitSteps = [
-    {
-      step: 1,
-      title: "Llega la factura",
-      detail: "El proveedor la envía por correo y el documento se deposita en la carpeta de siempre.",
-      system: "Correo",
-    },
-    {
-      step: 2,
-      title: "Rosetta IA la recoge",
-      detail: "Vigila la carpeta y toma los documentos nuevos.",
-      system: "Almacenamiento de documentos",
-    },
-    {
-      step: 3,
-      title: "Se digitaliza",
-      detail: "El documento pasa por Invofox, que extrae su contenido.",
-      system: "Invofox",
-    },
-    {
-      step: 4,
-      title: "Se traduce y se registra",
-      detail: "Rosetta IA recupera lo extraído, lo traduce a los maestros del cliente y registra el documento en el ERP, directamente o pasando antes por revisión.",
-      system: "ERP",
-      review: { label: "Revisión opcional", optional: true },
-    },
-    {
-      step: 5,
-      title: "Entran los movimientos del banco",
-      detail: "Los extractos se descargan solos, todos los días.",
-      system: "Banco",
-    },
-    {
-      step: 6,
-      title: "Se cruzan movimiento y factura",
-      detail: "Cada apunte bancario se enfrenta a los documentos pendientes hasta encontrar su pareja.",
-      system: "Banco + ERP",
-    },
-    {
-      step: 7,
-      title: "Se contabiliza y se compensa",
-      detail: "El pago o el cobro se contabiliza y el documento queda saldado en el ERP. Lo que no encuentra pareja no se fuerza.",
-      system: "ERP",
-      review: { label: "Sin pareja: a revisión con su motivo", optional: false },
-    },
-  ];
+  // La aplicación protagonista: ocupa dos columnas y va en oscuro
+  const invoiceApp = {
+    title: "Digitalización y registro de facturas de proveedor",
+    headline: "La factura llega por correo y aparece registrada en el ERP",
+    description: "Rosetta IA recoge las facturas de la carpeta donde caen, las pasa por el servicio de digitalización, recupera el contenido extraído y registra el documento en el ERP.",
+    bullets: [
+      "Del buzón de correo a la carpeta, y de la carpeta al ERP, sin que nadie abra el PDF ni teclee una línea.",
+      "La extracción del documento la realiza Invofox; Rosetta IA orquesta todo el circuito y traduce lo extraído a los maestros del cliente: proveedor, cuenta contable, dimensiones y centros de coste.",
+      "Registro directo en Microsoft Dynamics 365 Business Central, y en cualquier otro ERP conectado por el mismo camino.",
+    ],
+    highlight:
+      "Tú decides si el documento se registra solo o pasa antes por revisión. Se configura por cliente, por tipo de documento o por proveedor: automático donde hay confianza, revisado donde conviene mirarlo.",
+    flow: [
+      { label: "Correo", icon: icons.mail },
+      { label: "Carpeta", icon: icons.folder },
+      { label: "Invofox", icon: icons.doc },
+      { label: "ERP", icon: icons.erp },
+    ],
+  };
 
-  // §1.1 · Figura simétrica: cualquier sistema a cada lado; ERP y tesorería son ejemplos, no la definición
-  const architectureSides = [
-    {
-      label: "Un sistema",
-      examples: [
-        { name: "ERP", detail: "SAP, Business Central, M3, JD Edwards, Sage, Odoo" },
-        { name: "Bancos", detail: "Agregación bancaria, Norma 43, ficheros de liquidación" },
-        { name: "Plataformas sectoriales", detail: "Seguros, retail, hostelería" },
-        { name: "Gestores documentales y digitalización", detail: "Buzones de correo, carpetas, extracción de documentos" },
-        { name: "Aplicaciones propias sin API", detail: "Desarrollos a medida y sistemas heredados" },
-      ],
-      footnote: "Se lee por API, servicio web, base de datos o fichero.",
-    },
-    {
-      label: "Cualquier otro sistema",
-      examples: [
-        { name: "Tesorería", detail: "Sage XRT Advanced, Embat" },
-        { name: "ERP", detail: "Registro de documentos, asientos y compensaciones" },
-        { name: "BI y almacenes de datos", detail: "Informes, cuadros de mando, históricos" },
-        { name: "Ficheros y bases de datos heredadas", detail: "AS/400, SQL, ficheros planos" },
-        { name: "Organismos y bancos", detail: "Ficheros de pago, Veri*factu, SII, formatos sectoriales" },
-      ],
-      footnote: "Se entrega en el formato que espera y se confirma la aceptación.",
-    },
-  ];
-
-  const renderSide = (side: (typeof architectureSides)[number]) => (
-    <div className="p-8 rounded-3xl bg-gray-50 dark:bg-gray-800/80 border-2 border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-      <div>
-        <h3 className="text-2xl font-bold font-heading text-arje-gray-900 dark:text-white mb-2">{side.label}</h3>
-        <p className="text-sm text-arje-gray-600 dark:text-gray-300 mb-6">Del tipo que sea. Por ejemplo:</p>
-        <div className="space-y-2.5 text-xs sm:text-sm text-arje-gray-700 dark:text-gray-300">
-          {side.examples.map((ex) => (
-            <div key={ex.name} className="p-2.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
-              <strong>{ex.name}:</strong> {ex.detail}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-arje-gray-500 dark:text-gray-400">
-        {side.footnote}
-      </div>
-    </div>
-  );
-
-  const bidirectionalArrow = (
-    <div className="flex items-center justify-center text-arje-blue text-2xl font-bold" aria-hidden="true">
-      <span className="hidden lg:inline">⇄</span>
-      <span className="lg:hidden">⇅</span>
-    </div>
-  );
-
-  const aiRows = [
-    ["Entender la estructura de un sistema nuevo", "Calcular importes"],
-    ["Proponer equivalencias entre campos", "Decidir signos, redondeos o divisas"],
-    ["Interpretar documentación y nomenclaturas", "Generar el fichero que va al banco"],
-    ["Señalar lo que no encaja", "Validar el cumplimiento normativo"],
-  ];
-
-  // S6 · Casos de v1.0 que no quedan cubiertos por ninguna tarjeta de aplicación
   const alsoSolves = [
     {
       title: "Maestros siempre alineados",
@@ -250,761 +162,790 @@ export default function RosettaIAPage() {
     },
   ];
 
-  // S4 · Los tres pilares
-  const pillars = [
+  // El circuito: dos corrientes independientes que solo se encuentran en el cruce (paso 6)
+  const invoiceStream = [
+    { step: "01", system: "Correo", title: "Llega la factura", detail: "El proveedor la envía por correo y el documento cae en la carpeta de siempre." },
+    { step: "02", system: "Carpeta", title: "Rosetta IA la recoge", detail: "Vigila la carpeta y toma los documentos nuevos." },
+    { step: "03", system: "Invofox", title: "Se digitaliza", detail: "El documento pasa por Invofox, que extrae su contenido." },
     {
-      title: "Un modelo de datos común",
-      desc: "Cuentas, terceros, operaciones, cobros y pagos se traducen a un modelo canónico único, construido sobre estándares financieros del sector. Conectar el sistema número diez cuesta una fracción de lo que costó el primero, porque el núcleo ya está resuelto.",
-    },
-    {
-      title: "Inteligencia artificial donde aporta",
-      desc: "La IA se usa para lo que hace bien: entender la estructura de un sistema desconocido, proponer equivalencias entre campos, interpretar documentación ambigua y detectar lo que no encaja. Trabaja sobre la estructura de los datos, no sobre tus importes.",
-    },
-    {
-      title: "Control determinista del dinero",
-      desc: "Los importes, los ficheros SEPA, los extractos bancarios y las validaciones regulatorias se calculan con reglas fijas y auditables. El mismo dato de entrada produce siempre el mismo resultado, y ese resultado se puede verificar línea a línea.",
+      step: "04",
+      system: "ERP",
+      title: "Se traduce y se registra",
+      detail: "Rosetta IA lo traduce a los maestros del cliente y lo registra en el ERP, directamente o pasando antes por revisión.",
+      review: "Revisión previa, si la configuras",
     },
   ];
+  const bankStep = {
+    step: "05",
+    system: "Banco · NUEK",
+    title: "Se descarga el extracto",
+    detail: "Rosetta IA con NUEK, por agregación bancaria o ficheros Norma 43, todos los días. No espera a ninguna factura, ni la factura le espera a él.",
+  };
+  const matchStep = {
+    step: "06",
+    system: "Rosetta IA",
+    title: "Se cruzan movimiento y factura",
+    detail: "Cada movimiento del extracto busca la factura a la que corresponde.",
+  };
+  const settleStep = {
+    step: "07",
+    system: "ERP",
+    title: "Se contabiliza y se compensa",
+    detail: "El cobro o el pago se contabiliza y el documento queda saldado en el ERP. Lo que no encuentra pareja no se fuerza.",
+    review: "Sin pareja: a revisión con su motivo",
+  };
 
-  // S5 · El recorrido de un dato (asset A: rama de excepciones en el paso de validación)
+  const aiRows = [
+    ["Entender la estructura de un sistema nuevo", "Calcular importes"],
+    ["Proponer equivalencias entre campos", "Decidir signos, redondeos o divisas"],
+    ["Interpretar documentación y nomenclaturas", "Generar el fichero que va al banco"],
+    ["Señalar lo que no encaja", "Validar el cumplimiento normativo"],
+  ];
+
+  // Arquitectura: un solo relato del recorrido de un dato (sustituye a «Qué es» y «Cómo funciona»)
   const dataJourney = [
-    {
-      title: "Se lee del origen",
-      desc: "Rosetta IA extrae la información del sistema de origen por el camino que ese sistema permita: API, servicio web, consulta a base de datos o fichero. Si tu política de seguridad no admite accesos entrantes, el flujo se invierte y es tu sistema el que envía la información a Rosetta IA.",
-    },
-    {
-      title: "Se traduce al modelo común",
-      desc: "Los campos del sistema de origen se convierten al modelo canónico. Las equivalencias se definen una vez, quedan documentadas y versionadas, y se reutilizan en cada ejecución.",
-    },
-    {
-      title: "Se valida antes de salir",
-      desc: "Ningún dato sale sin pasar por la puerta de validación: estructura, importes, divisas, identificadores y reglas de negocio. Lo que no cumple no se envía; se aparta, se registra con el motivo y queda a la vista para revisarlo.",
-      exceptions: true,
-    },
-    {
-      title: "Se entrega al destino y se confirma",
-      desc: "El dato se entrega en el formato que espera el sistema de destino, y Rosetta IA comprueba que realmente se ha aceptado, no solo que la comunicación no ha fallado. Si el destino rechaza algo, se reintenta de forma controlada y queda registrado.",
-    },
+    { title: "Se lee del origen", desc: "Por API, servicio web, base de datos o fichero. Si tu política de seguridad no admite accesos entrantes, es tu sistema el que envía y Rosetta IA recibe." },
+    { title: "Se traduce al modelo común", desc: "Las equivalencias se definen una vez, quedan documentadas y versionadas, y se reutilizan en cada ejecución." },
+    { title: "Se valida antes de salir", desc: "Lo que no cumple no se envía: se aparta, se registra con el motivo y queda a la vista para revisarlo.", review: true },
+    { title: "Se entrega al destino y se confirma", desc: "Rosetta IA comprueba que el destino lo ha aceptado de verdad, no solo que la comunicación no ha fallado." },
   ];
 
   const securityItems = [
     {
       title: "Aislamiento por cliente",
       desc: "Cada cliente opera en su propio espacio lógico, con separación garantizada en el propio acceso a los datos.",
+      icon: icons.isolate,
     },
     {
       title: "Cifrado en reposo y en tránsito",
       desc: "Los datos se almacenan cifrados en infraestructura gestionada dentro de la Unión Europea y viajan siempre por canales cifrados.",
+      icon: icons.lock,
     },
     {
       title: "Credenciales fuera del sistema",
       desc: "Las credenciales de acceso a tus sistemas y bancos se custodian en un gestor de secretos dedicado. Se resuelven en el momento y no se guardan en claro en ninguna parte de la plataforma.",
+      icon: icons.key,
     },
     {
       title: "La IA no ve tus datos sensibles",
       desc: "Los modelos de lenguaje trabajan sobre nombres de campos y estructuras —los metadatos de tus sistemas—, no sobre IBAN, importes o datos de contacto reales.",
+      icon: icons.eye,
     },
     {
       title: "Todo queda registrado",
       desc: "Cada ejecución, cada transformación y cada decisión humana deja rastro consultable.",
+      icon: icons.log,
     },
   ];
 
+  const launchSteps = [
+    {
+      title: "Diagnóstico",
+      desc: "Revisamos tus sistemas, tus procesos y tus formatos, y te decimos con concreción qué se puede integrar, con qué esfuerzo y en qué orden. Sin compromiso.",
+    },
+    {
+      title: "Primera integración",
+      desc: "Se pone en marcha un proceso completo, de principio a fin, con datos reales y volumen real. Es el que demuestra que funciona en tu casa, no en una demo.",
+    },
+    {
+      title: "Extensión",
+      desc: "A partir de ahí, cada proceso y cada sociedad nuevos reutilizan lo ya construido. El coste de la segunda integración no se parece al de la primera.",
+    },
+  ];
+
+  // Caso 1 · grupo con dieciséis sociedades: las seis integraciones entre el ERP y la tesorería
+  const caseLanes = [
+    {
+      group: "Maestros · lo que tiene que estar antes",
+      lanes: [
+        { name: "Cuentas", desc: "El plan contable del grupo, sociedad a sociedad" },
+        { name: "Atributos", desc: "La clasificación analítica con la que la tesorería lee cada dato" },
+        { name: "Clientes y proveedores", desc: "Los terceros, con sus cuentas bancarias y sus condiciones de pago" },
+      ],
+    },
+    {
+      group: "Documentos y contabilidad · lo que se mueve cada día",
+      lanes: [
+        { name: "Operaciones", desc: "Facturas y abonos de clientes y proveedores: lo que se va a cobrar y a pagar" },
+        { name: "Asientos", desc: "El mayor de bancos, que es contra lo que se concilia" },
+      ],
+    },
+  ];
+  const caseResults = [
+    { value: "33.760", label: "cuentas sincronizadas en la primera integración" },
+    { value: "15 de 16", label: "sociedades en producción; la que falta la rechaza el propio ERP, y está señalada" },
+    { value: "1 núcleo", label: "para las seis: la sexta costó una fracción de la primera" },
+  ];
+
+  const arrowRight = (
+    <svg className="w-5 h-2 text-ros-line flex-shrink-0" viewBox="0 0 20 8" fill="none" stroke="currentColor" strokeWidth={1.4} aria-hidden="true">
+      <path d="M0 4h15m0 0l-4-3m4 3l-4 3" />
+    </svg>
+  );
+
+  const reviewTag = (label: string, optional: boolean) => (
+    <span
+      className={`inline-block mt-2.5 text-xs text-ros-amber border ${optional ? "border-dashed" : "border-solid"} border-ros-amber/50 rounded px-2 py-1`}
+    >
+      ↓ {label}
+    </span>
+  );
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-arje-gray-900 dark:text-gray-100 transition-colors">
-      {/* S1 · Hero (§1.1 Reposicionado) */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-arje-gray-50 via-white to-white dark:from-gray-950 dark:via-gray-900 dark:to-gray-900">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-r from-arje-blue/15 via-teal-500/10 to-arje-blue-light/15 blur-3xl -z-10 rounded-full pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-arje-blue/10 dark:bg-arje-blue/20 text-arje-blue dark:text-arje-blue-light text-xs font-bold tracking-wider uppercase border border-arje-blue/20">
-              <span>Rosetta IA · Plataforma de Integración</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-heading tracking-tight text-arje-gray-900 dark:text-white">
-              Conecta cualquier sistema con <span className="gradient-text">cualquier sistema</span>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-ros-ink dark:text-gray-100 transition-colors">
+      {/* 1 · Hero (nivel 1): texto a la izquierda, figura del producto a la derecha */}
+      <section className="relative overflow-hidden bg-ros-navy pt-36 pb-20 md:pt-40 md:pb-24">
+        <div
+          className="absolute -top-36 -right-32 w-[620px] h-[620px] rounded-full bg-[radial-gradient(circle,rgba(51,184,232,0.16),rgba(51,184,232,0)_68%)] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_460px] gap-16 items-center">
+          <div>
+            <Eyebrow onNavy className="mb-5">Rosetta IA · Plataforma de integración</Eyebrow>
+            <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-bold font-heading leading-[1.04] text-white">
+              Todos tus sistemas,
+              <br className="hidden sm:block" /> hablando <span className="text-ros-light">el mismo idioma</span>
             </h1>
-
-            <p className="text-xl md:text-2xl text-arje-gray-600 dark:text-gray-300 font-normal max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl leading-relaxed text-ros-on-navy max-w-2xl">
               Rosetta IA traduce entre aplicaciones que no fueron pensadas para entenderse. ERP, banco, tesorería, sistema propio, plataforma sectorial o fichero heredado: si tiene datos, tiene camino. Sin tocar el código de ninguno de los dos extremos.
             </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="mt-9 flex flex-col sm:flex-row gap-3.5">
               <Link
                 href="/contacto"
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-arje-blue to-arje-blue-dark text-white rounded-xl font-semibold shadow-lg shadow-arje-blue/20 hover:shadow-xl hover:shadow-arje-blue/30 hover:scale-105 transition-all text-center"
+                className="inline-flex items-center justify-center h-[52px] px-7 rounded bg-ros-light text-[#06202C] font-semibold hover:bg-[#7ED3F3] transition-colors"
               >
                 Solicita un diagnóstico
               </Link>
               <a
                 href="#como-funciona"
-                className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 text-arje-gray-800 dark:text-white border-2 border-gray-200 dark:border-gray-700 rounded-xl font-semibold hover:border-arje-blue dark:hover:border-arje-blue hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all text-center"
+                className="inline-flex items-center justify-center h-[52px] px-7 rounded border border-[#3C6A7E] text-[#D6E6ED] font-semibold hover:border-ros-light transition-colors"
               >
                 Ver cómo funciona
               </a>
             </div>
+            <p className="mt-10 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ros-soft">
+              <span>Sin modificar tus sistemas</span>
+              <span className="text-[#4A6F80]" aria-hidden="true">·</span>
+              <span>Cálculos deterministas</span>
+              <span className="text-[#4A6F80]" aria-hidden="true">·</span>
+              <span>Validación humana donde importa</span>
+            </p>
+          </div>
 
-            {/* Distintivos bajo el titular (§1.1) */}
-            <div className="pt-6 border-t border-gray-200/60 dark:border-gray-800/80 max-w-4xl mx-auto">
-              <p className="text-xs sm:text-sm text-arje-gray-500 dark:text-gray-400 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-                <span>✓ Cualquier origen, cualquier destino</span>
-                <span>✓ Sin modificar tus sistemas</span>
-                <span>✓ Cálculos deterministas</span>
-                <span>✓ Validación humana en los puntos críticos</span>
-              </p>
+          {/* Figura: un sistema ↔ cualquier otro sistema */}
+          <div className="hidden xl:flex items-center gap-4" aria-label="Rosetta IA conecta un sistema con cualquier otro">
+            {heroSides.map((side, idx) => (
+              <div key={side.label} className={`w-[158px] flex flex-col gap-2 ${idx === 1 ? "order-3" : ""}`}>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-[#6E93A3] mb-1">{side.label}</div>
+                {side.items.map((item) => (
+                  <div key={item} className="bg-[#12303F] border border-[#234B5E] rounded px-3 py-2.5 text-[13px] text-[#D6E6ED]">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            ))}
+            <div className="order-2 flex-grow flex flex-col items-center gap-2.5">
+              <div className="w-px h-6 bg-[#2A5063]" />
+              <div className="w-[108px] h-[108px] rounded-full bg-ros-brand border-[6px] border-[#10394C] flex flex-col items-center justify-center text-white">
+                <Icon d={icons.swap} className="w-6 h-6" />
+                <span className="font-heading text-sm font-semibold mt-1.5">Rosetta IA</span>
+              </div>
+              <div className="w-px h-6 bg-[#2A5063]" />
+              <div className="text-[11px] text-center leading-snug text-[#6E93A3]">
+                lee · traduce
+                <br />
+                valida · entrega
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* §1.2 · Aplicaciones: inmediatamente después del hero y antes de la arquitectura */}
-      <section id="aplicaciones" className="py-24 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+      {/* 2 · El problema (nivel 3), compacto y justo detrás del hero */}
+      <section className="bg-ros-bg dark:bg-gray-950 border-b border-[#E4EDF1] dark:border-gray-800 py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] gap-10 lg:gap-14">
+          <h2 className="text-2xl md:text-[27px] font-bold font-heading leading-tight">
+            Mover datos a mano tiene un coste que nadie apunta en ninguna parte
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "Trabajo repetido", desc: "Alguien descarga un extracto, lo cuadra en Excel y copia códigos de un sistema a otro. Trabajo cualificado dedicado a copiar y pegar." },
+              { title: "Errores que aparecen tarde", desc: "Un código mal traducido, un importe con el signo cambiado. El error se ve semanas después, cuando ya llegó al banco o al cierre." },
+              { title: "Cada caso, un proyecto", desc: "Una sociedad más, un banco más, un formato que cambia: análisis, desarrollo a medida y dependencia de quien lo montó." },
+            ].map((item) => (
+              <div key={item.title} className="border-t-2 border-ros-brand pt-4">
+                <h3 className="font-heading font-semibold mb-2">{item.title}</h3>
+                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3 · Aplicaciones (nivel 2): la de facturas destaca en oscuro y a doble ancho; alturas desiguales */}
+      <section id="aplicaciones" className="bg-white dark:bg-gray-900 py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Aplicaciones</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Aplicaciones que tu equipo usa cada día
-            </h2>
-            <p className="text-lg text-arje-gray-600 dark:text-gray-300">
+          <div className="grid grid-cols-1 xl:grid-cols-[620px_minmax(0,1fr)] gap-6 xl:gap-14 items-end mb-11">
+            <div>
+              <Eyebrow className="mb-3.5">Aplicaciones</Eyebrow>
+              <h2 className="text-3xl md:text-[44px] font-bold font-heading leading-[1.08]">Aplicaciones que tu equipo usa cada día</h2>
+            </div>
+            <p className="text-lg leading-relaxed text-ros-muted dark:text-gray-400">
               Sobre el motor de integración, Rosetta IA incorpora aplicaciones listas para trabajar. Cada una resuelve un proceso completo de principio a fin y se contrata por separado: se empieza por la que más duele.
             </p>
           </div>
 
-          {/* Rejilla de tarjetas visibles (3 columnas) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+            {/* Facturas de proveedor: protagonista */}
+            <article className="md:col-span-2 bg-ros-navy rounded-md p-7 md:p-10 flex flex-col sm:flex-row gap-8">
+              <div className="flex-grow">
+                <Eyebrow onNavy className="mb-3.5">Facturas de proveedor</Eyebrow>
+                <h3 className="text-2xl md:text-[28px] font-bold font-heading leading-tight text-white">{invoiceApp.headline}</h3>
+                <p className="mt-4 text-base leading-relaxed text-ros-on-navy">{invoiceApp.description}</p>
+                <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-ros-on-navy">
+                  {invoiceApp.bullets.map((b) => (
+                    <li key={b} className="flex gap-2.5">
+                      <Icon d={icons.check} className="w-4 h-4 mt-0.5 flex-shrink-0 text-ros-light" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 bg-[#123243] border-l-[3px] border-ros-amber rounded-r px-4 py-3 text-sm leading-relaxed text-[#F0DCBE]">
+                  {invoiceApp.highlight}
+                </p>
+              </div>
+              <ol className="sm:w-40 flex-shrink-0 flex sm:flex-col gap-2 sm:gap-0 flex-wrap sm:pt-2" aria-label="Recorrido de la factura">
+                {invoiceApp.flow.map((f, idx) => (
+                  <li key={f.label} className="flex sm:flex-col">
+                    <span className="flex items-center gap-2.5 text-[13px] text-[#C8DAE2]">
+                      <Icon d={f.icon} className="w-[18px] h-[18px] text-ros-light" />
+                      {f.label}
+                    </span>
+                    {idx < invoiceApp.flow.length - 1 && <span className="hidden sm:block w-px h-3 bg-[#2A5063] ml-2 my-1.5" aria-hidden="true" />}
+                  </li>
+                ))}
+              </ol>
+            </article>
+
             {applications.map((app) => (
-              <div
-                key={app.id}
-                className="p-8 rounded-3xl bg-arje-gray-50 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700/80 hover:shadow-xl hover:border-arje-blue/40 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-arje-blue/10 dark:bg-arje-blue/20 text-arje-blue dark:text-arje-blue-light flex items-center justify-center mb-5">
-                    {app.icon}
-                  </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-arje-blue">
-                    {app.title}
-                  </span>
-                  <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mt-1 mb-3">
-                    {app.headline}
-                  </h3>
-                  <p className="text-sm text-arje-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    {app.description}
-                  </p>
-                  <ul className="space-y-2.5 border-t border-gray-200/80 dark:border-gray-700/60 pt-4">
-                    {app.bullets.map((b, idx) => (
-                      <li key={idx} className="flex items-start text-xs sm:text-sm text-arje-gray-700 dark:text-gray-300">
-                        <span className="text-arje-blue mr-2 font-bold flex-shrink-0">•</span>
-                        <span>{b}</span>
+              <article key={app.id} className="bg-white dark:bg-gray-900 border border-ros-border dark:border-gray-700 rounded-md p-7">
+                <div className="w-10 h-10 rounded-md bg-ros-icon-bg dark:bg-gray-800 text-ros-brand dark:text-ros-light flex items-center justify-center mb-5">
+                  <Icon d={app.icon} />
+                </div>
+                <Eyebrow className="mb-2.5 !text-xs">{app.title}</Eyebrow>
+                <h3 className="text-xl font-bold font-heading leading-snug mb-3">{app.headline}</h3>
+                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{app.description}</p>
+                <ul className="mt-4 pt-4 border-t border-ros-border dark:border-gray-700 space-y-2 text-sm leading-relaxed text-[#3C4F59] dark:text-gray-300">
+                  {app.bullets.map((b) => (
+                    <li key={b} className="flex gap-2.5">
+                      <Icon d={icons.check} className="w-4 h-4 mt-0.5 flex-shrink-0 text-ros-brand dark:text-ros-light" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          {/* También resuelve */}
+          <div className="mt-8 bg-ros-bg dark:bg-gray-950 rounded-md px-6 py-5 grid grid-cols-1 md:grid-cols-[130px_1fr_1fr] gap-4 md:gap-7 items-start">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6C818C] dark:text-gray-400 md:pt-0.5">También resuelve</span>
+            {alsoSolves.map((item) => (
+              <p key={item.title} className="text-[15px] leading-relaxed text-[#3C4F59] dark:text-gray-300">
+                <strong className="font-heading text-ros-ink dark:text-white">{item.title}.</strong> {item.desc}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4 · Sistemas (nivel 3): la única prueba de la página, justo después de las aplicaciones */}
+      <section id="sistemas" className="bg-ros-bg dark:bg-gray-950 border-y border-[#E4EDF1] dark:border-gray-800 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[150px_minmax(0,1fr)_210px] gap-6 lg:gap-8 items-start">
+            <span className="text-[13px] font-semibold uppercase tracking-[0.14em] leading-snug text-[#6C818C] dark:text-gray-400">
+              Sistemas con los que trabaja
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {integrationCategories.map((cat) => (
+                <div key={cat.category}>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-ros-brand dark:text-ros-light mb-2.5">{cat.category}</h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {cat.systems.map((sys) => (
+                      <li
+                        key={sys}
+                        className="border border-ros-border dark:border-gray-700 bg-white dark:bg-gray-900 rounded-sm px-3 py-1.5 text-[13px] text-[#3C4F59] dark:text-gray-300"
+                      >
+                        {sys}
                       </li>
                     ))}
                   </ul>
-                  {app.highlight && (
-                    <p className="mt-4 p-3 rounded-xl bg-arje-blue/5 dark:bg-arje-blue/10 border border-arje-blue/20 text-xs sm:text-sm text-arje-gray-800 dark:text-gray-200 font-semibold leading-relaxed">
-                      {app.highlight}
-                    </p>
-                  )}
-                </div>
-                <div className="pt-6 mt-6 border-t border-gray-200/60 dark:border-gray-700/40">
-                  <span className="text-xs font-semibold text-arje-gray-400 dark:text-gray-500 cursor-not-allowed">
-                    Ver la aplicación →
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* S6 · Casos que no están en ninguna tarjeta */}
-          <div className="mt-10">
-            <span className="block text-center text-xs font-bold uppercase tracking-wider text-arje-gray-400 dark:text-gray-500 mb-4">
-              También resuelve
-            </span>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {alsoSolves.map((item) => (
-                <div
-                  key={item.title}
-                  className="p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
-                >
-                  <h3 className="font-bold font-heading text-base text-arje-gray-900 dark:text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* §1.2 bis · El circuito completo: horizontal en escritorio, vertical en móvil */}
-      {/* Estilo infografía neón: fondo negro fijo en ambos temas, nodos que brillan y láseres entre pasos */}
-      <section
-        id="circuito"
-        ref={circuitRef}
-        className="relative overflow-hidden py-24 bg-[#05070a] border-t border-b border-gray-800"
-      >
-        <div className="absolute inset-0 mesh-grid opacity-60 pointer-events-none" aria-hidden="true" />
-        <div className="absolute -top-40 left-1/4 w-[32rem] h-[32rem] rounded-full bg-arje-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 max-w-4xl mx-auto">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue-light">El circuito completo</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-white mt-2 mb-4">
-              Del correo del proveedor al documento compensado,{" "}
-              <span className="text-[#2de2ff] [text-shadow:0_0_18px_rgb(45_226_255/0.55)]">sin teclear</span>
-            </h2>
-            <p className="text-lg text-gray-400">
-              Cada una de las aplicaciones resuelve su tramo. Juntas resuelven el ciclo entero, y ese es el punto: no es una herramienta que automatiza un paso, es un circuito que va de punta a punta.
-            </p>
-          </div>
-
-          {/* Los cinco sistemas, mismo peso visual; se encienden cuando el documento pasa por ellos */}
-          <div className="flex flex-wrap justify-center gap-2.5 mb-14">
-            {circuitSystems.map((sys) => (
-              <span
-                key={sys}
-                style={neonVars(sys)}
-                data-active={circuitSteps.some((s) => isStepLit(s.step) && s.system.split(" + ").includes(sys))}
-                className="neon-node inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-200"
-              >
-                <span className="neon-dot w-1.5 h-1.5 rounded-full" aria-hidden="true" />
-                {sys}
-              </span>
-            ))}
-          </div>
-
-          {/* Pasos */}
-          <ol
-            className="relative grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-3"
-            onMouseLeave={() => {
-              if (pinnedStep !== null) setCircuitStep(pinnedStep);
-              setPinnedStep(null);
-            }}
-          >
-            {/* Línea conectora en escritorio */}
-            <div className="hidden lg:block absolute top-5 left-[7%] right-[7%] h-px bg-white/25" aria-hidden="true" />
-            {/* Línea conectora en móvil */}
-            <div className="lg:hidden absolute top-5 bottom-5 left-5 w-px bg-white/25" aria-hidden="true" />
-
-            {circuitSteps.map((s) => {
-              const lit = isStepLit(s.step);
-              const running = !circuitStatic && s.step === activeCircuitStep;
-              return (
-                <li
-                  key={s.step}
-                  style={neonVars(s.system)}
-                  onMouseEnter={() => setPinnedStep(s.step)}
-                  className="relative flex lg:flex-col items-start lg:items-stretch gap-4 lg:gap-3"
-                >
-                  {/* Láser hacia el siguiente paso: nace y muere detrás de los nodos */}
-                  {running && s.step < circuitSteps.length && (
-                    <>
-                      <span
-                        className="hidden lg:block absolute top-5 left-1/2 w-[calc(100%+0.75rem)] h-px pointer-events-none"
-                        aria-hidden="true"
-                      >
-                        <span className="neon-run-x" style={laserVars(s.system)} />
-                      </span>
-                      <span
-                        className="lg:hidden absolute top-5 left-5 h-[calc(100%+1rem)] w-px pointer-events-none"
-                        aria-hidden="true"
-                      >
-                        <span className="neon-run-y" style={laserVars(s.system)} />
-                      </span>
-                    </>
-                  )}
-
-                  <div
-                    data-active={lit}
-                    className="neon-node relative z-10 w-10 h-10 rounded-full text-white flex items-center justify-center font-bold text-sm flex-shrink-0 lg:mx-auto"
-                  >
-                    {s.step}
-                  </div>
-                  <div
-                    data-active={lit}
-                    className="neon-node flex-1 p-4 rounded-2xl flex flex-col"
-                  >
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-[color:var(--neon)] mb-1">
-                      {s.system}
-                    </span>
-                    <h3 className="font-bold font-heading text-white text-sm leading-snug mb-1.5">
-                      {s.title}
-                    </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed">
-                      {s.detail}
-                    </p>
-                    {s.review && (
-                      <div className="mt-auto pt-3" style={{ "--neon": REVIEW_NEON } as CSSProperties}>
-                        <div className="flex lg:flex-col items-center gap-1.5 text-[11px] font-semibold text-[color:var(--neon)]">
-                          <span
-                            className={`relative hidden lg:block w-0 h-5 border-l ${s.review.optional ? "border-dashed" : "border-solid"} border-[color:var(--neon)]`}
-                            aria-hidden="true"
-                          >
-                            {running && (
-                              <span className="neon-run-y" style={{ ...laserVars(s.system), "--neon": REVIEW_NEON } as CSSProperties} />
-                            )}
-                          </span>
-                          <span
-                            data-active={lit}
-                            className={`neon-node px-2.5 py-1 rounded-full border-[color:var(--neon)] ${s.review.optional ? "border-dashed" : "border-solid"} text-center`}
-                          >
-                            ↓ {s.review.label}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-
-          {/* Bandeja de revisión humana: se enciende cuando el documento llega a un punto de revisión */}
-          <div
-            style={{ "--neon": REVIEW_NEON } as CSSProperties}
-            data-active={circuitStatic || circuitSteps.some((s) => s.review && s.step === activeCircuitStep)}
-            className="neon-node mt-8 p-4 rounded-2xl border-dashed flex flex-col sm:flex-row items-center justify-center gap-2 text-center"
-          >
-            <span className="text-sm font-bold text-[color:var(--neon)]">Bandeja de revisión humana</span>
-            <span className="text-xs sm:text-sm text-gray-300">
-              Una persona valida lo dudoso con la pregunta concreta: en el paso 4 si así lo configuras, en el paso 7 siempre que algo no encuentra pareja.
-            </span>
-          </div>
-
-          <div
-            style={{ "--neon": CIRCUIT_NEON.ERP } as CSSProperties}
-            data-active="true"
-            className="neon-node mt-10 text-center max-w-2xl mx-auto p-6 rounded-2xl"
-          >
-            <p className="text-sm text-gray-300 leading-relaxed">
-              En todo el recorrido hay cinco sistemas distintos —correo, almacenamiento de documentos, Invofox, ERP y banco— que nunca fueron diseñados para hablar entre sí. <strong className="text-white">Eso es exactamente lo que hace Rosetta IA.</strong>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* §1.5 · La frontera determinista (entre las aplicaciones y el resto del argumento) */}
-      <section className="py-24 bg-gradient-to-br from-arje-blue/5 via-teal-500/5 to-white dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Por qué es diferente</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Inteligencia artificial donde ayuda.{" "}
-              <span className="gradient-text">Reglas donde no se puede fallar.</span>
-            </h2>
-            <p className="text-lg text-arje-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Muchas herramientas prometen resolver las integraciones con inteligencia artificial. El problema aparece cuando esa misma inteligencia artificial calcula el importe de un pago. Rosetta IA traza una línea explícita y la respeta.
-            </p>
-          </div>
-
-          {/* Asset B · Dos zonas y la línea entre ellas como elemento dominante */}
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] rounded-3xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 mb-10">
-            <div className="p-8 bg-blue-50/70 dark:bg-blue-950/20">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-bold uppercase tracking-wider mb-4">
-                IA
-              </span>
-              <h3 className="font-bold font-heading text-lg text-arje-gray-900 dark:text-white mb-4">
-                La IA se encarga de
-              </h3>
-              <ul className="space-y-3 text-sm text-arje-gray-700 dark:text-gray-300">
-                {aiRows.map(([does]) => (
-                  <li key={does} className="flex items-start gap-2.5">
-                    <span className="text-blue-600 dark:text-blue-400 font-bold">✓</span>
-                    <span>{does}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-blue-700/70 dark:text-blue-300/70">
-                Entender · mapear · señalar
-              </p>
-            </div>
-
-            <div className="relative h-2 md:h-auto md:w-2 bg-arje-gray-900 dark:bg-white" aria-hidden="true">
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:-rotate-90 whitespace-nowrap px-4 py-1.5 rounded-full bg-arje-gray-900 dark:bg-white text-white dark:text-gray-900 text-[11px] font-bold uppercase tracking-widest">
-                La frontera
-              </span>
-            </div>
-
-            <div className="p-8 bg-teal-50/70 dark:bg-teal-950/20">
-              <span className="inline-block px-3 py-1 rounded-full bg-teal-600 text-white text-xs font-bold uppercase tracking-wider mb-4">
-                Reglas deterministas
-              </span>
-              <h3 className="font-bold font-heading text-lg text-arje-gray-900 dark:text-white mb-4">
-                Nunca se encarga de
-              </h3>
-              <ul className="space-y-3 text-sm text-arje-gray-700 dark:text-gray-300">
-                {aiRows.map(([, never]) => (
-                  <li key={never} className="flex items-start gap-2.5">
-                    <span className="text-red-500 font-bold">✕</span>
-                    <span>{never}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-teal-700/70 dark:text-teal-300/70">
-                Calcular · validar · generar
-              </p>
-            </div>
-          </div>
-
-          {/* Bloques de refuerzo */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-              <h4 className="font-bold font-heading text-base text-arje-gray-900 dark:text-white mb-2">
-                Lo dudoso se pregunta, no se inventa
-              </h4>
-              <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                Cuando una equivalencia no está clara o un dato no tiene destino, Rosetta IA no elige la opción más probable: lo marca, lo aparta y lo pone delante de una persona con la pregunta concreta. Es más lento el primer día y mucho más barato el resto del año.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-              <h4 className="font-bold font-heading text-base text-arje-gray-900 dark:text-white mb-2">
-                La integración es tuya y es portable
-              </h4>
-              <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                La configuración de una integración —conexiones, equivalencias, reglas, tablas de códigos— es un objeto con versión que se puede empaquetar, mover entre entornos y auditar. No queda encerrada en la cabeza de quien la montó.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-              <h4 className="font-bold font-heading text-base text-arje-gray-900 dark:text-white mb-2">
-                Se adapta a tu política de seguridad, no al revés
-              </h4>
-              <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                Si tu organización no admite que un proveedor entre en su red, Rosetta IA trabaja en modo de recepción: es tu sistema el que abre la conexión y envía los datos. El resto del proceso es idéntico.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* S3 · El problema */}
-      <section className="py-20 bg-arje-gray-50 dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-arje-gray-900 dark:text-white">
-              Mover datos a mano tiene un coste que nadie apunta en ninguna parte
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mb-3">
-                Trabajo repetido
-              </h3>
-              <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                Cada mañana alguien descarga un extracto, lo cuadra en Excel, copia códigos de un sistema a otro y vuelve a subirlo. Es trabajo cualificado dedicado a tareas de copiar y pegar.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mb-3">
-                Errores que aparecen tarde
-              </h3>
-              <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                Un código mal traducido, un importe con el signo cambiado, un IBAN que no cuadra. El error no se ve el día que ocurre, se ve semanas después, cuando ya ha llegado al banco o al cierre.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mb-3">
-                Cada nuevo caso, un proyecto
-              </h3>
-              <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                Una sociedad más, un banco más, un formato que cambia. Todo vuelve a empezar: análisis, desarrollo a medida, pruebas y dependencia de quien lo montó.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* S4 · Qué es Rosetta IA: figura simétrica (§1.1) + tres pilares */}
-      <section id="que-es" className="py-24 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Qué es Rosetta IA</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Una capa de traducción <span className="gradient-text">entre tus sistemas</span>
-            </h2>
-            <p className="text-lg text-arje-gray-600 dark:text-gray-300">
-              Rosetta IA es una plataforma que se sitúa entre tus sistemas, del tipo que sean. Lee de un lado, lo convierte a un modelo de datos común y lo entrega al otro con el formato que espera. Tus sistemas no se tocan: siguen siendo los tuyos y siguen siendo la fuente de la verdad.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 lg:gap-4 items-stretch">
-            {renderSide(architectureSides[0])}
-            {bidirectionalArrow}
-
-            {/* Núcleo */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-arje-blue/10 via-teal-500/5 to-white dark:from-gray-800 dark:via-gray-800/90 dark:to-gray-800 border-2 border-arje-blue/50 shadow-xl flex flex-col justify-between relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-arje-blue text-white text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                Rosetta IA
-              </div>
-              <div className="mt-2">
-                <h3 className="text-2xl font-bold font-heading text-arje-gray-900 dark:text-white mb-4">
-                  Lee, traduce, valida y entrega
-                </h3>
-                <ol className="space-y-2.5 text-xs sm:text-sm text-arje-gray-700 dark:text-gray-300">
-                  {dataJourney.map((step, idx) => (
-                    <li
-                      key={step.title}
-                      className="p-3 rounded-xl bg-white dark:bg-gray-900 border border-arje-blue/20 flex items-center gap-3"
-                    >
-                      <span className="w-6 h-6 rounded-full bg-arje-blue text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
-                        {idx + 1}
-                      </span>
-                      {step.title}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <a
-                href="#como-funciona"
-                className="mt-6 pt-4 border-t border-arje-blue/20 text-xs text-arje-blue font-semibold text-center hover:underline"
-              >
-                Ver el recorrido paso a paso ↓
-              </a>
-            </div>
-
-            {bidirectionalArrow}
-            {renderSide(architectureSides[1])}
-          </div>
-
-          {/* Tres pilares */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pillars.map((pillar, idx) => (
-              <div
-                key={pillar.title}
-                className="p-8 rounded-3xl bg-arje-gray-50 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700"
-              >
-                <span className="text-xs font-bold uppercase tracking-wider text-arje-blue">Pilar {idx + 1}</span>
-                <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mt-1 mb-3">
-                  {pillar.title}
-                </h3>
-                <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">{pillar.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* S5 · Cómo funciona: el recorrido de un dato (asset A) */}
-      <section id="como-funciona" className="py-24 bg-arje-gray-50 dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14 max-w-3xl mx-auto">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Cómo funciona</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2">
-              El recorrido de un dato, de principio a fin
-            </h2>
-          </div>
-
-          <ol className="relative grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Línea conectora */}
-            <div className="hidden md:block absolute top-5 left-[12.5%] right-[12.5%] h-0.5 bg-arje-blue/30" aria-hidden="true" />
-            <div className="md:hidden absolute top-2 bottom-2 left-5 w-0.5 bg-arje-blue/30" aria-hidden="true" />
-
-            {dataJourney.map((step, idx) => (
-              <li key={step.title} className="relative flex md:flex-col items-start md:items-stretch gap-4 md:gap-3">
-                <div className="relative z-10 w-10 h-10 rounded-full bg-arje-blue text-white flex items-center justify-center font-bold text-sm flex-shrink-0 md:mx-auto ring-4 ring-arje-gray-50 dark:ring-gray-950">
-                  {idx + 1}
-                </div>
-                <div className="flex-1 p-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                  <h3 className="font-bold font-heading text-arje-gray-900 dark:text-white text-base mb-2">{step.title}</h3>
-                  <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">{step.desc}</p>
-                  {step.exceptions && (
-                    <span className="md:hidden inline-block mt-3 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-400 dark:border-amber-700">
-                      ↓ Bandeja de excepciones, revisada por una persona
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          {/* Rama descendente desde "Validación" hacia la bandeja de excepciones (escritorio) */}
-          <div className="hidden md:grid grid-cols-4 gap-4" aria-hidden="true">
-            <div className="col-start-3 flex flex-col items-center">
-              <span className="h-8 border-l-2 border-amber-500" />
-              <div className="w-full p-3 rounded-xl border-2 border-amber-400 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 text-center">
-                <span className="block text-sm font-bold text-amber-800 dark:text-amber-300">Bandeja de excepciones</span>
-                <span className="block text-xs text-arje-gray-600 dark:text-gray-300">Revisada por una persona, con el motivo de cada caso</span>
-              </div>
-            </div>
-          </div>
-
-          <p className="mt-12 text-center max-w-3xl mx-auto text-base text-arje-gray-700 dark:text-gray-300 leading-relaxed">
-            Todo el recorrido queda trazado: qué se leyó, cuándo, qué se transformó, qué se envió y qué respondió el destino. Cuando alguien pregunta &ldquo;¿de dónde sale este importe?&rdquo;, hay una respuesta exacta.
-          </p>
-
-          {/* S2 · Sistemas con los que trabaja (misma lista que Inicio, en cápsulas de texto, sin logotipos) */}
-          <div className="mt-16 pt-12 border-t border-gray-200 dark:border-gray-800">
-            <div className="text-center mb-8">
-              <span className="text-xs font-bold uppercase tracking-wider text-arje-gray-400 dark:text-gray-500">
-                Sistemas con los que trabaja
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {integrationCategories.map((cat) => (
-                <div key={cat.category}>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-arje-blue mb-3 text-center md:text-left">
-                    {cat.category}
-                  </h3>
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                    {cat.systems.map((sys) => (
-                      <span
-                        key={sys}
-                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-gray-800 text-arje-gray-800 dark:text-gray-200 font-medium text-xs border border-gray-200 dark:border-gray-700 cursor-default"
-                      >
-                        {sys}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-center text-xs sm:text-sm text-arje-gray-500 dark:text-gray-400 mt-8 max-w-3xl mx-auto">
+            <p className="text-[13px] leading-relaxed text-ros-muted dark:text-gray-400">
               La lista no es un límite: Rosetta IA se conecta por API, por servicio web, por base de datos o por fichero, con lo que tu sistema sepa ofrecer.
             </p>
           </div>
         </div>
       </section>
 
-      {/* S8 · Seguridad y cumplimiento (§2.3 bloque propio · §1.3 Veri*factu como un formato más) */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Seguridad y cumplimiento</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Cómo se custodian tus datos
-            </h2>
+      {/* 5 · El circuito completo (nivel 1): dos corrientes independientes que se juntan en el cruce */}
+      <section id="circuito" className="relative overflow-hidden bg-ros-navy py-20 md:py-24">
+        <div
+          className="absolute -bottom-52 -left-24 w-[560px] h-[560px] rounded-full bg-[radial-gradient(circle,rgba(31,111,139,0.22),rgba(31,111,139,0)_70%)] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 xl:grid-cols-[690px_minmax(0,1fr)] gap-6 xl:gap-14 items-end mb-12">
+            <div>
+              <Eyebrow onNavy className="mb-3.5">El circuito completo</Eyebrow>
+              <h2 className="text-3xl md:text-[46px] font-bold font-heading leading-[1.08] text-white">
+                Del correo del proveedor al documento compensado, <span className="text-ros-light">sin teclear</span>
+              </h2>
+            </div>
+            <p className="text-[17px] leading-relaxed text-ros-on-navy">
+              La factura entra por correo y termina registrada en el ERP. El extracto se descarga del banco cada día, por su cuenta. Cuando los dos llegan, cada movimiento busca su factura y el documento queda compensado.
+            </p>
           </div>
 
-          <div className="space-y-4">
-            {securityItems.map((sec) => (
-              <div
-                key={sec.title}
-                className="p-5 rounded-2xl bg-arje-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 flex items-start gap-4"
-              >
-                <div className="w-8 h-8 rounded-lg bg-teal-500/15 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">
-                  ✓
+          {/* Escritorio y tableta: la animación del circuito; el diagrama estático es la reserva (movimiento reducido) */}
+          <div className="hidden md:block">
+            <AnimatedPiece
+              src="/animaciones/RosettaIA_anim_circuito.html"
+              title="Animación del circuito de facturas"
+              fallback={
+                <div className="hidden md:grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_40px_190px_28px_minmax(0,280px)] gap-y-4 xl:items-center">
+                  {/* Las dos corrientes */}
+                  <div ref={streamsRef} className="relative flex flex-col gap-4">
+                    <div ref={invoiceBandRef} className="bg-ros-panel border border-ros-line rounded-lg px-5 pt-4 pb-5">
+                      <Eyebrow onNavy className="!text-[11px] mb-4">La factura · cuando llega</Eyebrow>
+                      <ol className="flex items-start gap-2">
+                        {invoiceStream.map((s, idx) => (
+                          <li key={s.step} className="flex items-start gap-2 flex-1 min-w-0">
+                            <div className="flex-1 min-w-0">
+                              <div className={`font-heading text-[11px] font-semibold mb-1.5 ${s.review ? "text-ros-amber" : "text-ros-light"}`}>
+                                {s.step} · {s.system}
+                              </div>
+                              <h3 className="font-heading text-sm font-semibold text-white mb-1">{s.title}</h3>
+                              <p className="text-xs leading-relaxed text-ros-soft">{s.detail}</p>
+                              {s.review && reviewTag(s.review, true)}
+                            </div>
+                            {idx < invoiceStream.length - 1 && <span className="pt-7">{arrowRight}</span>}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    <div ref={bankBandRef} className="bg-ros-panel border border-ros-line rounded-lg px-5 pt-4 pb-5">
+                      <Eyebrow onNavy className="!text-[11px] mb-4">El banco · a diario, por su cuenta</Eyebrow>
+                      <div className="flex items-start gap-5">
+                        <div className="w-44 flex-shrink-0">
+                          <div className="font-heading text-[11px] font-semibold mb-1.5 text-ros-light">
+                            {bankStep.step} · {bankStep.system}
+                          </div>
+                          <h3 className="font-heading text-sm font-semibold text-white">{bankStep.title}</h3>
+                        </div>
+                        <p className="text-[13px] leading-relaxed text-ros-soft">{bankStep.detail}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Confluencia: dos líneas que se unen (horizontal en pantallas anchas, vertical en tableta) */}
+                  <svg
+                    className="hidden xl:block w-10 self-stretch text-ros-light"
+                    viewBox={`0 0 40 ${confluence.h}`}
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d={`M0 ${confluence.a}H20V${confluence.h / 2}H40M0 ${confluence.b}H20V${confluence.h / 2}`}
+                      stroke="currentColor"
+                      strokeWidth={1.8}
+                    />
+                  </svg>
+                  <div className="xl:hidden flex flex-col items-center text-ros-light" aria-hidden="true">
+                    <svg width="120" height="30" viewBox="0 0 120 30" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                      <path d="M2 2h40q18 0 18 18v8M118 2H78q-18 0-18 18v8" />
+                    </svg>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ros-soft mt-1">Se juntan</span>
+                  </div>
+
+                  {/* Un solo camino: 06 → 07 */}
+                  <div className="grid grid-cols-[minmax(0,1fr)_28px_minmax(0,1fr)] items-center xl:contents">
+                    <div className="bg-ros-panel border border-ros-light rounded-lg p-5">
+                      <div className="font-heading text-[11px] font-semibold mb-2 text-ros-light">
+                        {matchStep.step} · {matchStep.system}
+                      </div>
+                      <h3 className="font-heading text-base font-semibold text-white mb-1.5">{matchStep.title}</h3>
+                      <p className="text-[13px] leading-relaxed text-ros-soft">{matchStep.detail}</p>
+                    </div>
+                    <span className="flex justify-center text-ros-light" aria-hidden="true">
+                      <svg className="w-5 h-2" viewBox="0 0 20 8" fill="none" stroke="currentColor" strokeWidth={1.6}>
+                        <path d="M0 4h15m0 0l-4-3m4 3l-4 3" />
+                      </svg>
+                    </span>
+                    <div className="bg-ros-panel border border-ros-amber-line rounded-lg p-5">
+                      <div className="font-heading text-[11px] font-semibold mb-2 text-ros-amber">
+                        {settleStep.step} · {settleStep.system}
+                      </div>
+                      <h3 className="font-heading text-base font-semibold text-white mb-1.5">{settleStep.title}</h3>
+                      <p className="text-[13px] leading-relaxed text-ros-soft">{settleStep.detail}</p>
+                      {reviewTag(settleStep.review, false)}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-arje-gray-900 dark:text-white text-base">
-                    {sec.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 mt-1">
-                    {sec.desc}
-                  </p>
-                </div>
+              }
+            />
+          </div>
+
+          {/* Móvil: la factura, un separador y el banco, y luego donde se juntan */}
+          <ol className="md:hidden">
+            {([...invoiceStream, bankStep, matchStep, settleStep] as { step: string; system: string; title: string; detail: string; review?: string }[]).map((s) => {
+              const amber = Boolean(s.review);
+              return (
+                <li key={s.step}>
+                  {s.step === "05" && (
+                    <div className="mt-2 mb-4 pt-4 border-t border-dashed border-ros-line">
+                      <Eyebrow onNavy className="!text-[11px]">Por otro lado · el banco, a diario</Eyebrow>
+                    </div>
+                  )}
+                  {s.step === "06" && (
+                    <div className="mt-2 mb-4 pt-4 border-t border-dashed border-ros-line">
+                      <Eyebrow onNavy className="!text-[11px]">Donde se juntan</Eyebrow>
+                    </div>
+                  )}
+                  <div className="flex gap-3.5">
+                    <div className="flex flex-col items-center w-[34px] flex-shrink-0">
+                      <span
+                        className={`w-[34px] h-[34px] rounded-full flex items-center justify-center font-heading text-[13px] font-semibold border ${
+                          amber ? "bg-[#2A2418] border-[#6E5526] text-ros-amber" : "bg-ros-panel border-[#2A5C73] text-ros-light"
+                        }`}
+                      >
+                        {Number(s.step)}
+                      </span>
+                      {!["04", "05", "07"].includes(s.step) && <span className="w-px flex-grow min-h-[24px] bg-[#23556B]" aria-hidden="true" />}
+                    </div>
+                    <div className="pt-1 pb-5">
+                      <div className="text-[11px] font-semibold uppercase tracking-wider text-ros-soft">{s.system}</div>
+                      <h3 className="font-heading text-base font-semibold text-white">{s.title}</h3>
+                      <p className="text-[13.5px] leading-relaxed text-ros-soft mt-1">{s.detail}</p>
+                      {s.review && reviewTag(s.review, s.step === "04")}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+
+          {/* Bandeja de revisión humana, debajo y con su propio espacio */}
+          <div className="mt-6 md:mt-7 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 bg-[#17313A] border border-[#5E4A29] rounded-lg px-5 py-5 md:px-6">
+            <span className="w-10 h-10 rounded-lg bg-[#2A2418] text-ros-amber flex items-center justify-center flex-shrink-0">
+              <Icon d={icons.tray} />
+            </span>
+            <h3 className="font-heading text-base font-semibold text-[#F0DCBE] sm:w-56 flex-shrink-0">Bandeja de revisión humana</h3>
+            <p className="text-sm leading-relaxed text-[#C4B79E]">
+              Una persona valida lo dudoso con la pregunta concreta: en el paso 4 si así lo configuras, en el paso 7 siempre que algo no encuentra pareja. Nada se fuerza y nada se inventa.
+            </p>
+          </div>
+
+          <p className="mt-9 text-center text-base leading-relaxed text-ros-on-navy max-w-3xl mx-auto">
+            En todo el recorrido hay cinco sistemas distintos —correo, almacenamiento de documentos, Invofox, ERP y banco— que nunca fueron diseñados para hablar entre sí.{" "}
+            <strong className="text-white font-semibold">Eso es exactamente lo que hace Rosetta IA.</strong>
+          </p>
+        </div>
+      </section>
+
+      {/* 6 · Casos de éxito (nivel 3): sin nombres de cliente, sin logotipos y sin testimonios */}
+      <section id="casos" className="bg-ros-bg dark:bg-gray-950 py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-10">
+            <Eyebrow className="mb-3.5">Casos de éxito</Eyebrow>
+            <h2 className="text-3xl md:text-[40px] font-bold font-heading leading-[1.1]">Lo que ya hemos puesto en marcha</h2>
+          </div>
+
+          {/* Caso 1 · grupo con dieciséis sociedades, con su diagrama de las seis integraciones */}
+          <article className="bg-ros-navy rounded-lg p-6 md:p-10">
+            <Eyebrow onNavy className="!text-xs mb-3">Grupo con dieciséis sociedades</Eyebrow>
+            <h3 className="text-2xl md:text-[34px] font-bold font-heading leading-tight text-white">
+              Seis integraciones entre el ERP y la tesorería, sobre <span className="text-ros-light">la misma tubería</span>
+            </h3>
+            <p className="mt-3.5 text-base leading-relaxed text-ros-on-navy max-w-4xl">
+              Cinco procesos llevan el ERP a la tesorería y uno trae de vuelta lo que ocurre con el dinero. Comparten el mismo núcleo: lo único que cambia en cada uno es qué se lee y qué reglas lo validan.
+            </p>
+
+            {/* Las seis integraciones encendiéndose una a una; el diagrama estático es la reserva */}
+            <div className="mt-8">
+              <AnimatedPiece
+                src="/animaciones/RosettaIA_anim_integracion.html"
+                title="Animación de las seis integraciones entre el ERP y la tesorería"
+                fallback={
+                  <div className="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)_200px] gap-5 lg:gap-7 items-stretch">
+                    {[
+                      { role: "El ERP", name: "Infor M3", note: "16 sociedades · 3 países · 3 divisas", icon: icons.erp, order: "" },
+                      { role: "La tesorería", name: "Embat", note: "Posición, previsión, cobros y pagos", icon: icons.bank, order: "lg:order-3" },
+                    ].map((end) => (
+                      <div key={end.role} className={`bg-[#12303F] border border-[#2A5C73] rounded-lg p-5 text-center flex flex-col justify-center ${end.order}`}>
+                        <span className="w-12 h-12 mx-auto mb-3 rounded-lg bg-ros-navy border border-[#2A5C73] text-ros-light flex items-center justify-center">
+                          <Icon d={end.icon} className="w-6 h-6" />
+                        </span>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-[#6E93A3] mb-1">{end.role}</div>
+                        <div className="font-heading text-xl font-semibold text-white">{end.name}</div>
+                        <div className="text-[13px] leading-relaxed text-ros-soft mt-2">{end.note}</div>
+                      </div>
+                    ))}
+
+                    <div className="lg:order-2 space-y-5">
+                      {caseLanes.map((g) => (
+                        <div key={g.group}>
+                          <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-[#6E93A3] mb-2.5">{g.group}</div>
+                          <ul className="space-y-2">
+                            {g.lanes.map((lane) => (
+                              <li key={lane.name} className="flex items-center gap-4 bg-ros-panel border border-[#23556B] rounded-lg px-4 py-3">
+                                <span className="font-heading text-[15px] font-semibold text-white w-40 flex-shrink-0">{lane.name}</span>
+                                <span className="flex-grow text-[13px] leading-snug text-ros-soft">{lane.desc}</span>
+                                <svg className="hidden sm:block w-8 h-2.5 text-ros-light flex-shrink-0" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="Del ERP a la tesorería">
+                                  <path d="M0 5h26m0 0l-5-4m5 4l-5 4" />
+                                </svg>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                      <div>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ros-light mb-2.5">El flujo de vuelta · lo que pasa con el dinero</div>
+                        <div className="flex items-center gap-4 bg-[#12384A] border border-ros-light rounded-lg px-4 py-3">
+                          <svg className="hidden sm:block w-8 h-2.5 text-ros-light flex-shrink-0 -scale-x-100" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="De la tesorería al ERP">
+                            <path d="M0 5h26m0 0l-5-4m5 4l-5 4" />
+                          </svg>
+                          <span className="font-heading text-[15px] font-semibold text-white w-36 flex-shrink-0">Cobros y pagos</span>
+                          <span className="flex-grow text-[13px] leading-snug text-ros-soft">
+                            Lo que la tesorería ha cobrado y pagado vuelve al ERP, uno a uno, y cada documento queda saldado
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+
+            <ul className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              {caseResults.map((r) => (
+                <li key={r.value} className="bg-ros-panel border border-ros-line rounded-lg px-5 py-4">
+                  <div className="font-heading text-2xl font-semibold text-white">{r.value}</div>
+                  <div className="text-[13px] leading-snug text-ros-soft mt-1">{r.label}</div>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      {/* 7 · Por qué es diferente (nivel 2): la frontera determinista y su tabla */}
+      <section className="bg-white dark:bg-gray-900 py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Eyebrow className="mb-3.5">Por qué es diferente</Eyebrow>
+            <h2 className="text-3xl md:text-[44px] font-bold font-heading leading-[1.1]">
+              Inteligencia artificial donde ayuda.
+              <br className="hidden md:block" /> Reglas donde no se puede fallar.
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-ros-muted dark:text-gray-400 max-w-3xl mx-auto">
+              Muchas herramientas prometen resolver las integraciones con inteligencia artificial. El problema aparece cuando esa misma inteligencia artificial calcula el importe de un pago. Rosetta IA traza una línea explícita y la respeta.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_110px_1fr] rounded-md overflow-hidden">
+            <div className="bg-[#F2F8FB] dark:bg-gray-800 p-8 md:p-9">
+              <Eyebrow className="mb-4">La IA se encarga de</Eyebrow>
+              <ul className="space-y-3">
+                {aiRows.map(([does]) => (
+                  <li key={does} className="flex gap-3 text-base text-[#1B3540] dark:text-gray-200">
+                    <Icon d={icons.check} className="w-[18px] h-[18px] mt-0.5 flex-shrink-0 text-ros-brand dark:text-ros-light" />
+                    <span>{does}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[13px] uppercase tracking-[0.08em] text-[#62808C] dark:text-gray-400">Entender · mapear · señalar</p>
+            </div>
+
+            <div className="bg-ros-navy flex md:flex-col items-center justify-center gap-3 px-6 py-3 md:py-0" aria-hidden="true">
+              <span className="h-px w-full md:w-px md:h-auto md:flex-grow bg-[#2A5063]" />
+              <span className="font-heading text-xs font-semibold uppercase tracking-[0.1em] text-ros-light md:[writing-mode:vertical-rl] whitespace-nowrap md:py-4">
+                La frontera
+              </span>
+              <span className="h-px w-full md:w-px md:h-auto md:flex-grow bg-[#2A5063]" />
+            </div>
+
+            <div className="bg-[#1B3540] p-8 md:p-9">
+              <span className="block text-[13px] font-semibold uppercase tracking-[0.14em] text-ros-light mb-4">Nunca se encarga de</span>
+              <ul className="space-y-3">
+                {aiRows.map(([, never]) => (
+                  <li key={never} className="flex gap-3 text-base text-[#E4EEF2]">
+                    <Icon d={icons.cross} className="w-[18px] h-[18px] mt-0.5 flex-shrink-0 text-ros-soft" />
+                    <span>{never}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[13px] uppercase tracking-[0.08em] text-ros-soft">Calcular · validar · generar</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-9">
+            {[
+              {
+                title: "Lo dudoso se pregunta, no se inventa",
+                desc: "Cuando una equivalencia no está clara o un dato no tiene destino, Rosetta IA no elige la opción más probable: lo marca, lo aparta y lo pone delante de una persona con la pregunta concreta. Es más lento el primer día y mucho más barato el resto del año.",
+              },
+              {
+                title: "La integración es tuya y es portable",
+                desc: "La configuración de una integración —conexiones, equivalencias, reglas, tablas de códigos— es un objeto con versión que se puede empaquetar, mover entre entornos y auditar. No queda encerrada en la cabeza de quien la montó.",
+              },
+              {
+                title: "Se adapta a tu política de seguridad, no al revés",
+                desc: "Si tu organización no admite que un proveedor entre en su red, Rosetta IA trabaja en modo de recepción: es tu sistema el que abre la conexión y envía los datos. El resto del proceso es idéntico.",
+              },
+            ].map((b) => (
+              <div key={b.title} className="border-l-2 border-ros-brand pl-5">
+                <h3 className="font-heading text-[17px] font-semibold mb-2">{b.title}</h3>
+                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{b.desc}</p>
               </div>
             ))}
-          </div>
-
-          <div className="mt-8 p-6 rounded-2xl bg-arje-gray-50 dark:bg-gray-800/60 border-l-4 border-arje-blue border-y border-r border-y-gray-200 border-r-gray-200 dark:border-y-gray-700 dark:border-r-gray-700">
-            <p className="text-sm text-arje-gray-700 dark:text-gray-300 leading-relaxed">
-              <strong className="text-arje-gray-900 dark:text-white">Cumplimiento normativo.</strong> Rosetta IA genera y valida los formatos que exige la normativa —SEPA/ISO 20022, Norma 43, cuadernos bancarios, Veri*factu, SII y formatos sectoriales— con validación estructural real contra el esquema oficial y cálculo determinista de importes y totales de control. Se contrata como módulo cuando el cliente lo necesita.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* S9 · Cómo se pone en marcha */}
-      <section className="py-20 bg-arje-gray-50 dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Puesta en marcha</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
+      {/* 8 · Arquitectura (nivel 3): «Qué es» y «Cómo funciona» fundidos en una sola sección */}
+      <section id="como-funciona" className="bg-ros-bg dark:bg-gray-950 border-y border-[#E4EDF1] dark:border-gray-800 py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[520px_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
+          <div>
+            <Eyebrow className="mb-3.5">Cómo funciona</Eyebrow>
+            <h2 className="text-3xl md:text-[38px] font-bold font-heading leading-[1.1]">Una capa de traducción entre tus sistemas</h2>
+            <p className="mt-5 text-lg leading-relaxed text-ros-muted dark:text-gray-400">
+              Rosetta IA se sitúa entre tus sistemas, del tipo que sean. Lee de un lado, lo convierte a un modelo de datos común y lo entrega al otro con el formato que espera. Tus sistemas no se tocan: siguen siendo los tuyos y siguen siendo la fuente de la verdad.
+            </p>
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-heading text-[15px] font-semibold mb-1.5">Un modelo común</h3>
+                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">
+                  Construido sobre estándares financieros del sector. Conectar el sistema número diez cuesta una fracción de lo que costó el primero.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-heading text-[15px] font-semibold mb-1.5">Todo queda trazado</h3>
+                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">
+                  Qué se leyó, cuándo, qué se transformó, qué se envió y qué respondió el destino. Cada importe tiene una respuesta exacta.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <ol className="space-y-3.5">
+            {dataJourney.map((step, idx) => (
+              <li
+                key={step.title}
+                className={`flex gap-4 bg-white dark:bg-gray-900 border rounded-md px-6 py-5 ${
+                  step.review ? "border-[#C9A96A]" : "border-ros-border dark:border-gray-700"
+                }`}
+              >
+                <span className={`font-heading text-[22px] font-semibold w-7 flex-shrink-0 ${step.review ? "text-[#D9B476]" : "text-[#B8CDD6] dark:text-gray-600"}`}>
+                  0{idx + 1}
+                </span>
+                <div>
+                  <h3 className="font-heading text-[17px] font-semibold mb-1">{step.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{step.desc}</p>
+                  {step.review && (
+                    <span className="inline-block mt-2.5 text-xs text-[#97711F] dark:text-ros-amber bg-[#FBF3E4] dark:bg-[#2A2418] rounded-sm px-2.5 py-1">
+                      → Bandeja de revisión, con el motivo de cada caso
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 9 · Seguridad y cumplimiento (nivel 2) */}
+      <section className="bg-white dark:bg-gray-900 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 mb-9">
+            <Eyebrow>Seguridad y cumplimiento</Eyebrow>
+            <h2 className="text-2xl md:text-[30px] font-bold font-heading">Cómo se custodian tus datos</h2>
+          </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-7">
+            {securityItems.map((sec) => (
+              <li key={sec.title}>
+                <span className="text-ros-brand dark:text-ros-light">
+                  <Icon d={sec.icon} className="w-[22px] h-[22px]" />
+                </span>
+                <h3 className="font-heading text-[15px] font-semibold mt-3 mb-1.5">{sec.title}</h3>
+                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">{sec.desc}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-9 bg-ros-bg dark:bg-gray-800 rounded-md px-6 py-5 text-[15px] leading-relaxed text-[#3C4F59] dark:text-gray-300 max-w-5xl">
+            <strong className="font-heading text-ros-ink dark:text-white">Cumplimiento normativo.</strong> Rosetta IA genera y valida los formatos que exige la normativa —SEPA/ISO 20022, Norma 43, cuadernos bancarios, Veri*factu, SII y formatos sectoriales— con validación estructural real contra el esquema oficial y cálculo determinista de importes y totales de control. Se contrata como módulo cuando el cliente lo necesita.
+          </p>
+        </div>
+      </section>
+
+      {/* 10 · Puesta en marcha (nivel 3) */}
+      <section className="bg-ros-bg dark:bg-gray-950 border-t border-[#E4EDF1] dark:border-gray-800 py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-11">
+            <Eyebrow className="mb-3.5">Puesta en marcha</Eyebrow>
+            <h2 className="text-3xl md:text-[36px] font-bold font-heading leading-tight">
               De la primera conversación a la primera integración en producción
             </h2>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-            {[
-              {
-                title: "Diagnóstico",
-                desc: "Revisamos tus sistemas, tus procesos y tus formatos, y te decimos con concreción qué se puede integrar, con qué esfuerzo y en qué orden. Sin compromiso.",
-              },
-              {
-                title: "Primera integración",
-                desc: "Se pone en marcha un proceso completo, de principio a fin, con datos reales y volumen real. Es el que demuestra que funciona en tu casa, no en una demo.",
-              },
-              {
-                title: "Extensión",
-                desc: "A partir de ahí, cada proceso y cada sociedad nuevos reutilizan lo ya construido. El coste de la segunda integración no se parece al de la primera.",
-              },
-            ].map((step, idx) => (
-              <div
-                key={step.title}
-                className="p-8 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm text-center"
-              >
-                <div className="w-12 h-12 rounded-full bg-arje-blue text-white flex items-center justify-center font-bold text-xl mx-auto mb-4">
-                  {idx + 1}
-                </div>
-                <h3 className="text-xl font-bold font-heading text-arje-gray-900 dark:text-white mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-arje-gray-600 dark:text-gray-300">{step.desc}</p>
-              </div>
+          <ol className="grid grid-cols-1 md:grid-cols-3 gap-7">
+            {launchSteps.map((step, idx) => (
+              <li key={step.title} className="bg-white dark:bg-gray-900 border border-ros-border dark:border-gray-700 rounded-md p-8">
+                <span className="font-heading text-[46px] font-semibold leading-none text-[#D3E2E9] dark:text-gray-700">{idx + 1}</span>
+                <h3 className="font-heading text-xl font-semibold mt-3.5 mb-2.5">{step.title}</h3>
+                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{step.desc}</p>
+              </li>
             ))}
-          </div>
-
-          <div className="text-center p-6 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-sm text-arje-gray-700 dark:text-gray-300">
+          </ol>
+          <p className="mt-8 text-center text-base leading-relaxed text-ros-muted dark:text-gray-400 max-w-3xl mx-auto">
             Rosetta IA se contrata como servicio, con la implantación y el acompañamiento de los consultores de Arjé Partners. No te dejamos una plataforma y una documentación: te dejamos una integración funcionando.
-          </div>
+          </p>
         </div>
       </section>
 
-      {/* S10 · Preguntas frecuentes (Primera abierta por defecto) */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">FAQ</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Preguntas frecuentes
-            </h2>
+      {/* 11 · Preguntas frecuentes (nivel 2) */}
+      <section className="bg-white dark:bg-gray-900 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-8 lg:gap-16 items-start">
+          <div>
+            <Eyebrow className="mb-3.5">FAQ</Eyebrow>
+            <h2 className="text-3xl md:text-[32px] font-bold font-heading leading-tight">Preguntas frecuentes</h2>
           </div>
-
-          <div className="space-y-4">
+          <div className="border-b border-ros-border dark:border-gray-700">
             {faqs.map((faq, idx) => {
               const isOpen = activeFaq === idx;
               return (
-                <div
-                  key={faq.q}
-                  className="rounded-2xl bg-arje-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 overflow-hidden transition-all"
-                >
+                <div key={faq.q} className="border-t border-ros-border dark:border-gray-700">
                   <button
                     onClick={() => setActiveFaq(isOpen ? null : idx)}
                     aria-expanded={isOpen}
-                    className="w-full p-6 text-left flex justify-between items-center gap-4 focus:outline-none"
+                    className="w-full py-5 text-left flex justify-between items-center gap-4"
                   >
-                    <span className="font-bold text-base sm:text-lg text-arje-gray-900 dark:text-white">
-                      {faq.q}
-                    </span>
-                    <span className={`text-arje-blue font-bold text-xl transition-transform ${isOpen ? "rotate-180" : ""}`}>
-                      ↓
-                    </span>
+                    <span className="font-heading text-lg font-semibold">{faq.q}</span>
+                    <svg
+                      className={`w-[18px] h-[18px] flex-shrink-0 text-[#9DB3BD] transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.8}
+                      strokeLinecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </button>
-                  {isOpen && (
-                    <div className="px-6 pb-6 text-arje-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed border-t border-gray-200/60 dark:border-gray-700/60 pt-4">
-                      {faq.a}
-                    </div>
-                  )}
+                  {isOpen && <p className="pb-5 text-base leading-relaxed text-ros-muted dark:text-gray-400">{faq.a}</p>}
                 </div>
               );
             })}
@@ -1012,24 +953,21 @@ export default function RosettaIAPage() {
         </div>
       </section>
 
-      {/* S11 · CTA final */}
-      <section id="diagnostico" className="py-24 bg-gradient-to-br from-arje-blue via-arje-blue-light to-arje-blue-dark text-white relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-          <h2 className="text-3xl sm:text-5xl font-bold font-heading">
-            Cuéntanos qué sistemas tienes
-          </h2>
-          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            En una sesión de una hora revisamos tu escenario y te decimos qué es integrable, por dónde empezar y qué esperar. Sin compromiso y sin presentación comercial.
-          </p>
-
-          <div className="pt-4 max-w-xl mx-auto">
-            <Link
-              href="/contacto"
-              className="inline-block w-full sm:w-auto px-10 py-4 bg-white text-arje-blue font-bold rounded-xl shadow-2xl hover:bg-gray-50 hover:scale-105 transition-all text-center text-base"
-            >
-              Solicita un diagnóstico
-            </Link>
+      {/* 12 · Llamada final (nivel 1) */}
+      <section id="diagnostico" className="bg-ros-brand py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center gap-8 md:gap-14">
+          <div className="flex-grow">
+            <h2 className="text-3xl md:text-[40px] font-bold font-heading leading-tight text-white">Cuéntanos qué sistemas tienes</h2>
+            <p className="mt-3.5 text-lg leading-relaxed text-[#D3E9F2] max-w-2xl">
+              En una sesión de una hora revisamos tu escenario y te decimos qué es integrable, por dónde empezar y qué esperar. Sin compromiso y sin presentación comercial.
+            </p>
           </div>
+          <Link
+            href="/contacto"
+            className="inline-flex items-center justify-center h-[58px] px-8 rounded bg-white text-ros-ink font-semibold text-[17px] hover:bg-ros-bg transition-colors flex-shrink-0"
+          >
+            Solicita un diagnóstico
+          </Link>
         </div>
       </section>
     </div>

@@ -1,66 +1,56 @@
 // Fuente única de los sistemas y formatos que se citan en Inicio y en /rosetta-ia.
 // Cualquier cambio en la lista se hace aquí para que ambas páginas digan lo mismo.
+// Pendiente de decisión: separar «integrado y en producción» de «integrable». No inventarlo aquí.
 
 export const integrationCategories = [
   {
-    category: "ERPs Estándar & Tier 1",
+    category: "ERP de mercado",
     systems: [
-      "SAP S/4HANA & ECC",
+      "SAP S/4HANA y ECC",
       "Microsoft Dynamics 365 Business Central",
       "Navision (todas las versiones)",
       "Axapta / Dynamics AX",
-      "Infor M3 & Movex",
+      "Infor M3 y Movex",
       "IFS Applications",
       "JD Edwards EnterpriseOne",
       "Odoo Enterprise",
       "Sage 200",
     ],
-    badge: "Conectores Nativos",
+    badge: "Los ERP más habituales",
   },
   {
-    category: "TMS & Soluciones de Tesorería",
+    category: "Tesorería y bancos",
     systems: [
       "Sage XRT Advanced (todas las versiones)",
-      "Embat Treasury Platform",
+      "Embat",
       "Kyriba",
-      "Cash Pooling & Netting",
-      "Conectividad Bancaria Directa (SWIFT / SEPA / EBICS)",
-      "Extractos Multibanco N43 & CAMT.053",
+      "Cash pooling y compensación entre sociedades",
+      "Conexión directa con bancos (SWIFT, SEPA, EBICS)",
+      "Extractos de todos tus bancos (Norma 43, CAMT.053)",
     ],
-    badge: "Sincronización Total",
+    badge: "Tu ERP y tu tesorería, al día",
   },
   {
-    category: "Sistemas Propios & Legacy",
+    category: "Sistemas propios y heredados",
     systems: [
-      "Desarrollos in-house a medida",
-      "ERPs corporativos propios (C++, Java, .NET)",
-      "Sistemas host y AS400 / iSeries",
-      "Archivos secuenciales y COBOL",
-      "Bases de datos SQL Server, Oracle, DB2, PostgreSQL",
-      "Cualquier stack tecnológico sin APIs nativas",
+      "Desarrollos a medida",
+      "ERP propios, en cualquier lenguaje",
+      "AS/400 y otros sistemas centrales",
+      "Ficheros planos y aplicaciones COBOL",
+      "Bases de datos SQL Server, Oracle, DB2 y PostgreSQL",
+      "Sistemas sin API",
     ],
-    badge: "Especialidad Arjé",
+    badge: "Nuestra especialidad",
   },
 ];
 
 export const integrationTechnologies = [
-  { name: "REST API & JSON", icon: "🌐" },
-  { name: "SOAP & WS-Security", icon: "🔒" },
-  { name: "Direct Database (SQL/ODBC)", icon: "🗄️" },
-  { name: "ISO 20022 XML (PAIN/CAMT)", icon: "🏦" },
-  { name: "Cuaderno 43 / MT940", icon: "📄" },
-  { name: "WebHooks en tiempo real", icon: "⚡" },
-  { name: "SFTP & Managed File Transfer", icon: "📁" },
-  { name: "Verifactu / SII AEAT", icon: "🏛️" },
+  { name: "API REST" },
+  { name: "Servicios web SOAP" },
+  { name: "Conexión directa a base de datos (SQL/ODBC)" },
+  { name: "Ficheros bancarios ISO 20022 (pain, camt)" },
+  { name: "Norma 43 y MT940" },
+  { name: "Avisos en tiempo real (webhooks)" },
+  { name: "Intercambio de ficheros por SFTP" },
+  { name: "Veri*factu y SII" },
 ];
-
-// Circuito de la factura de proveedor: un color neón por sistema (la revisión humana usa ámbar)
-export const CIRCUIT_NEON: Record<string, string> = {
-  Correo: "#ff4fd8",
-  "Almacenamiento de documentos": "#9d7bff",
-  Invofox: "#3dffa0",
-  ERP: "#2de2ff",
-  Banco: "#ffe14d",
-};
-
-export const circuitSystems = Object.keys(CIRCUIT_NEON);

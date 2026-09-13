@@ -17,12 +17,12 @@ export default function Integration() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Compatibilidad Universal</span>
+          <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">Con qué conectamos</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-            Integración probada con <span className="gradient-text">cualquier tecnología</span>
+            Trabajamos con los sistemas <span className="gradient-text">que ya tienes</span>
           </h2>
           <p className="text-lg text-arje-gray-600 dark:text-gray-300">
-            Desde ERPs en la nube de última generación hasta sistemas legacy de hace más de 25 años. Si gestiona datos financieros, lo integramos.
+            Desde el ERP más reciente en la nube hasta el sistema propio que lleva décadas funcionando. Si guarda datos financieros, se puede conectar.
           </p>
         </div>
 
@@ -71,10 +71,10 @@ export default function Integration() {
         {/* Technologies Supported Bar */}
         <div className="bg-white dark:bg-gray-800/90 rounded-3xl p-8 md:p-10 shadow-lg border border-gray-200 dark:border-gray-700">
           <h3 className="text-xl md:text-2xl font-bold font-heading text-arje-gray-900 dark:text-white mb-2 text-center">
-            Formatos y Protocolos de Comunicación Nativos
+            Formatos y canales que manejamos
           </h3>
           <p className="text-sm text-arje-gray-500 dark:text-gray-400 text-center mb-8 max-w-2xl mx-auto">
-            Gestionados por Rosetta IA con trazabilidad completa, validación del formato y reintentos controlados.
+            Rosetta IA los gestiona dejando rastro de cada envío, validando el formato y reintentando de forma controlada si algo falla.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {technologies.map((tech, index) => (
@@ -82,7 +82,6 @@ export default function Integration() {
                 key={index}
                 className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 dark:bg-gray-700/60 text-arje-gray-800 dark:text-gray-200 rounded-xl text-xs sm:text-sm font-medium border border-gray-200/80 dark:border-gray-600 hover:border-arje-blue hover:text-arje-blue dark:hover:text-arje-blue-light transition-all cursor-default"
               >
-                <span>{tech.icon}</span>
                 <span>{tech.name}</span>
               </span>
             ))}

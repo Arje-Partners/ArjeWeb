@@ -22,7 +22,25 @@ const config = {
             800: '#1F2937',
             900: '#111827',
           }
-        }
+        },
+        // Sistema visual de Rosetta IA: azul para lo normal y el recorrido del dato; ámbar solo para la intervención humana
+        ros: {
+          navy: '#0B2230',
+          panel: '#10313F',
+          line: '#1E4B5F',
+          brand: '#1F6F8B',
+          'brand-dark': '#12556C',
+          light: '#4FC3EE',
+          amber: '#E0A33C',
+          'amber-line': '#C9902F',
+          bg: '#F6F9FA',
+          border: '#DCE7EC',
+          ink: '#0E2029',
+          muted: '#5E7480',
+          soft: '#8FB0BE',
+          'on-navy': '#AEC7D2',
+          'icon-bg': '#E8F3F7',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],

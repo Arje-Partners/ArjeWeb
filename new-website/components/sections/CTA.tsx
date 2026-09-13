@@ -28,7 +28,7 @@ export default function CTA() {
             Hablemos
           </Link>
           <Link
-            href="/insights"
+            href="/rosetta-ia#casos"
             className="px-8 py-4 bg-transparent text-white border-2 border-white rounded-xl font-semibold hover:bg-white/10 transition-all inline-block"
           >
             Ver casos de éxito

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Rosetta IA · seis integraciones entre el ERP y la tesorería</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; width: 1280px; height: 720px; background: #0B2230; overflow: hidden;
+         font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; color: #E4EEF2; }
+  .dsp { font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.02em; }
+  .stage { position: relative; width: 1280px; height: 720px; padding: 34px 44px; }
+  .glow { position: absolute; bottom: -220px; left: -140px; width: 620px; height: 620px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(31,111,139,0.20), rgba(31,111,139,0) 70%); }
+  .eyebrow { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+             text-transform: uppercase; color: #4FC3EE; }
+  .title { font-size: 30px; font-weight: 600; color: #FFFFFF; line-height: 1.15; margin-top: 8px; }
+  .mock { position: absolute; top: 34px; right: 44px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+          color: #7D93A0; border: 1px solid #2A4756; border-radius: 20px; padding: 5px 12px; }
+
+  .row { display: flex; align-items: stretch; gap: 26px; margin-top: 26px; }
+  .end { width: 210px; background: #12303F; border: 1px solid #2A5C73; border-radius: 12px; padding: 22px 18px;
+         text-align: center; display: flex; flex-direction: column; justify-content: center; }
+  .endic { width: 48px; height: 48px; margin: 0 auto 14px auto; border-radius: 11px; background: #0B2230;
+           border: 1px solid #2A5C73; display: flex; align-items: center; justify-content: center; }
+  .endlbl { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.13em;
+            text-transform: uppercase; color: #6E93A3; margin-bottom: 6px; }
+  .endname { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 600; color: #FFFFFF; }
+  .endsub { font-size: 12.5px; line-height: 1.5; color: #8FB0BE; margin-top: 8px; }
+
+  .lanes { flex-grow: 1; display: flex; flex-direction: column; gap: 9px; }
+  .lane { position: relative; display: flex; align-items: center; gap: 14px; height: 58px; background: #10313F;
+          border: 1px solid #23556B; border-radius: 8px; padding: 0 16px; opacity: .45;
+          transition: opacity .45s ease, border-color .45s ease, background .45s ease; }
+  .lane.on { opacity: 1; border-color: #4FC3EE; background: #123A4C; }
+  .lane.done { opacity: .92; border-color: #23556B; background: #10313F; }
+  .lname { font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; color: #FFFFFF; width: 196px; flex-shrink: 0; }
+  .ltext { flex-grow: 1; font-size: 13px; color: #8FB0BE; }
+  .state { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+           text-transform: uppercase; color: #4FC3EE; width: 96px; text-align: right; opacity: 0; transition: opacity .35s ease; }
+  .state.show { opacity: 1; }
+  .state.ok { color: #8FB0BE; }
+
+  .track { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; overflow: hidden; }
+  .track i { position: absolute; top: 0; left: -22%; width: 22%; height: 2px; background: linear-gradient(90deg, rgba(79,195,238,0), #4FC3EE); }
+  .lane.on .track i { animation: sweep 1.7s ease-in-out infinite; }
+  .lane.back.on .track i { animation: sweepback 1.7s ease-in-out infinite; }
+  @keyframes sweep { from { left: -22%; } to { left: 100%; } }
+  @keyframes sweepback { from { left: 100%; } to { left: -22%; } }
+
+  .grp { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.13em;
+         text-transform: uppercase; color: #6E93A3; margin: 8px 0 2px 2px; }
+  .grp.blue { color: #4FC3EE; }
+
+  .foot { position: absolute; left: 44px; right: 44px; bottom: 28px; display: flex; align-items: center; gap: 16px; }
+  .caption { font-size: 14px; color: #8FB0BE; flex-grow: 1; }
+  .bar { width: 300px; height: 3px; background: #17394A; border-radius: 2px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0%; background: #4FC3EE; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="glow"></div>
+  <div class="mock">Datos de ejemplo</div>
+
+  <div class="eyebrow">Rosetta IA · un caso real, con datos de ejemplo</div>
+  <div class="dsp title">Seis integraciones entre el ERP y la tesorería, sobre la misma tubería</div>
+
+  <div class="row">
+    <div class="end">
+      <div class="endic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><rect x="3" y="4" width="18" height="6" rx="1"></rect><rect x="3" y="14" width="18" height="6" rx="1"></rect></svg></div>
+      <div class="endlbl">El ERP</div>
+      <div class="dsp endname">Infor M3</div>
+      <div class="endsub">16 sociedades<br>3 países · 3 divisas</div>
+    </div>
+
+    <div class="lanes">
+      <div class="grp">Maestros</div>
+      <div class="lane" id="L1"><div class="lname">Cuentas</div><div class="ltext">El plan contable, sociedad a sociedad</div><div class="state" id="S1">Al día</div><div class="track"><i></i></div></div>
+      <div class="lane" id="L2"><div class="lname">Atributos</div><div class="ltext">La clasificación con la que la tesorería lee cada dato</div><div class="state" id="S2">Al día</div><div class="track"><i></i></div></div>
+      <div class="lane" id="L3"><div class="lname">Clientes y proveedores</div><div class="ltext">Terceros, con sus cuentas y condiciones de pago</div><div class="state" id="S3">Al día</div><div class="track"><i></i></div></div>
+
+      <div class="grp">Documentos y contabilidad</div>
+      <div class="lane" id="L4"><div class="lname">Operaciones</div><div class="ltext">Facturas y abonos: lo que se va a cobrar y a pagar</div><div class="state" id="S4">Al día</div><div class="track"><i></i></div></div>
+      <div class="lane" id="L5"><div class="lname">Asientos</div><div class="ltext">El mayor de bancos, contra el que se concilia</div><div class="state" id="S5">Al día</div><div class="track"><i></i></div></div>
+
+      <div class="grp blue">El flujo de vuelta</div>
+      <div class="lane back" id="L6" style="border-color:#2F6E88;"><div class="lname">Cobros y pagos</div><div class="ltext">Lo cobrado y lo pagado vuelve al ERP y salda cada documento</div><div class="state" id="S6">3 pagos · 1 cobro</div><div class="track"><i></i></div></div>
+    </div>
+
+    <div class="end">
+      <div class="endic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"></path></svg></div>
+      <div class="endlbl">La tesorería</div>
+      <div class="dsp endname">Embat</div>
+      <div class="endsub">Posición, previsión<br>cobros y pagos</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="caption" id="cap">Cinco integraciones llevan el ERP a la tesorería. Una trae de vuelta lo que pasa con el dinero.</div>
+    <div class="bar"><i id="prog"></i></div>
+  </div>
+</div>
+
+<script>
+const beats = [
+  { t: 0,     lane: 'L1', cap: 'Las cuentas: el plan contable del grupo, sociedad a sociedad.' },
+  { t: 2500,  lane: 'L2', cap: 'Los atributos: la clasificación con la que la tesorería entiende cada dato.' },
+  { t: 5000,  lane: 'L3', cap: 'Clientes y proveedores, con sus cuentas bancarias y sus condiciones de pago.' },
+  { t: 7500,  lane: 'L4', cap: 'Las operaciones: las facturas y abonos que se van a cobrar y a pagar.' },
+  { t: 10000, lane: 'L5', cap: 'Los asientos del mayor de bancos, que es contra lo que se concilia.' },
+  { t: 12500, lane: 'L6', cap: 'Y de vuelta: lo que la tesorería ha cobrado y pagado regresa al ERP, y cada documento queda saldado.' },
+  { t: 15600, cap: 'Seis integraciones sobre el mismo núcleo. La sexta costó una fracción de la primera.' }
+];
+const TOTAL = 19500;
+const $ = id => document.getElementById(id);
+
+function reset() {
+  document.querySelectorAll('.lane').forEach(l => l.classList.remove('on','done'));
+  document.querySelectorAll('.state').forEach(s => { s.classList.remove('show','ok'); });
+  $('prog').style.width = '0%';
+}
+function run() {
+  reset();
+  const start = performance.now();
+  beats.forEach(b => {
+    setTimeout(() => {
+      document.querySelectorAll('.lane.on').forEach(l => {
+        l.classList.remove('on'); l.classList.add('done');
+        const s = $('S' + l.id.slice(1)); if (s) { s.classList.add('show','ok'); }
+      });
+      if (b.lane) $(b.lane).classList.add('on');
+      if (b.cap) $('cap').textContent = b.cap;
+    }, b.t);
+  });
+  setTimeout(() => { document.querySelectorAll('.lane').forEach(l => l.classList.add('done')); }, 15400);
+  setTimeout(() => { document.querySelectorAll('.state').forEach(s => s.classList.add('show','ok')); }, 15500);
+  function tick(now) {
+    const p = Math.min(1, (now - start) / TOTAL);
+    $('prog').style.width = (p * 100) + '%';
+    if (p < 1) requestAnimationFrame(tick); else setTimeout(run, 700);
+  }
+  requestAnimationFrame(tick);
+}
+window.__animReady = true;
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(() => setTimeout(run, 300)); }
+else { setTimeout(run, 300); }
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Rosetta IA · circuito de facturas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; width: 1280px; height: 720px; background: #0B2230; overflow: hidden;
+         font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; color: #E4EEF2; }
+  .dsp { font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.02em; }
+  .stage { position: relative; width: 1280px; height: 720px; padding: 34px 44px; }
+  .glow { position: absolute; top: -200px; right: -140px; width: 620px; height: 620px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(51,184,232,0.14), rgba(51,184,232,0) 68%); }
+
+  .eyebrow { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+             text-transform: uppercase; color: #4FC3EE; }
+  .title { font-size: 30px; font-weight: 600; color: #FFFFFF; line-height: 1.15; margin-top: 8px; }
+
+  .mock { position: absolute; top: 34px; right: 44px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+          color: #7D93A0; border: 1px solid #2A4756; border-radius: 20px; padding: 5px 12px; }
+
+  .lanes { position: relative; margin-top: 26px; height: 470px; }
+  .lanelabel { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.13em;
+               text-transform: uppercase; color: #6E93A3; margin-bottom: 10px; }
+
+  .node { position: absolute; width: 168px; background: #10313F; border: 1px solid #23556B; border-radius: 10px;
+          padding: 14px 14px 16px 14px; text-align: center; opacity: 0.42; transform: translateY(0) scale(0.97);
+          transition: opacity .5s ease, transform .5s ease, border-color .5s ease, box-shadow .5s ease; }
+  .node.on { opacity: 1; transform: scale(1); border-color: #4FC3EE; box-shadow: 0 0 0 3px rgba(79,195,238,0.12); }
+  .node.done { opacity: .78; border-color: #23556B; box-shadow: none; }
+  .node.amber.on { border-color: #E0A33C; box-shadow: 0 0 0 3px rgba(224,163,60,0.14); }
+  .nic { width: 40px; height: 40px; margin: 0 auto 10px auto; border-radius: 9px; background: #0B2230;
+         border: 1px solid #2A5C73; display: flex; align-items: center; justify-content: center; }
+  .nsys { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.11em;
+          text-transform: uppercase; color: #6E93A3; margin-bottom: 6px; }
+  .ntit { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; color: #FFFFFF; line-height: 1.2; }
+
+  .card { position: absolute; width: 300px; background: #0E2A38; border: 1px solid #2A5C73; border-radius: 10px;
+          padding: 14px 16px; opacity: 0; transform: translateY(8px);
+          transition: opacity .45s ease, transform .45s ease; box-shadow: 0 14px 34px rgba(0,0,0,.35); }
+  .card.show { opacity: 1; transform: translateY(0); }
+  .ctag { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.11em;
+          text-transform: uppercase; color: #4FC3EE; margin-bottom: 8px; }
+  .crow { display: flex; justify-content: space-between; font-size: 13px; line-height: 1.7; color: #AEC7D2; }
+  .crow b { font-family: 'Outfit', sans-serif; font-weight: 600; color: #FFFFFF; }
+  .amberline { color: #E0A33C; }
+
+  .link { position: absolute; height: 2px; background: linear-gradient(90deg, rgba(79,195,238,0), #4FC3EE);
+          opacity: 0; transition: opacity .4s ease; }
+  .link.show { opacity: 1; }
+
+  .check { position: absolute; opacity: 0; transform: scale(.8); transition: opacity .4s ease, transform .4s ease; }
+  .check.show { opacity: 1; transform: scale(1); }
+
+  .foot { position: absolute; left: 44px; right: 44px; bottom: 28px; display: flex; align-items: center; gap: 14px; }
+  .bar { flex-grow: 1; height: 3px; background: #17394A; border-radius: 2px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0%; background: #4FC3EE; }
+  .caption { font-size: 14px; color: #8FB0BE; width: 560px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="glow"></div>
+  <div class="mock">Datos de ejemplo</div>
+
+  <div class="eyebrow">Rosetta IA · circuito de facturas</div>
+  <div class="dsp title">Del correo del proveedor al documento compensado</div>
+
+  <div class="lanes">
+    <div style="position:absolute; left:0; top:0;"><div class="lanelabel">La factura · cuando llega</div></div>
+
+    <div class="node" id="n1" style="left:0; top:24px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></div>
+      <div class="nsys">Correo</div><div class="ntit">Llega la factura</div>
+    </div>
+    <div class="node" id="n2" style="left:200px; top:24px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><path d="M3 7h6l2 2h10v10H3z"></path></svg></div>
+      <div class="nsys">Carpeta</div><div class="ntit">Rosetta IA la recoge</div>
+    </div>
+    <div class="node" id="n3" style="left:400px; top:24px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h3"></path></svg></div>
+      <div class="nsys">Invofox</div><div class="ntit">Se digitaliza</div>
+    </div>
+    <div class="node amber" id="n4" style="left:600px; top:24px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E0A33C" stroke-width="1.6"><rect x="3" y="4" width="18" height="6" rx="1"></rect><rect x="3" y="14" width="18" height="6" rx="1"></rect></svg></div>
+      <div class="nsys">ERP</div><div class="ntit">Se registra</div>
+    </div>
+
+    <div style="position:absolute; left:0; top:162px;"><div class="lanelabel">El banco · a diario, por su cuenta</div></div>
+    <div class="node" id="n5" style="left:600px; top:186px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"></path></svg></div>
+      <div class="nsys">Banco · NUEK</div><div class="ntit">Se descarga el extracto</div>
+    </div>
+
+    <div class="node" id="n6" style="left:846px; top:104px; width:180px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FC3EE" stroke-width="1.6"><path d="M4 8h10M4 8l3-3M4 8l3 3"></path><path d="M20 16H10m10 0l-3-3m3 3l-3 3"></path></svg></div>
+      <div class="nsys">Rosetta IA</div><div class="ntit">Se machean</div>
+    </div>
+    <div class="node amber" id="n7" style="left:1054px; top:104px; width:138px;">
+      <div class="nic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E0A33C" stroke-width="1.6" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"></path></svg></div>
+      <div class="nsys">ERP</div><div class="ntit">Se compensa</div>
+    </div>
+
+    <div class="link" id="l1" style="left:168px; top:100px; width:32px;"></div>
+    <div class="link" id="l2" style="left:368px; top:100px; width:32px;"></div>
+    <div class="link" id="l3" style="left:568px; top:100px; width:32px;"></div>
+    <div class="link" id="l4" style="left:768px; top:100px; width:78px;"></div>
+    <div class="link" id="l5" style="left:768px; top:262px; width:78px;"></div>
+    <div class="link" id="l6" style="left:1026px; top:180px; width:28px;"></div>
+
+    <!-- HUECO A · el documento -->
+    <div class="card" data-slot="a" id="c1" style="left:0; top:336px; width:600px;">
+      <div class="ctag">Factura recibida</div>
+      <div class="crow"><span>Proveedor</span><b>Suministros Peñalba, S.L. · NIF B00000000</b></div>
+      <div class="crow"><span>Documento</span><b>F-2026/0418</b></div>
+      <div class="crow"><span>Importe</span><b>4.235,00 €</b></div>
+    </div>
+    <div class="card" data-slot="a" id="c2" style="left:0; top:336px; width:600px;">
+      <div class="ctag">Contenido extraído por Invofox</div>
+      <div class="crow"><span>Base · IVA 21 %</span><b>3.500,00 € · 735,00 €</b></div>
+      <div class="crow"><span>Total</span><b>4.235,00 €</b></div>
+      <div class="crow"><span>Vencimiento</span><b>12/10/2026</b></div>
+    </div>
+    <div class="card" data-slot="a" id="c3" style="left:0; top:336px; width:600px;">
+      <div class="ctag">Registrada en el ERP</div>
+      <div class="crow"><span>Proveedor</span><b>41000012 · Suministros Peñalba, S.L.</b></div>
+      <div class="crow"><span>Cuenta · centro de coste</span><b>600000 · ALM-02</b></div>
+      <div class="crow amberline"><span>Revisión previa</span><b style="color:#E0A33C">no configurada para este proveedor</b></div>
+    </div>
+
+    <!-- HUECO B · el banco -->
+    <div class="card" data-slot="b" id="c4" style="left:640px; top:336px; width:552px;">
+      <div class="ctag">Movimiento del extracto</div>
+      <div class="crow"><span>Fecha valor</span><b>12/09/2026</b></div>
+      <div class="crow"><span>Concepto</span><b>TRANSF. PEÑALBA</b></div>
+      <div class="crow"><span>Importe</span><b>−4.235,00 €</b></div>
+    </div>
+    <div class="card" data-slot="b" id="c5" style="left:640px; top:336px; width:552px;">
+      <div class="ctag">Contabilizado y compensado</div>
+      <div class="crow"><span>Coincide</span><b>importe · fecha · tercero</b></div>
+      <div class="crow"><span>Asiento</span><b>400 Proveedores a 572 Bancos</b></div>
+      <div class="crow"><span>Documento F-2026/0418</span><b style="color:#7FD1A8">saldado</b></div>
+    </div>
+
+    <div class="link" id="lmatch" style="left:600px; top:372px; width:40px;"></div>
+  </div>
+
+  <div class="foot">
+    <div class="caption" id="cap">La factura entra por correo y termina registrada en el ERP.</div>
+    <div class="bar"><i id="prog"></i></div>
+  </div>
+</div>
+
+<script>
+const beats = [
+  { t: 0,    on: ['n1'], card: 'c1', cap: 'El proveedor envía la factura por correo y cae en la carpeta de siempre.' },
+  { t: 2600, on: ['n2'], link: 'l1', cap: 'Rosetta IA vigila la carpeta y toma los documentos nuevos.' },
+  { t: 4600, on: ['n3'], link: 'l2', card: 'c2', cap: 'Invofox extrae el contenido del documento.' },
+  { t: 7200, on: ['n4'], link: 'l3', card: 'c3', cap: 'Rosetta IA lo traduce a los maestros del cliente y lo registra en el ERP.' },
+  { t: 10200, on: ['n5'], card: 'c4', cap: 'Por otro lado, el extracto del banco se descarga a diario, por su cuenta.' },
+  { t: 13000, on: ['n6'], link: 'l4', link2: 'l5', link3: 'lmatch', cap: 'Cuando los dos llegan, cada movimiento busca su factura.' },
+  { t: 15600, on: ['n7'], link: 'l6', card: 'c5', cap: 'Se contabiliza el pago y el documento queda compensado.' },
+  { t: 19000, cap: 'Cinco sistemas que nunca fueron diseñados para hablar entre sí. Eso es Rosetta IA.' }
+];
+const TOTAL = 23000;
+const $ = id => document.getElementById(id);
+
+function reset() {
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('on','done'));
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('show'));
+  document.querySelectorAll('.link').forEach(l => l.classList.remove('show'));
+  $('prog').style.width = '0%';
+}
+
+function run() {
+  reset();
+  const start = performance.now();
+  beats.forEach(b => {
+    setTimeout(() => {
+      document.querySelectorAll('.node.on').forEach(n => { n.classList.remove('on'); n.classList.add('done'); });
+      (b.on || []).forEach(id => $(id).classList.add('on'));
+      if (b.link) $(b.link).classList.add('show');
+      if (b.link2) $(b.link2).classList.add('show');
+      if (b.link3) $(b.link3).classList.add('show');
+      if (b.card) {
+        const el = $(b.card);
+        document.querySelectorAll('.card[data-slot="' + el.dataset.slot + '"]').forEach(c => c.classList.remove('show'));
+        el.classList.add('show');
+      }
+      if (b.cap) $('cap').textContent = b.cap;
+    }, b.t);
+  });
+  function tick(now) {
+    const p = Math.min(1, (now - start) / TOTAL);
+    $('prog').style.width = (p * 100) + '%';
+    if (p < 1) requestAnimationFrame(tick); else setTimeout(run, 700);
+  }
+  requestAnimationFrame(tick);
+}
+window.__animReady = true;
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(() => setTimeout(run, 300)); }
+else { setTimeout(run, 300); }
+</script>
+</body>
+</html>
