@@ -32,8 +32,100 @@
 
   .mesh-grid {
     background-size: 40px 40px;
-    background-image: 
+    background-image:
       linear-gradient(to right, rgba(41, 140, 181, 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(41, 140, 181, 0.05) 1px, transparent 1px);
+  }
+}
+
+/* Infografía neón (circuito de Rosetta IA)
+   Receta: forma casi negra con borde blanco semitransparente; al activarse, borde blanco
+   pleno + sombra ancha (45px) + resplandor corto (8px) del mismo color. Los láseres son
+   trazos cortos de 3px con extremos redondeados que corren a velocidad constante y
+   nacen y mueren detrás de los nodos. --neon (y --neon2, opcional) fijan el color y se
+   heredan del contenedor del paso. */
+@layer components {
+  .neon-node {
+    background-color: #0b0f14;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    box-shadow: 0 0 18px -6px color-mix(in srgb, var(--neon) 35%, transparent);
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .neon-node[data-active="true"] {
+    border-color: #fff;
+    box-shadow:
+      0 0 8px color-mix(in srgb, var(--neon) 90%, transparent),
+      -12px 0 45px -4px color-mix(in srgb, var(--neon) 55%, transparent),
+      12px 0 45px -4px color-mix(in srgb, var(--neon2, var(--neon)) 55%, transparent);
+  }
+
+  .neon-dot {
+    background-color: var(--neon);
+    box-shadow: 0 0 6px var(--neon), 0 0 14px var(--neon);
+  }
+
+  .neon-run-x,
+  .neon-run-y {
+    position: absolute;
+    inset: 0;
+    animation-timing-function: linear;
+    animation-duration: var(--run, 1.8s);
+    animation-iteration-count: var(--loops, 1);
+    animation-fill-mode: forwards;
+  }
+
+  .neon-run-x {
+    animation-name: neon-run-x;
+  }
+
+  .neon-run-y {
+    animation-name: neon-run-y;
+  }
+
+  .neon-run-x::before,
+  .neon-run-y::before {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    background-color: #fff;
+    box-shadow: 0 0 3px var(--neon), 0 0 10px var(--neon), 0 0 16px var(--neon);
+  }
+
+  .neon-run-x::before {
+    left: 0;
+    top: 50%;
+    width: 14px;
+    height: 3px;
+    transform: translate(-50%, -50%);
+  }
+
+  .neon-run-y::before {
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes neon-run-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+
+  @keyframes neon-run-y {
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neon-run-x,
+    .neon-run-y {
+      display: none;
+    }
+
+    .neon-node {
+      transition: none;
+    }
   }
 }

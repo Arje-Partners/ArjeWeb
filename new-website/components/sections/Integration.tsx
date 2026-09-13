@@ -1,62 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { integrationCategories, integrationTechnologies as technologies } from "@/lib/integrations";
+
+const categoryColors = [
+  "bg-blue-50/70 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800",
+  "bg-teal-50/70 border-teal-200 dark:bg-teal-950/20 dark:border-teal-800",
+  "bg-indigo-50/70 border-indigo-200 dark:bg-indigo-950/20 dark:border-indigo-800",
+];
 
 export default function Integration() {
-  const integrationTypes = [
-    {
-      category: "ERPs Estándar & Tier 1",
-      systems: [
-        "SAP S/4HANA & ECC",
-        "Microsoft Dynamics 365 Business Central",
-        "Navision (todas las versiones)",
-        "Axapta / Dynamics AX",
-        "Infor M3 & Movex",
-        "IFS Applications",
-        "JD Edwards EnterpriseOne",
-        "Odoo Enterprise",
-      ],
-      badge: "Conectores Nativos",
-      color: "bg-blue-50/70 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800",
-    },
-    {
-      category: "TMS & Soluciones de Tesorería",
-      systems: [
-        "Sage XRT Advanced (todas las versiones)",
-        "Embat Treasury Platform",
-        "Kyriba",
-        "Cash Pooling & Netting",
-        "Conectividad Bancaria Directa (SWIFT / SEPA / EBICS)",
-        "Extractos Multibanco N43 & CAMT.053",
-      ],
-      badge: "Sincronización Total",
-      color: "bg-teal-50/70 border-teal-200 dark:bg-teal-950/20 dark:border-teal-800",
-    },
-    {
-      category: "Sistemas Propios & Legacy",
-      systems: [
-        "Desarrollos in-house a medida",
-        "ERPs corporativos propios (C++, Java, .NET)",
-        "Sistemas host y AS400 / iSeries",
-        "Archivos secuenciales y COBOL",
-        "Bases de datos SQL Server, Oracle, DB2, PostgreSQL",
-        "Cualquier stack tecnológico sin APIs nativas",
-      ],
-      badge: "Especialidad Arjé",
-      color: "bg-indigo-50/70 border-indigo-200 dark:bg-indigo-950/20 dark:border-indigo-800",
-    },
-  ];
-
-  const technologies = [
-    { name: "REST API & JSON", icon: "🌐" },
-    { name: "SOAP & WS-Security", icon: "🔒" },
-    { name: "Direct Database (SQL/ODBC)", icon: "🗄️" },
-    { name: "ISO 20022 XML (PAIN/CAMT)", icon: "🏦" },
-    { name: "Cuaderno 43 / MT940", icon: "📄" },
-    { name: "WebHooks en tiempo real", icon: "⚡" },
-    { name: "SFTP & Managed File Transfer", icon: "📁" },
-    { name: "Verifactu / SII AEAT", icon: "🏛️" },
-  ];
+  const integrationTypes = integrationCategories.map((c, i) => ({ ...c, color: categoryColors[i] }));
 
   return (
     <section className="py-24 md:py-32 bg-gradient-to-b from-arje-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-t border-gray-200 dark:border-gray-800">

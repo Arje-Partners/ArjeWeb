@@ -20,8 +20,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Arjé Partners | Conectamos cualquier sistema con cualquier sistema",
-  description: "Con Rosetta IA conectamos cualquier sistema con cualquier sistema: ERP, bancos, tesorería, plataformas sectoriales o sistemas propios, sin tocarlos. Especialistas en tesorería corporativa.",
+  title: "Arjé Partners | Tus datos, donde tienen que estar",
+  description: "Integración de sistemas y datos para empresas medianas y grandes: conectamos aplicaciones, transformamos, cargamos y entregamos la información donde se necesita. Más de 15 años haciéndolo, hoy con Rosetta IA.",
   keywords: "treasury management, Rosetta IA, integración ERP, sistemas custom, tesorería, conciliación bancaria, Arjé Partners",
   icons: {
     icon: [

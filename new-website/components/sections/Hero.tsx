@@ -10,9 +10,25 @@ export default function Hero() {
     setMounted(true);
   }, []);
 
-  // Figura simétrica, igual que en /rosetta-ia: la tesorería es un ejemplo, no el límite
-  const sideA = ["ERP", "Bancos", "Plataformas sectoriales", "Sistemas propios"];
-  const sideB = ["Tesorería", "ERP", "Gestores documentales", "BI y datos"];
+  // Inicio presenta a Arjé Partners por lo que hace con los datos; el detalle del producto vive en /rosetta-ia
+  const offer = [
+    {
+      title: "Conectar sistemas",
+      desc: "ERP, bancos, plataformas sectoriales y desarrollos propios o heredados, por API, base de datos o fichero.",
+    },
+    {
+      title: "Transformar datos",
+      desc: "Los traducimos a un modelo común y aplicamos reglas de calidad antes de que lleguen a ninguna parte.",
+    },
+    {
+      title: "Cargar y almacenar",
+      desc: "Alimentamos tu data warehouse o datalake con información limpia, histórica y trazable.",
+    },
+    {
+      title: "Entregar y suministrar",
+      desc: "Al ERP, al BI, al banco o al organismo, en el formato que espera y con confirmación de recepción.",
+    },
+  ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-arje-gray-50 via-white to-white dark:from-gray-950 dark:via-gray-900 dark:to-gray-900 pt-28 pb-20">
@@ -31,7 +47,7 @@ export default function Hero() {
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-arje-blue animate-ping" />
-            <span>Rosetta IA · Plataforma de integración</span>
+            <span>Arjé Partners · Integración de sistemas y datos</span>
           </div>
 
           {/* Main Heading with Epilogue font */}
@@ -40,9 +56,9 @@ export default function Hero() {
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            Conectamos cualquier sistema{" "}
+            Tus datos,{" "}
             <br className="hidden sm:inline" />
-            con <span className="gradient-text">cualquier sistema</span>
+            <span className="gradient-text">donde tienen que estar</span>
           </h1>
 
           {/* Subheading */}
@@ -51,8 +67,9 @@ export default function Hero() {
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            ERP, banco, tesorería, sistema propio, plataforma sectorial o fichero heredado: si tiene datos, tiene camino.
-            Con <strong className="text-arje-gray-900 dark:text-white font-bold">Rosetta IA</strong> lo conectamos sin tocar tus sistemas. La tesorería corporativa es donde más lejos hemos llegado.
+            Conectamos sistemas, transformamos sus datos y los entregamos listos para usar: en el ERP, en el banco, en tu BI o
+            en tus aplicaciones propias. Más de 15 años haciéndolo, hoy con{" "}
+            <strong className="text-arje-gray-900 dark:text-white font-bold whitespace-nowrap">Rosetta IA.</strong>
           </p>
 
           {/* CTAs */}
@@ -65,7 +82,7 @@ export default function Hero() {
               href="/contacto"
               className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-arje-blue to-arje-blue-dark text-white rounded-xl font-semibold shadow-lg shadow-arje-blue/20 hover:shadow-xl hover:shadow-arje-blue/30 hover:scale-105 transition-all text-center"
             >
-              Solicita un diagnóstico
+              Habla con un consultor
             </Link>
             <Link
               href="/rosetta-ia"
@@ -76,59 +93,40 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* Live Architecture Connectivity Strip */}
+          {/* Qué hacemos: el recorrido del dato en cuatro verbos */}
           <div
             className={`pt-12 transition-all duration-700 delay-500 ${
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            <div className="p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-xl max-w-4xl mx-auto">
-              <div className="text-xs font-semibold uppercase tracking-wider text-arje-gray-500 dark:text-gray-400 mb-4">
-                Cualquier origen, cualquier destino
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-7 gap-3 items-center">
-                {/* Un sistema */}
-                <div className="md:col-span-3 space-y-1.5 text-left">
-                  <div className="text-[11px] font-bold text-arje-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                    Un sistema
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {sideA.map((item) => (
-                      <span
-                        key={item}
-                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 text-arje-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Rosetta IA en medio */}
-                <div className="md:col-span-1 flex flex-col items-center justify-center py-2 md:py-0">
-                  <span className="text-arje-blue text-lg font-bold" aria-hidden="true">⇄</span>
-                  <span className="text-[11px] font-bold text-arje-blue dark:text-arje-blue-light whitespace-nowrap">Rosetta IA</span>
-                </div>
-
-                {/* Cualquier otro sistema */}
-                <div className="md:col-span-3 space-y-1.5 text-left md:text-right">
-                  <div className="text-[11px] font-bold text-arje-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                    Cualquier otro sistema
-                  </div>
-                  <div className="flex flex-wrap md:justify-end gap-1.5">
-                    {sideB.map((item) => (
-                      <span
-                        key={item}
-                        className="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-700 text-arje-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto text-left">
+              {offer.map((item, idx) => (
+                <li
+                  key={item.title}
+                  className="relative p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-lg"
+                >
+                  <span className="text-xs font-bold text-arje-blue dark:text-arje-blue-light">0{idx + 1}</span>
+                  <h2 className="font-bold font-heading text-base text-arje-gray-900 dark:text-white mt-1 mb-1.5">
+                    {item.title}
+                  </h2>
+                  <p className="text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">{item.desc}</p>
+                  {idx < offer.length - 1 && (
+                    <span
+                      className="hidden lg:flex absolute top-1/2 -right-3.5 z-10 w-6 h-6 -translate-y-1/2 rounded-full bg-arje-blue text-white text-xs items-center justify-center"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+            <Link
+              href="/servicios"
+              className="inline-block mt-6 text-sm font-semibold text-arje-blue dark:text-arje-blue-light hover:underline"
+            >
+              Ver todos los servicios →
+            </Link>
           </div>
         </div>
       </div>

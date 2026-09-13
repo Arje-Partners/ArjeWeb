@@ -1,35 +1,16 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Link from "next/link";
+import { CIRCUIT_NEON, circuitSystems } from "@/lib/integrations";
 
+// Avance de Rosetta IA en Inicio: solo nombra y enlaza; el desarrollo completo está en /rosetta-ia
 export default function RosettaShowcase() {
-  // Aplicaciones en producción (§1.2); sin nombres internos ni Veri*factu destacado (§1.3, §2.1)
   const applications = [
-    {
-      title: "Conectividad bancaria",
-      desc: "Los extractos de todos tus bancos entran solos, todos los días.",
-    },
-    {
-      title: "Contabilización de extractos",
-      desc: "Clasifica y contabiliza lo que está claro, y pone delante de una persona solo lo que requiere criterio.",
-    },
-    {
-      title: "Facturas de proveedor",
-      desc: "La factura llega por correo y aparece registrada en el ERP, sola o pasando antes por revisión.",
-    },
-    {
-      title: "Pagos y conciliación de TPV",
-      desc: "Ficheros de pago con importes calculados de forma determinista y cobros por datáfono cuadrados con el banco.",
-    },
-  ];
-
-  // §1.2 bis · Resumen del circuito, en lenguaje de negocio (sustituye al diagrama de consola)
-  const circuit = [
-    { system: "Correo", step: "Llega la factura" },
-    { system: "Invofox", step: "Se digitaliza" },
-    { system: "ERP", step: "Se registra", review: "Revisión opcional" },
-    { system: "Banco", step: "Entran los movimientos" },
-    { system: "ERP", step: "Se cruza, se contabiliza y se compensa", review: "Lo que no cuadra, a revisión" },
+    "Conectividad bancaria",
+    "Contabilización de extractos",
+    "Facturas de proveedor",
+    "Pagos y conciliación de TPV",
   ];
 
   return (
@@ -47,80 +28,84 @@ export default function RosettaShowcase() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-arje-gray-900 dark:text-white leading-tight">
-              <span className="gradient-text">Rosetta IA</span>: aplicaciones que ya funcionan sobre tus sistemas
+              <span className="gradient-text">Rosetta IA</span>, la plataforma con la que trabajamos
             </h2>
 
             <p className="text-lg text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-              Sobre el motor de integración, Rosetta IA incorpora aplicaciones listas para trabajar. Cada una resuelve un proceso completo de principio a fin y se contrata por separado: se empieza por la que más duele.
+              Todo lo que hemos aprendido integrando sistemas lo hemos convertido en producto. Rosetta IA es la base de cada
+              proyecto que ponemos en marcha e incluye aplicaciones listas para el día a día, empezando por el área financiera:
             </p>
 
-            {/* Aplicaciones */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            {/* Aplicaciones: solo los nombres; el detalle está en /rosetta-ia#aplicaciones */}
+            <ul className="flex flex-wrap gap-2.5 pt-1">
               {applications.map((app) => (
-                <div
-                  key={app.title}
-                  className="p-4 rounded-xl bg-white dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700"
+                <li
+                  key={app}
+                  className="px-4 py-2 rounded-xl bg-white dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-arje-gray-800 dark:text-gray-200"
                 >
-                  <div className="text-arje-blue font-bold text-base mb-1">{app.title}</div>
-                  <p className="text-xs text-arje-gray-600 dark:text-gray-300">{app.desc}</p>
-                </div>
+                  {app}
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+            <div className="pt-4">
               <Link
                 href="/rosetta-ia"
-                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-arje-blue to-arje-blue-dark text-white rounded-xl font-semibold shadow-md hover:shadow-xl hover:scale-105 transition-all text-center"
+                className="inline-block w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-arje-blue to-arje-blue-dark text-white rounded-xl font-semibold shadow-md hover:shadow-xl hover:scale-105 transition-all text-center"
               >
                 Conoce Rosetta IA →
-              </Link>
-              <Link
-                href="/contacto"
-                className="w-full sm:w-auto px-7 py-3.5 bg-white dark:bg-gray-800 text-arje-gray-800 dark:text-white border border-gray-300 dark:border-gray-700 rounded-xl font-semibold hover:border-arje-blue transition-all text-center"
-              >
-                Solicita un diagnóstico
               </Link>
             </div>
           </div>
 
-          {/* Right: Circuito de la factura */}
+          {/* Right: avance neón del circuito; el completo está en /rosetta-ia#circuito */}
           <div className="lg:col-span-6">
-            <div className="p-6 md:p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 border-arje-blue/30 dark:border-gray-700 shadow-2xl">
-              <div className="pb-5 border-b border-gray-100 dark:border-gray-700 mb-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-arje-blue">El circuito completo</span>
-                <h3 className="text-lg font-bold font-heading text-arje-gray-900 dark:text-white mt-1">
-                  Del correo del proveedor al documento compensado, sin teclear
+            <Link
+              href="/rosetta-ia#circuito"
+              className="group relative block p-6 md:p-8 rounded-3xl bg-[#05070a] border border-gray-800 shadow-2xl overflow-hidden"
+            >
+              <div className="absolute inset-0 mesh-grid opacity-60 pointer-events-none" aria-hidden="true" />
+
+              <div className="relative">
+                <span className="text-xs font-bold uppercase tracking-wider text-arje-blue-light">Un ejemplo en marcha</span>
+                <h3 className="text-lg md:text-xl font-bold font-heading text-white mt-1 mb-6">
+                  Una factura de proveedor atraviesa cinco sistemas y nadie la teclea
                 </h3>
-              </div>
 
-              <ol className="relative space-y-4">
-                <div className="absolute top-2 bottom-2 left-4 w-0.5 bg-arje-blue/25" aria-hidden="true" />
-                {circuit.map((c, idx) => (
-                  <li key={idx} className="relative flex items-start gap-4">
-                    <div className="relative z-10 w-8 h-8 rounded-full bg-arje-blue text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
-                      {idx + 1}
-                    </div>
-                    <div className="flex-1 pt-0.5">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold text-sm text-arje-gray-900 dark:text-white">{c.step}</span>
-                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-700 text-arje-gray-600 dark:text-gray-300">
-                          {c.system}
-                        </span>
-                      </div>
-                      {c.review && (
-                        <span className="inline-block mt-1.5 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                          {c.review}
-                        </span>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                <ol className="relative space-y-3">
+                  {/* Línea y láser que la recorre en bucle, por detrás de los nodos */}
+                  <div className="absolute top-5 bottom-5 left-5 w-px bg-white/25" aria-hidden="true">
+                    <span
+                      className="neon-run-y"
+                      style={{ "--neon": CIRCUIT_NEON.ERP, "--run": "4s", "--loops": "infinite" } as CSSProperties}
+                    />
+                  </div>
 
-              <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 text-xs text-arje-gray-500 dark:text-gray-400">
-                Cinco sistemas que nunca fueron diseñados para hablar entre sí. Los importes se calculan con reglas deterministas; lo dudoso lo valida una persona.
+                  {circuitSystems.map((sys, idx) => (
+                    <li
+                      key={sys}
+                      style={{ "--neon": CIRCUIT_NEON[sys] } as CSSProperties}
+                      className="relative flex items-center gap-4"
+                    >
+                      <span
+                        data-active="true"
+                        className="neon-node relative z-10 w-10 h-10 rounded-full text-white flex items-center justify-center font-bold text-sm flex-shrink-0"
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="neon-node flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-200 flex items-center gap-2">
+                        <span className="neon-dot w-1.5 h-1.5 rounded-full" aria-hidden="true" />
+                        {sys}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2de2ff] group-hover:gap-2.5 transition-all">
+                  Ver el circuito completo <span aria-hidden="true">→</span>
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

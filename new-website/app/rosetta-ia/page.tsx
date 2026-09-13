@@ -1,23 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { faqs } from "./faqs";
+import { CIRCUIT_NEON, circuitSystems, integrationCategories } from "@/lib/integrations";
+
+const REVIEW_NEON = "#ffa53d";
+const CIRCUIT_STEP_MS = 1800;
+
+const neonVars = (system: string): CSSProperties => {
+  const [first, second = first] = system.split(" + ");
+  return { "--neon": CIRCUIT_NEON[first], "--neon2": CIRCUIT_NEON[second] } as CSSProperties;
+};
 
 export default function RosettaIAPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0); // Primera abierta por defecto segun §1.4
 
-  const systemsConnected = [
-    "Infor M3",
-    "Microsoft Dynamics 365 Business Central",
-    "JD Edwards",
-    "SAP",
-    "Sage 200",
-    "Odoo",
-    "AS/400 y sistemas propietarios",
-    "Sage XRT Advanced",
-    "Embat",
-  ];
+  // El documento recorre el circuito paso a paso; al pasar el ratón por un paso queda fijado
+  const circuitRef = useRef<HTMLElement>(null);
+  const [circuitStep, setCircuitStep] = useState(1);
+  const [pinnedStep, setPinnedStep] = useState<number | null>(null);
+  const [circuitRunning, setCircuitRunning] = useState(false);
+  const [circuitStatic, setCircuitStatic] = useState(false); // Movimiento reducido: todo encendido y quieto
+
+  useEffect(() => {
+    const section = circuitRef.current;
+    if (!section) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCircuitStatic(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => setCircuitRunning(entry.isIntersecting), { threshold: 0.2 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!circuitRunning || pinnedStep !== null) return;
+    const timer = setInterval(() => setCircuitStep((s) => (s % 7) + 1), CIRCUIT_STEP_MS);
+    return () => clearInterval(timer);
+  }, [circuitRunning, pinnedStep]);
+
+  const activeCircuitStep = pinnedStep ?? circuitStep;
+  const isStepLit = (step: number) => circuitStatic || step === activeCircuitStep;
+  const laserVars = (system: string): CSSProperties =>
+    ({ ...neonVars(system), "--run": `${CIRCUIT_STEP_MS}ms`, "--loops": pinnedStep !== null ? "infinite" : 1 }) as CSSProperties;
 
   const applications = [
     {
@@ -103,9 +131,6 @@ export default function RosettaIAPage() {
       ),
     },
   ];
-
-  // §1.2 bis · Los cinco sistemas del circuito, con el mismo peso visual
-  const circuitSystems = ["Correo", "Almacenamiento de documentos", "Invofox", "ERP", "Banco"];
 
   const circuitSteps = [
     {
@@ -411,85 +436,147 @@ export default function RosettaIAPage() {
       </section>
 
       {/* §1.2 bis · El circuito completo: horizontal en escritorio, vertical en móvil */}
-      <section id="circuito" className="py-24 bg-gradient-to-b from-arje-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-t border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Estilo infografía neón: fondo negro fijo en ambos temas, nodos que brillan y láseres entre pasos */}
+      <section
+        id="circuito"
+        ref={circuitRef}
+        className="relative overflow-hidden py-24 bg-[#05070a] border-t border-b border-gray-800"
+      >
+        <div className="absolute inset-0 mesh-grid opacity-60 pointer-events-none" aria-hidden="true" />
+        <div className="absolute -top-40 left-1/4 w-[32rem] h-[32rem] rounded-full bg-arje-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 max-w-4xl mx-auto">
-            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue">El circuito completo</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-arje-gray-900 dark:text-white mt-2 mb-4">
-              Del correo del proveedor al documento compensado, <span className="gradient-text">sin teclear</span>
+            <span className="text-sm font-semibold uppercase tracking-wider text-arje-blue-light">El circuito completo</span>
+            <h2 className="text-3xl md:text-5xl font-bold font-heading text-white mt-2 mb-4">
+              Del correo del proveedor al documento compensado,{" "}
+              <span className="text-[#2de2ff] [text-shadow:0_0_18px_rgb(45_226_255/0.55)]">sin teclear</span>
             </h2>
-            <p className="text-lg text-arje-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-400">
               Cada una de las aplicaciones resuelve su tramo. Juntas resuelven el ciclo entero, y ese es el punto: no es una herramienta que automatiza un paso, es un circuito que va de punta a punta.
             </p>
           </div>
 
-          {/* Los cinco sistemas, mismo peso visual */}
-          <div className="flex flex-wrap justify-center gap-2.5 mb-12">
+          {/* Los cinco sistemas, mismo peso visual; se encienden cuando el documento pasa por ellos */}
+          <div className="flex flex-wrap justify-center gap-2.5 mb-14">
             {circuitSystems.map((sys) => (
               <span
                 key={sys}
-                className="px-4 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs sm:text-sm font-semibold text-arje-gray-800 dark:text-gray-200"
+                style={neonVars(sys)}
+                data-active={circuitSteps.some((s) => isStepLit(s.step) && s.system.split(" + ").includes(sys))}
+                className="neon-node inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-200"
               >
+                <span className="neon-dot w-1.5 h-1.5 rounded-full" aria-hidden="true" />
                 {sys}
               </span>
             ))}
           </div>
 
           {/* Pasos */}
-          <ol className="relative grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-3">
+          <ol
+            className="relative grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-3"
+            onMouseLeave={() => {
+              if (pinnedStep !== null) setCircuitStep(pinnedStep);
+              setPinnedStep(null);
+            }}
+          >
             {/* Línea conectora en escritorio */}
-            <div className="hidden lg:block absolute top-5 left-[7%] right-[7%] h-0.5 bg-arje-blue/30" aria-hidden="true" />
+            <div className="hidden lg:block absolute top-5 left-[7%] right-[7%] h-px bg-white/25" aria-hidden="true" />
             {/* Línea conectora en móvil */}
-            <div className="lg:hidden absolute top-2 bottom-2 left-5 w-0.5 bg-arje-blue/30" aria-hidden="true" />
+            <div className="lg:hidden absolute top-5 bottom-5 left-5 w-px bg-white/25" aria-hidden="true" />
 
-            {circuitSteps.map((s) => (
-              <li key={s.step} className="relative flex lg:flex-col items-start lg:items-stretch gap-4 lg:gap-3">
-                <div className="relative z-10 w-10 h-10 rounded-full bg-arje-blue text-white flex items-center justify-center font-bold text-sm flex-shrink-0 lg:mx-auto ring-4 ring-arje-gray-50 dark:ring-gray-950">
-                  {s.step}
-                </div>
-                <div className="flex-1 lg:flex-none lg:h-full p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex flex-col">
-                  <span className="text-[11px] font-semibold uppercase tracking-wide text-arje-gray-500 dark:text-gray-400 mb-1">
-                    {s.system}
-                  </span>
-                  <h3 className="font-bold font-heading text-arje-gray-900 dark:text-white text-sm leading-snug mb-1.5">
-                    {s.title}
-                  </h3>
-                  <p className="text-xs text-arje-gray-600 dark:text-gray-300 leading-relaxed">
-                    {s.detail}
-                  </p>
-                  {s.review && (
-                    <div className="mt-auto pt-3">
-                      <div
-                        className={`flex lg:flex-col items-center gap-1.5 text-[11px] font-semibold text-amber-700 dark:text-amber-300`}
+            {circuitSteps.map((s) => {
+              const lit = isStepLit(s.step);
+              const running = !circuitStatic && s.step === activeCircuitStep;
+              return (
+                <li
+                  key={s.step}
+                  style={neonVars(s.system)}
+                  onMouseEnter={() => setPinnedStep(s.step)}
+                  className="relative flex lg:flex-col items-start lg:items-stretch gap-4 lg:gap-3"
+                >
+                  {/* Láser hacia el siguiente paso: nace y muere detrás de los nodos */}
+                  {running && s.step < circuitSteps.length && (
+                    <>
+                      <span
+                        className="hidden lg:block absolute top-5 left-1/2 w-[calc(100%+0.75rem)] h-px pointer-events-none"
+                        aria-hidden="true"
                       >
-                        <span
-                          className={`hidden lg:block w-0 h-5 border-l-2 ${s.review.optional ? "border-dashed" : "border-solid"} border-amber-500`}
-                          aria-hidden="true"
-                        />
-                        <span
-                          className={`px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border ${s.review.optional ? "border-dashed" : "border-solid"} border-amber-400 dark:border-amber-700 text-center`}
-                        >
-                          ↓ {s.review.label}
-                        </span>
-                      </div>
-                    </div>
+                        <span className="neon-run-x" style={laserVars(s.system)} />
+                      </span>
+                      <span
+                        className="lg:hidden absolute top-5 left-5 h-[calc(100%+1rem)] w-px pointer-events-none"
+                        aria-hidden="true"
+                      >
+                        <span className="neon-run-y" style={laserVars(s.system)} />
+                      </span>
+                    </>
                   )}
-                </div>
-              </li>
-            ))}
+
+                  <div
+                    data-active={lit}
+                    className="neon-node relative z-10 w-10 h-10 rounded-full text-white flex items-center justify-center font-bold text-sm flex-shrink-0 lg:mx-auto"
+                  >
+                    {s.step}
+                  </div>
+                  <div
+                    data-active={lit}
+                    className="neon-node flex-1 p-4 rounded-2xl flex flex-col"
+                  >
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-[color:var(--neon)] mb-1">
+                      {s.system}
+                    </span>
+                    <h3 className="font-bold font-heading text-white text-sm leading-snug mb-1.5">
+                      {s.title}
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed">
+                      {s.detail}
+                    </p>
+                    {s.review && (
+                      <div className="mt-auto pt-3" style={{ "--neon": REVIEW_NEON } as CSSProperties}>
+                        <div className="flex lg:flex-col items-center gap-1.5 text-[11px] font-semibold text-[color:var(--neon)]">
+                          <span
+                            className={`relative hidden lg:block w-0 h-5 border-l ${s.review.optional ? "border-dashed" : "border-solid"} border-[color:var(--neon)]`}
+                            aria-hidden="true"
+                          >
+                            {running && (
+                              <span className="neon-run-y" style={{ ...laserVars(s.system), "--neon": REVIEW_NEON } as CSSProperties} />
+                            )}
+                          </span>
+                          <span
+                            data-active={lit}
+                            className={`neon-node px-2.5 py-1 rounded-full border-[color:var(--neon)] ${s.review.optional ? "border-dashed" : "border-solid"} text-center`}
+                          >
+                            ↓ {s.review.label}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ol>
 
-          {/* Bandeja de revisión humana */}
-          <div className="mt-6 p-4 rounded-2xl border-2 border-dashed border-amber-400/70 dark:border-amber-700 bg-amber-50/60 dark:bg-amber-950/20 flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
-            <span className="text-sm font-bold text-amber-800 dark:text-amber-300">Bandeja de revisión humana</span>
-            <span className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300">
+          {/* Bandeja de revisión humana: se enciende cuando el documento llega a un punto de revisión */}
+          <div
+            style={{ "--neon": REVIEW_NEON } as CSSProperties}
+            data-active={circuitStatic || circuitSteps.some((s) => s.review && s.step === activeCircuitStep)}
+            className="neon-node mt-8 p-4 rounded-2xl border-dashed flex flex-col sm:flex-row items-center justify-center gap-2 text-center"
+          >
+            <span className="text-sm font-bold text-[color:var(--neon)]">Bandeja de revisión humana</span>
+            <span className="text-xs sm:text-sm text-gray-300">
               Una persona valida lo dudoso con la pregunta concreta: en el paso 4 si así lo configuras, en el paso 7 siempre que algo no encuentra pareja.
             </span>
           </div>
 
-          <div className="mt-10 text-center max-w-2xl mx-auto p-6 rounded-2xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40">
-            <p className="text-sm text-arje-gray-700 dark:text-gray-300 leading-relaxed">
-              En todo el recorrido hay cinco sistemas distintos —correo, almacenamiento de documentos, Invofox, ERP y banco— que nunca fueron diseñados para hablar entre sí. <strong>Eso es exactamente lo que hace Rosetta IA.</strong>
+          <div
+            style={{ "--neon": CIRCUIT_NEON.ERP } as CSSProperties}
+            data-active="true"
+            className="neon-node mt-10 text-center max-w-2xl mx-auto p-6 rounded-2xl"
+          >
+            <p className="text-sm text-gray-300 leading-relaxed">
+              En todo el recorrido hay cinco sistemas distintos —correo, almacenamiento de documentos, Invofox, ERP y banco— que nunca fueron diseñados para hablar entre sí. <strong className="text-white">Eso es exactamente lo que hace Rosetta IA.</strong>
             </p>
           </div>
         </div>
@@ -735,7 +822,7 @@ export default function RosettaIAPage() {
                 <div className="relative z-10 w-10 h-10 rounded-full bg-arje-blue text-white flex items-center justify-center font-bold text-sm flex-shrink-0 md:mx-auto ring-4 ring-arje-gray-50 dark:ring-gray-950">
                   {idx + 1}
                 </div>
-                <div className="flex-1 md:flex-none md:h-full p-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <div className="flex-1 p-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                   <h3 className="font-bold font-heading text-arje-gray-900 dark:text-white text-base mb-2">{step.title}</h3>
                   <p className="text-xs sm:text-sm text-arje-gray-600 dark:text-gray-300 leading-relaxed">{step.desc}</p>
                   {step.exceptions && (
@@ -763,27 +850,36 @@ export default function RosettaIAPage() {
             Todo el recorrido queda trazado: qué se leyó, cuándo, qué se transformó, qué se envió y qué respondió el destino. Cuando alguien pregunta &ldquo;¿de dónde sale este importe?&rdquo;, hay una respuesta exacta.
           </p>
 
-          {/* S2 · Sistemas ya conectados (en cápsulas de texto, sin logotipos) */}
+          {/* S2 · Sistemas con los que trabaja (misma lista que Inicio, en cápsulas de texto, sin logotipos) */}
           <div className="mt-16 pt-12 border-t border-gray-200 dark:border-gray-800">
-            <div className="text-center mb-6">
+            <div className="text-center mb-8">
               <span className="text-xs font-bold uppercase tracking-wider text-arje-gray-400 dark:text-gray-500">
-                Ya conectado con
+                Sistemas con los que trabaja
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 max-w-5xl mx-auto">
-              {systemsConnected.map((sys) => (
-                <span
-                  key={sys}
-                  className="px-4 py-2 rounded-xl bg-white dark:bg-gray-800 text-arje-gray-800 dark:text-gray-200 font-medium text-xs sm:text-sm border border-gray-200 dark:border-gray-700 cursor-default"
-                >
-                  {sys}
-                </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {integrationCategories.map((cat) => (
+                <div key={cat.category}>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-arje-blue mb-3 text-center md:text-left">
+                    {cat.category}
+                  </h3>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                    {cat.systems.map((sys) => (
+                      <span
+                        key={sys}
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-gray-800 text-arje-gray-800 dark:text-gray-200 font-medium text-xs border border-gray-200 dark:border-gray-700 cursor-default"
+                      >
+                        {sys}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
-            <p className="text-center text-xs sm:text-sm text-arje-gray-500 dark:text-gray-400 mt-6 max-w-3xl mx-auto">
-              ¿Tu sistema no está en la lista? Es el caso habitual. Rosetta IA se conecta por API, por servicio web, por base de datos o por fichero: lo que tu sistema sepa ofrecer.
+            <p className="text-center text-xs sm:text-sm text-arje-gray-500 dark:text-gray-400 mt-8 max-w-3xl mx-auto">
+              La lista no es un límite: Rosetta IA se conecta por API, por servicio web, por base de datos o por fichero, con lo que tu sistema sepa ofrecer.
             </p>
           </div>
         </div>
