@@ -466,7 +466,7 @@ export default function RosettaIAPage() {
             <span className="text-[13px] font-semibold uppercase tracking-[0.14em] leading-snug text-[#6C818C] dark:text-gray-400">
               Sistemas con los que trabaja
             </span>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
               {integrationCategories.map((cat) => (
                 <div key={cat.category}>
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-ros-brand dark:text-ros-light mb-2.5">{cat.category}</h3>

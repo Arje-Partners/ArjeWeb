@@ -237,6 +237,7 @@ export default function ContactoPage() {
                   >
                     <option value="">Selecciona una opción</option>
                     <option value="sap">SAP</option>
+                    <option value="business-central">Microsoft Business Central</option>
                     <option value="oracle">Oracle</option>
                     <option value="infor">Infor M3</option>
                     <option value="ifs">IFS</option>

@@ -7,6 +7,7 @@ const categoryColors = [
   "bg-blue-50/70 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800",
   "bg-teal-50/70 border-teal-200 dark:bg-teal-950/20 dark:border-teal-800",
   "bg-indigo-50/70 border-indigo-200 dark:bg-indigo-950/20 dark:border-indigo-800",
+  "bg-sky-50/70 border-sky-200 dark:bg-sky-950/20 dark:border-sky-800",
 ];
 
 export default function Integration() {
@@ -27,7 +28,7 @@ export default function Integration() {
         </div>
 
         {/* Integration Types */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-16">
           {integrationTypes.map((type, index) => (
             <div
               key={index}

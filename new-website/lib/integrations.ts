@@ -42,6 +42,11 @@ export const integrationCategories = [
     ],
     badge: "Nuestra especialidad",
   },
+  {
+    category: "Digitalización de documentos",
+    systems: ["Invofox", "Buzones de correo", "Carpetas compartidas y gestores documentales"],
+    badge: "Del papel al dato",
+  },
 ];
 
 export const integrationTechnologies = [

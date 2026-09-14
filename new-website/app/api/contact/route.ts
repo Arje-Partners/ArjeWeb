@@ -46,6 +46,7 @@ async function verifyTurnstileToken(token: string): Promise<boolean> {
 // Mapeo de sistemas
 const sistemaLabels: Record<string, string> = {
   'sap': 'SAP',
+  'business-central': 'Microsoft Business Central',
   'oracle': 'Oracle',
   'infor': 'Infor M3',
   'ifs': 'IFS',
