@@ -18,7 +18,7 @@ export default function FeaturedInsights() {
       id: "doce-millones-razones-abandonar-excel-treasury",
       title: "€12M de razones para abandonar Excel en Treasury",
       excerpt: "El coste real que una empresa mid-market pierde cada año gestionando su tesorería en hojas de cálculo.",
-      image: "/images/articles/excel-risk.png",
+      image: "/images/articles/manual-vs-ai-process.png",
       category: "Treasury Management",
       readTime: "12 min",
       gradient: "from-green-500 to-teal-600",

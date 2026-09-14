@@ -131,7 +131,7 @@ export default function RosettaIAPage() {
     },
   ];
 
-  // La aplicación protagonista: ocupa dos columnas y va en oscuro
+  // La aplicación protagonista: ocupa dos columnas y lleva borde de marca
   const invoiceApp = {
     title: "Digitalización y registro de facturas de proveedor",
     headline: "La factura llega por correo y aparece registrada en el ERP",
@@ -292,7 +292,7 @@ export default function RosettaIAPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-ros-ink dark:text-gray-100 transition-colors">
+    <div className="min-h-screen bg-surface text-ink transition-colors">
       {/* 1 · Hero (nivel 1): texto a la izquierda, figura del producto a la derecha */}
       <section className="relative overflow-hidden bg-ros-navy pt-36 pb-20 md:pt-40 md:pb-24">
         <div
@@ -362,7 +362,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 2 · El problema (nivel 3), compacto y justo detrás del hero */}
-      <section className="bg-ros-bg dark:bg-gray-950 border-b border-[#E4EDF1] dark:border-gray-800 py-14">
+      <section className="bg-surface-2 border-b border-line py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] gap-10 lg:gap-14">
           <h2 className="text-2xl md:text-[27px] font-bold font-heading leading-tight">
             Mover datos a mano tiene un coste que nadie apunta en ninguna parte
@@ -375,7 +375,7 @@ export default function RosettaIAPage() {
             ].map((item) => (
               <div key={item.title} className="border-t-2 border-ros-brand pt-4">
                 <h3 className="font-heading font-semibold mb-2">{item.title}</h3>
-                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{item.desc}</p>
+                <p className="text-[15px] leading-relaxed text-muted">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -383,59 +383,59 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 3 · Aplicaciones (nivel 2): la de facturas destaca en oscuro y a doble ancho; alturas desiguales */}
-      <section id="aplicaciones" className="bg-white dark:bg-gray-900 py-20 md:py-24">
+      <section id="aplicaciones" className="bg-surface py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 xl:grid-cols-[620px_minmax(0,1fr)] gap-6 xl:gap-14 items-end mb-11">
             <div>
               <Eyebrow className="mb-3.5">Aplicaciones</Eyebrow>
               <h2 className="text-3xl md:text-[44px] font-bold font-heading leading-[1.08]">Aplicaciones que tu equipo usa cada día</h2>
             </div>
-            <p className="text-lg leading-relaxed text-ros-muted dark:text-gray-400">
+            <p className="text-lg leading-relaxed text-muted">
               Sobre el motor de integración, Rosetta IA incorpora aplicaciones listas para trabajar. Cada una resuelve un proceso completo de principio a fin y se contrata por separado: se empieza por la que más duele.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
-            {/* Facturas de proveedor: protagonista */}
-            <article className="md:col-span-2 bg-ros-navy rounded-md p-7 md:p-10 flex flex-col sm:flex-row gap-8">
+            {/* Facturas de proveedor: destaca por el doble ancho, el borde de marca y el diagrama de los cuatro pasos */}
+            <article className="md:col-span-2 bg-surface border-2 border-ros-brand dark:border-ros-light rounded-md p-7 md:p-10 flex flex-col sm:flex-row gap-8">
               <div className="flex-grow">
-                <Eyebrow onNavy className="mb-3.5">Facturas de proveedor</Eyebrow>
-                <h3 className="text-2xl md:text-[28px] font-bold font-heading leading-tight text-white">{invoiceApp.headline}</h3>
-                <p className="mt-4 text-base leading-relaxed text-ros-on-navy">{invoiceApp.description}</p>
-                <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-ros-on-navy">
+                <Eyebrow className="mb-3.5">Facturas de proveedor</Eyebrow>
+                <h3 className="text-2xl md:text-[28px] font-bold font-heading leading-tight text-ink">{invoiceApp.headline}</h3>
+                <p className="mt-4 text-base leading-relaxed text-muted">{invoiceApp.description}</p>
+                <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-body">
                   {invoiceApp.bullets.map((b) => (
                     <li key={b} className="flex gap-2.5">
-                      <Icon d={icons.check} className="w-4 h-4 mt-0.5 flex-shrink-0 text-ros-light" />
+                      <Icon d={icons.check} className="w-4 h-4 mt-0.5 flex-shrink-0 text-ros-brand dark:text-ros-light" />
                       <span>{b}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-6 bg-[#123243] border-l-[3px] border-ros-amber rounded-r px-4 py-3 text-sm leading-relaxed text-[#F0DCBE]">
+                <p className="mt-6 bg-[#FBF3E4] dark:bg-[#2A2418] border-l-[3px] border-ros-amber rounded-r px-4 py-3 text-sm leading-relaxed text-[#6B4E16] dark:text-[#F0DCBE]">
                   {invoiceApp.highlight}
                 </p>
               </div>
               <ol className="sm:w-40 flex-shrink-0 flex sm:flex-col gap-2 sm:gap-0 flex-wrap sm:pt-2" aria-label="Recorrido de la factura">
                 {invoiceApp.flow.map((f, idx) => (
                   <li key={f.label} className="flex sm:flex-col">
-                    <span className="flex items-center gap-2.5 text-[13px] text-[#C8DAE2]">
-                      <Icon d={f.icon} className="w-[18px] h-[18px] text-ros-light" />
+                    <span className="flex items-center gap-2.5 text-[13px] text-body">
+                      <Icon d={f.icon} className="w-[18px] h-[18px] text-ros-brand dark:text-ros-light" />
                       {f.label}
                     </span>
-                    {idx < invoiceApp.flow.length - 1 && <span className="hidden sm:block w-px h-3 bg-[#2A5063] ml-2 my-1.5" aria-hidden="true" />}
+                    {idx < invoiceApp.flow.length - 1 && <span className="hidden sm:block w-px h-3 bg-line ml-2 my-1.5" aria-hidden="true" />}
                   </li>
                 ))}
               </ol>
             </article>
 
             {applications.map((app) => (
-              <article key={app.id} className="bg-white dark:bg-gray-900 border border-ros-border dark:border-gray-700 rounded-md p-7">
-                <div className="w-10 h-10 rounded-md bg-ros-icon-bg dark:bg-gray-800 text-ros-brand dark:text-ros-light flex items-center justify-center mb-5">
+              <article key={app.id} className="bg-surface border border-line rounded-md p-7">
+                <div className="w-10 h-10 rounded-md bg-icon-bg text-ros-brand dark:text-ros-light flex items-center justify-center mb-5">
                   <Icon d={app.icon} />
                 </div>
                 <Eyebrow className="mb-2.5 !text-xs">{app.title}</Eyebrow>
                 <h3 className="text-xl font-bold font-heading leading-snug mb-3">{app.headline}</h3>
-                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{app.description}</p>
-                <ul className="mt-4 pt-4 border-t border-ros-border dark:border-gray-700 space-y-2 text-sm leading-relaxed text-[#3C4F59] dark:text-gray-300">
+                <p className="text-[15px] leading-relaxed text-muted">{app.description}</p>
+                <ul className="mt-4 pt-4 border-t border-line space-y-2 text-sm leading-relaxed text-body">
                   {app.bullets.map((b) => (
                     <li key={b} className="flex gap-2.5">
                       <Icon d={icons.check} className="w-4 h-4 mt-0.5 flex-shrink-0 text-ros-brand dark:text-ros-light" />
@@ -448,11 +448,11 @@ export default function RosettaIAPage() {
           </div>
 
           {/* También resuelve */}
-          <div className="mt-8 bg-ros-bg dark:bg-gray-950 rounded-md px-6 py-5 grid grid-cols-1 md:grid-cols-[130px_1fr_1fr] gap-4 md:gap-7 items-start">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6C818C] dark:text-gray-400 md:pt-0.5">También resuelve</span>
+          <div className="mt-8 bg-surface-2 rounded-md px-6 py-5 grid grid-cols-1 md:grid-cols-[130px_1fr_1fr] gap-4 md:gap-7 items-start">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted md:pt-0.5">También resuelve</span>
             {alsoSolves.map((item) => (
-              <p key={item.title} className="text-[15px] leading-relaxed text-[#3C4F59] dark:text-gray-300">
-                <strong className="font-heading text-ros-ink dark:text-white">{item.title}.</strong> {item.desc}
+              <p key={item.title} className="text-[15px] leading-relaxed text-body">
+                <strong className="font-heading text-ink">{item.title}.</strong> {item.desc}
               </p>
             ))}
           </div>
@@ -460,10 +460,10 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 4 · Sistemas (nivel 3): la única prueba de la página, justo después de las aplicaciones */}
-      <section id="sistemas" className="bg-ros-bg dark:bg-gray-950 border-y border-[#E4EDF1] dark:border-gray-800 py-10">
+      <section id="sistemas" className="bg-surface-2 border-y border-line py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-[150px_minmax(0,1fr)_210px] gap-6 lg:gap-8 items-start">
-            <span className="text-[13px] font-semibold uppercase tracking-[0.14em] leading-snug text-[#6C818C] dark:text-gray-400">
+            <span className="text-[13px] font-semibold uppercase tracking-[0.14em] leading-snug text-muted">
               Sistemas con los que trabaja
             </span>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -474,7 +474,7 @@ export default function RosettaIAPage() {
                     {cat.systems.map((sys) => (
                       <li
                         key={sys}
-                        className="border border-ros-border dark:border-gray-700 bg-white dark:bg-gray-900 rounded-sm px-3 py-1.5 text-[13px] text-[#3C4F59] dark:text-gray-300"
+                        className="border border-line bg-surface rounded-sm px-3 py-1.5 text-[13px] text-body"
                       >
                         {sys}
                       </li>
@@ -483,7 +483,7 @@ export default function RosettaIAPage() {
                 </div>
               ))}
             </div>
-            <p className="text-[13px] leading-relaxed text-ros-muted dark:text-gray-400">
+            <p className="text-[13px] leading-relaxed text-muted">
               La lista no es un límite: Rosetta IA se conecta por API, por servicio web, por base de datos o por fichero, con lo que tu sistema sepa ofrecer.
             </p>
           </div>
@@ -513,6 +513,7 @@ export default function RosettaIAPage() {
           <div className="hidden md:block">
             <AnimatedPiece
               src="/animaciones/RosettaIA_anim_circuito.html"
+              poster="/animaciones/RosettaIA_anim_circuito_final.webp"
               title="Animación del circuito de facturas"
               fallback={
                 <div className="hidden md:grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_40px_190px_28px_minmax(0,280px)] gap-y-4 xl:items-center">
@@ -657,7 +658,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 6 · Casos de éxito (nivel 3): sin nombres de cliente, sin logotipos y sin testimonios */}
-      <section id="casos" className="bg-ros-bg dark:bg-gray-950 py-20 md:py-24">
+      <section id="casos" className="bg-surface-2 py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-10">
             <Eyebrow className="mb-3.5">Casos de éxito</Eyebrow>
@@ -665,19 +666,20 @@ export default function RosettaIAPage() {
           </div>
 
           {/* Caso 1 · grupo con dieciséis sociedades, con su diagrama de las seis integraciones */}
-          <article className="bg-ros-navy rounded-lg p-6 md:p-10">
-            <Eyebrow onNavy className="!text-xs mb-3">Grupo con dieciséis sociedades</Eyebrow>
-            <h3 className="text-2xl md:text-[34px] font-bold font-heading leading-tight text-white">
-              Seis integraciones entre el ERP y la tesorería, sobre <span className="text-ros-light">la misma tubería</span>
+          <article className="bg-surface border border-line rounded-lg p-6 md:p-10">
+            <Eyebrow className="!text-xs mb-3">Grupo con dieciséis sociedades</Eyebrow>
+            <h3 className="text-2xl md:text-[34px] font-bold font-heading leading-tight text-ink">
+              Seis integraciones entre Infor M3 y Embat, sobre <span className="text-ros-brand dark:text-ros-light">la misma tubería</span>
             </h3>
-            <p className="mt-3.5 text-base leading-relaxed text-ros-on-navy max-w-4xl">
-              Cinco procesos llevan el ERP a la tesorería y uno trae de vuelta lo que ocurre con el dinero. Comparten el mismo núcleo: lo único que cambia en cada uno es qué se lee y qué reglas lo validan.
+            <p className="mt-3.5 text-base leading-relaxed text-muted max-w-4xl">
+              Cinco procesos llevan los datos de Infor M3, el ERP del grupo, a Embat, su plataforma de tesorería, y uno trae de vuelta lo que ocurre con el dinero. Comparten el mismo núcleo: lo único que cambia en cada uno es qué se lee y qué reglas lo validan.
             </p>
 
             {/* Las seis integraciones encendiéndose una a una; el diagrama estático es la reserva */}
             <div className="mt-8">
               <AnimatedPiece
                 src="/animaciones/RosettaIA_anim_integracion.html"
+                poster="/animaciones/RosettaIA_anim_integracion_final.webp"
                 title="Animación de las seis integraciones entre el ERP y la tesorería"
                 fallback={
                   <div className="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)_200px] gap-5 lg:gap-7 items-stretch">
@@ -685,26 +687,26 @@ export default function RosettaIAPage() {
                       { role: "El ERP", name: "Infor M3", note: "16 sociedades · 3 países · 3 divisas", icon: icons.erp, order: "" },
                       { role: "La tesorería", name: "Embat", note: "Posición, previsión, cobros y pagos", icon: icons.bank, order: "lg:order-3" },
                     ].map((end) => (
-                      <div key={end.role} className={`bg-[#12303F] border border-[#2A5C73] rounded-lg p-5 text-center flex flex-col justify-center ${end.order}`}>
-                        <span className="w-12 h-12 mx-auto mb-3 rounded-lg bg-ros-navy border border-[#2A5C73] text-ros-light flex items-center justify-center">
+                      <div key={end.role} className={`bg-surface-2 border border-line rounded-lg p-5 text-center flex flex-col justify-center ${end.order}`}>
+                        <span className="w-12 h-12 mx-auto mb-3 rounded-lg bg-surface border border-line text-ros-brand dark:text-ros-light flex items-center justify-center">
                           <Icon d={end.icon} className="w-6 h-6" />
                         </span>
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-[#6E93A3] mb-1">{end.role}</div>
-                        <div className="font-heading text-xl font-semibold text-white">{end.name}</div>
-                        <div className="text-[13px] leading-relaxed text-ros-soft mt-2">{end.note}</div>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-muted mb-1">{end.role}</div>
+                        <div className="font-heading text-xl font-semibold text-ink">{end.name}</div>
+                        <div className="text-[13px] leading-relaxed text-muted mt-2">{end.note}</div>
                       </div>
                     ))}
 
                     <div className="lg:order-2 space-y-5">
                       {caseLanes.map((g) => (
                         <div key={g.group}>
-                          <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-[#6E93A3] mb-2.5">{g.group}</div>
+                          <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-muted mb-2.5">{g.group}</div>
                           <ul className="space-y-2">
                             {g.lanes.map((lane) => (
-                              <li key={lane.name} className="flex items-center gap-4 bg-ros-panel border border-[#23556B] rounded-lg px-4 py-3">
-                                <span className="font-heading text-[15px] font-semibold text-white w-40 flex-shrink-0">{lane.name}</span>
-                                <span className="flex-grow text-[13px] leading-snug text-ros-soft">{lane.desc}</span>
-                                <svg className="hidden sm:block w-8 h-2.5 text-ros-light flex-shrink-0" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="Del ERP a la tesorería">
+                              <li key={lane.name} className="flex items-center gap-4 bg-surface-2 border border-line rounded-lg px-4 py-3">
+                                <span className="font-heading text-[15px] font-semibold text-ink w-40 flex-shrink-0">{lane.name}</span>
+                                <span className="flex-grow text-[13px] leading-snug text-muted">{lane.desc}</span>
+                                <svg className="hidden sm:block w-8 h-2.5 text-ros-brand dark:text-ros-light flex-shrink-0" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="Del ERP a la tesorería">
                                   <path d="M0 5h26m0 0l-5-4m5 4l-5 4" />
                                 </svg>
                               </li>
@@ -713,13 +715,13 @@ export default function RosettaIAPage() {
                         </div>
                       ))}
                       <div>
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ros-light mb-2.5">El flujo de vuelta · lo que pasa con el dinero</div>
-                        <div className="flex items-center gap-4 bg-[#12384A] border border-ros-light rounded-lg px-4 py-3">
-                          <svg className="hidden sm:block w-8 h-2.5 text-ros-light flex-shrink-0 -scale-x-100" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="De la tesorería al ERP">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ros-brand dark:text-ros-light mb-2.5">El flujo de vuelta · lo que pasa con el dinero</div>
+                        <div className="flex items-center gap-4 bg-icon-bg border border-ros-brand dark:border-ros-light rounded-lg px-4 py-3">
+                          <svg className="hidden sm:block w-8 h-2.5 text-ros-brand dark:text-ros-light flex-shrink-0 -scale-x-100" viewBox="0 0 34 10" fill="none" stroke="currentColor" strokeWidth={1.7} aria-label="De la tesorería al ERP">
                             <path d="M0 5h26m0 0l-5-4m5 4l-5 4" />
                           </svg>
-                          <span className="font-heading text-[15px] font-semibold text-white w-36 flex-shrink-0">Cobros y pagos</span>
-                          <span className="flex-grow text-[13px] leading-snug text-ros-soft">
+                          <span className="font-heading text-[15px] font-semibold text-ink w-36 flex-shrink-0">Cobros y pagos</span>
+                          <span className="flex-grow text-[13px] leading-snug text-muted">
                             Lo que la tesorería ha cobrado y pagado vuelve al ERP, uno a uno, y cada documento queda saldado
                           </span>
                         </div>
@@ -732,9 +734,9 @@ export default function RosettaIAPage() {
 
             <ul className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3.5">
               {caseResults.map((r) => (
-                <li key={r.value} className="bg-ros-panel border border-ros-line rounded-lg px-5 py-4">
-                  <div className="font-heading text-2xl font-semibold text-white">{r.value}</div>
-                  <div className="text-[13px] leading-snug text-ros-soft mt-1">{r.label}</div>
+                <li key={r.value} className="bg-surface-2 border border-line rounded-lg px-5 py-4">
+                  <div className="font-heading text-2xl font-semibold text-ink">{r.value}</div>
+                  <div className="text-[13px] leading-snug text-muted mt-1">{r.label}</div>
                 </li>
               ))}
             </ul>
@@ -743,7 +745,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 7 · Por qué es diferente (nivel 2): la frontera determinista y su tabla */}
-      <section className="bg-white dark:bg-gray-900 py-20 md:py-24">
+      <section className="bg-surface py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Eyebrow className="mb-3.5">Por qué es diferente</Eyebrow>
@@ -751,23 +753,23 @@ export default function RosettaIAPage() {
               Inteligencia artificial donde ayuda.
               <br className="hidden md:block" /> Reglas donde no se puede fallar.
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-ros-muted dark:text-gray-400 max-w-3xl mx-auto">
+            <p className="mt-5 text-lg leading-relaxed text-muted max-w-3xl mx-auto">
               Muchas herramientas prometen resolver las integraciones con inteligencia artificial. El problema aparece cuando esa misma inteligencia artificial calcula el importe de un pago. Rosetta IA traza una línea explícita y la respeta.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-[1fr_110px_1fr] rounded-md overflow-hidden">
-            <div className="bg-[#F2F8FB] dark:bg-gray-800 p-8 md:p-9">
+            <div className="bg-surface-2 p-8 md:p-9">
               <Eyebrow className="mb-4">La IA se encarga de</Eyebrow>
               <ul className="space-y-3">
                 {aiRows.map(([does]) => (
-                  <li key={does} className="flex gap-3 text-base text-[#1B3540] dark:text-gray-200">
+                  <li key={does} className="flex gap-3 text-base text-ink">
                     <Icon d={icons.check} className="w-[18px] h-[18px] mt-0.5 flex-shrink-0 text-ros-brand dark:text-ros-light" />
                     <span>{does}</span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-[13px] uppercase tracking-[0.08em] text-[#62808C] dark:text-gray-400">Entender · mapear · señalar</p>
+              <p className="mt-6 text-[13px] uppercase tracking-[0.08em] text-muted">Entender · mapear · señalar</p>
             </div>
 
             <div className="bg-ros-navy flex md:flex-col items-center justify-center gap-3 px-6 py-3 md:py-0" aria-hidden="true">
@@ -809,7 +811,7 @@ export default function RosettaIAPage() {
             ].map((b) => (
               <div key={b.title} className="border-l-2 border-ros-brand pl-5">
                 <h3 className="font-heading text-[17px] font-semibold mb-2">{b.title}</h3>
-                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{b.desc}</p>
+                <p className="text-[15px] leading-relaxed text-muted">{b.desc}</p>
               </div>
             ))}
           </div>
@@ -817,24 +819,24 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 8 · Arquitectura (nivel 3): «Qué es» y «Cómo funciona» fundidos en una sola sección */}
-      <section id="como-funciona" className="bg-ros-bg dark:bg-gray-950 border-y border-[#E4EDF1] dark:border-gray-800 py-20 md:py-24">
+      <section id="como-funciona" className="bg-surface-2 border-y border-line py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[520px_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
           <div>
             <Eyebrow className="mb-3.5">Cómo funciona</Eyebrow>
             <h2 className="text-3xl md:text-[38px] font-bold font-heading leading-[1.1]">Una capa de traducción entre tus sistemas</h2>
-            <p className="mt-5 text-lg leading-relaxed text-ros-muted dark:text-gray-400">
+            <p className="mt-5 text-lg leading-relaxed text-muted">
               Rosetta IA se sitúa entre tus sistemas, del tipo que sean. Lee de un lado, lo convierte a un modelo de datos común y lo entrega al otro con el formato que espera. Tus sistemas no se tocan: siguen siendo los tuyos y siguen siendo la fuente de la verdad.
             </p>
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-heading text-[15px] font-semibold mb-1.5">Un modelo común</h3>
-                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">
+                <p className="text-sm leading-relaxed text-muted">
                   Construido sobre estándares financieros del sector. Conectar el sistema número diez cuesta una fracción de lo que costó el primero.
                 </p>
               </div>
               <div>
                 <h3 className="font-heading text-[15px] font-semibold mb-1.5">Todo queda trazado</h3>
-                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">
+                <p className="text-sm leading-relaxed text-muted">
                   Qué se leyó, cuándo, qué se transformó, qué se envió y qué respondió el destino. Cada importe tiene una respuesta exacta.
                 </p>
               </div>
@@ -845,16 +847,16 @@ export default function RosettaIAPage() {
             {dataJourney.map((step, idx) => (
               <li
                 key={step.title}
-                className={`flex gap-4 bg-white dark:bg-gray-900 border rounded-md px-6 py-5 ${
-                  step.review ? "border-[#C9A96A]" : "border-ros-border dark:border-gray-700"
+                className={`flex gap-4 bg-surface border rounded-md px-6 py-5 ${
+                  step.review ? "border-[#C9A96A]" : "border-line"
                 }`}
               >
-                <span className={`font-heading text-[22px] font-semibold w-7 flex-shrink-0 ${step.review ? "text-[#D9B476]" : "text-[#B8CDD6] dark:text-gray-600"}`}>
+                <span className={`font-heading text-[22px] font-semibold w-7 flex-shrink-0 ${step.review ? "text-[#D9B476]" : "text-line"}`}>
                   0{idx + 1}
                 </span>
                 <div>
                   <h3 className="font-heading text-[17px] font-semibold mb-1">{step.title}</h3>
-                  <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{step.desc}</p>
+                  <p className="text-[15px] leading-relaxed text-muted">{step.desc}</p>
                   {step.review && (
                     <span className="inline-block mt-2.5 text-xs text-[#97711F] dark:text-ros-amber bg-[#FBF3E4] dark:bg-[#2A2418] rounded-sm px-2.5 py-1">
                       → Bandeja de revisión, con el motivo de cada caso
@@ -868,7 +870,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 9 · Seguridad y cumplimiento (nivel 2) */}
-      <section className="bg-white dark:bg-gray-900 py-16 md:py-20">
+      <section className="bg-surface py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 mb-9">
             <Eyebrow>Seguridad y cumplimiento</Eyebrow>
@@ -881,18 +883,18 @@ export default function RosettaIAPage() {
                   <Icon d={sec.icon} className="w-[22px] h-[22px]" />
                 </span>
                 <h3 className="font-heading text-[15px] font-semibold mt-3 mb-1.5">{sec.title}</h3>
-                <p className="text-sm leading-relaxed text-ros-muted dark:text-gray-400">{sec.desc}</p>
+                <p className="text-sm leading-relaxed text-muted">{sec.desc}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-9 bg-ros-bg dark:bg-gray-800 rounded-md px-6 py-5 text-[15px] leading-relaxed text-[#3C4F59] dark:text-gray-300 max-w-5xl">
-            <strong className="font-heading text-ros-ink dark:text-white">Cumplimiento normativo.</strong> Rosetta IA genera y valida los formatos que exige la normativa —SEPA/ISO 20022, Norma 43, cuadernos bancarios, Veri*factu, SII y formatos sectoriales— con validación estructural real contra el esquema oficial y cálculo determinista de importes y totales de control. Se contrata como módulo cuando el cliente lo necesita.
+          <p className="mt-9 bg-surface-2 rounded-md px-6 py-5 text-[15px] leading-relaxed text-body max-w-5xl">
+            <strong className="font-heading text-ink">Cumplimiento normativo.</strong> Rosetta IA genera y valida los formatos que exige la normativa —SEPA/ISO 20022, Norma 43, cuadernos bancarios, Veri*factu, SII y formatos sectoriales— con validación estructural real contra el esquema oficial y cálculo determinista de importes y totales de control. Se contrata como módulo cuando el cliente lo necesita.
           </p>
         </div>
       </section>
 
       {/* 10 · Puesta en marcha (nivel 3) */}
-      <section className="bg-ros-bg dark:bg-gray-950 border-t border-[#E4EDF1] dark:border-gray-800 py-20">
+      <section className="bg-surface-2 border-t border-line py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-11">
             <Eyebrow className="mb-3.5">Puesta en marcha</Eyebrow>
@@ -902,31 +904,31 @@ export default function RosettaIAPage() {
           </div>
           <ol className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {launchSteps.map((step, idx) => (
-              <li key={step.title} className="bg-white dark:bg-gray-900 border border-ros-border dark:border-gray-700 rounded-md p-8">
-                <span className="font-heading text-[46px] font-semibold leading-none text-[#D3E2E9] dark:text-gray-700">{idx + 1}</span>
+              <li key={step.title} className="bg-surface border border-line rounded-md p-8">
+                <span className="font-heading text-[46px] font-semibold leading-none text-line">{idx + 1}</span>
                 <h3 className="font-heading text-xl font-semibold mt-3.5 mb-2.5">{step.title}</h3>
-                <p className="text-[15px] leading-relaxed text-ros-muted dark:text-gray-400">{step.desc}</p>
+                <p className="text-[15px] leading-relaxed text-muted">{step.desc}</p>
               </li>
             ))}
           </ol>
-          <p className="mt-8 text-center text-base leading-relaxed text-ros-muted dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="mt-8 text-center text-base leading-relaxed text-muted max-w-3xl mx-auto">
             Rosetta IA se contrata como servicio, con la implantación y el acompañamiento de los consultores de Arjé Partners. No te dejamos una plataforma y una documentación: te dejamos una integración funcionando.
           </p>
         </div>
       </section>
 
       {/* 11 · Preguntas frecuentes (nivel 2) */}
-      <section className="bg-white dark:bg-gray-900 py-20">
+      <section className="bg-surface py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-8 lg:gap-16 items-start">
           <div>
             <Eyebrow className="mb-3.5">FAQ</Eyebrow>
             <h2 className="text-3xl md:text-[32px] font-bold font-heading leading-tight">Preguntas frecuentes</h2>
           </div>
-          <div className="border-b border-ros-border dark:border-gray-700">
+          <div className="border-b border-line">
             {faqs.map((faq, idx) => {
               const isOpen = activeFaq === idx;
               return (
-                <div key={faq.q} className="border-t border-ros-border dark:border-gray-700">
+                <div key={faq.q} className="border-t border-line">
                   <button
                     onClick={() => setActiveFaq(isOpen ? null : idx)}
                     aria-expanded={isOpen}
@@ -945,7 +947,7 @@ export default function RosettaIAPage() {
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </button>
-                  {isOpen && <p className="pb-5 text-base leading-relaxed text-ros-muted dark:text-gray-400">{faq.a}</p>}
+                  {isOpen && <p className="pb-5 text-base leading-relaxed text-muted">{faq.a}</p>}
                 </div>
               );
             })}

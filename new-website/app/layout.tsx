@@ -41,7 +41,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning className={`${inter.variable} ${epilogue.variable}`}>
-      <body className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-arje-gray-900 dark:text-gray-100 transition-colors duration-200`}>
+      <head>
+        <meta name="color-scheme" content="light dark" />
+        {/* Decide el tema antes del primer pintado: sin esto, quien tiene el modo oscuro guardado ve un fogonazo en claro */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.classList.toggle('dark',t==='dark');document.documentElement.style.colorScheme=t;}catch(e){}`,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} antialiased bg-surface text-arje-gray-900 dark:text-gray-100 transition-colors duration-200`}>
         <GoogleAnalytics />
         <ThemeProvider>
           <Navbar />

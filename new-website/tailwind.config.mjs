@@ -23,6 +23,24 @@ const config = {
             900: '#111827',
           }
         },
+        // En esta web solo hay un negro, #0B2230: los grises oscuros (que solo se usan en modo oscuro)
+        // se derivan del navy de marca en lugar de los neutros de Tailwind
+        gray: {
+          700: '#1E4B5F',
+          800: '#123040',
+          900: '#0B2230',
+          950: '#0B2230',
+        },
+        // Escala de superficie única (valores en app/globals.css, cambian con el tema)
+        surface: {
+          DEFAULT: 'rgb(var(--surface) / <alpha-value>)',
+          2: 'rgb(var(--surface-2) / <alpha-value>)',
+        },
+        line: 'rgb(var(--line) / <alpha-value>)',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        body: 'rgb(var(--body) / <alpha-value>)',
+        muted: 'rgb(var(--muted) / <alpha-value>)',
+        'icon-bg': 'rgb(var(--icon-bg) / <alpha-value>)',
         // Sistema visual de Rosetta IA: azul para lo normal y el recorrido del dato; ámbar solo para la intervención humana
         ros: {
           navy: '#0B2230',

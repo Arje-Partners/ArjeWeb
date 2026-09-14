@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+  /* Escala de superficie: claro blanco y gris azulado; oscuro, derivada del navy de marca */
+  :root {
+    --surface: 255 255 255;
+    --surface-2: 246 249 250;
+    --line: 220 231 236;
+    --ink: 14 32 41;
+    --body: 60 79 89;
+    --muted: 94 116 128;
+    --icon-bg: 232 243 247;
+  }
+
+  .dark {
+    --surface: 11 34 48;
+    --surface-2: 18 48 64;
+    --line: 35 85 107;
+    --ink: 228 238 242;
+    --body: 200 218 226;
+    --muted: 143 176 190;
+    --icon-bg: 18 48 64;
+  }
+
   html {
     @apply scroll-smooth;
   }

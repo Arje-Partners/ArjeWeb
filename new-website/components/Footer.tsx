@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-arje-gray-900 dark:bg-gray-950 text-white">
+    <footer className="bg-ros-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -118,7 +118,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-arje-gray-800 dark:border-gray-700 mt-8 pt-8">
+        <div className="border-t border-ros-line mt-8 pt-8">
           <div className="text-center text-arje-gray-200 dark:text-gray-300 text-sm space-y-2">
             <p>© {currentYear} Arjé Partners. Todos los derechos reservados.</p>
             <p className="text-xs text-arje-gray-400 dark:text-gray-500">

@@ -60,42 +60,42 @@ export default function RosettaShowcase() {
           <div className="lg:col-span-6">
             <Link
               href="/rosetta-ia#circuito"
-              className="group block p-6 md:p-8 rounded-lg bg-ros-navy border border-ros-line shadow-2xl"
+              className="group block p-6 md:p-8 rounded-lg bg-surface border-2 border-ros-brand dark:border-ros-light shadow-xl"
             >
-              <span className="text-xs font-bold uppercase tracking-wider text-ros-light">Un ejemplo en marcha</span>
-              <h3 className="text-lg md:text-xl font-bold font-heading text-white mt-1 mb-6">
+              <span className="text-xs font-bold uppercase tracking-wider text-ros-brand dark:text-ros-light">Un ejemplo en marcha</span>
+              <h3 className="text-lg md:text-xl font-bold font-heading text-ink mt-1 mb-6">
                 Dos corrientes que se juntan: la factura y el extracto
               </h3>
 
               <div className="space-y-3">
-                <div className="p-4 rounded-md bg-ros-panel border border-ros-line">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-light mb-3">La factura · cuando llega</div>
-                  <ol className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-white">
+                <div className="p-4 rounded-md bg-surface-2 border border-line">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-brand dark:text-ros-light mb-3">La factura · cuando llega</div>
+                  <ol className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-ink">
                     {["Correo", "Carpeta", "Invofox", "ERP"].map((sys, idx) => (
                       <li key={sys} className="flex items-center gap-2">
-                        {idx > 0 && <span className="text-ros-soft" aria-hidden="true">→</span>}
+                        {idx > 0 && <span className="text-muted" aria-hidden="true">→</span>}
                         {sys}
                       </li>
                     ))}
                   </ol>
                 </div>
-                <div className="p-4 rounded-md bg-ros-panel border border-ros-line">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-light mb-3">El banco · a diario, por su cuenta</div>
-                  <p className="text-sm text-white">Se descarga el extracto de todos tus bancos</p>
+                <div className="p-4 rounded-md bg-surface-2 border border-line">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-ros-brand dark:text-ros-light mb-3">El banco · a diario, por su cuenta</div>
+                  <p className="text-sm text-ink">Se descarga el extracto de todos tus bancos</p>
                 </div>
-                <div className="flex justify-center text-ros-light" aria-hidden="true">
+                <div className="flex justify-center text-ros-brand dark:text-ros-light" aria-hidden="true">
                   <svg width="64" height="22" viewBox="0 0 64 22" fill="none" stroke="currentColor" strokeWidth="1.6">
                     <path d="M2 2h14q16 0 16 16v2M62 2H48q-16 0-16 16v2" />
                   </svg>
                 </div>
-                <div className="p-4 rounded-md bg-ros-panel border border-ros-light">
-                  <p className="text-sm text-white">
+                <div className="p-4 rounded-md bg-icon-bg border border-ros-brand dark:border-ros-light">
+                  <p className="text-sm text-ink">
                     Cada movimiento encuentra su factura y el documento queda compensado en el ERP.
                   </p>
                 </div>
               </div>
 
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ros-light group-hover:gap-2.5 transition-all">
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ros-brand dark:text-ros-light group-hover:gap-2.5 transition-all">
                 Ver el circuito completo <span aria-hidden="true">→</span>
               </span>
             </Link>
