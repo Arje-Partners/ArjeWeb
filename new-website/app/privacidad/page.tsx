@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Política de protección de datos | Arjé Partners",
+  description: "Cómo trata Arjé Partners los datos personales de quienes usan su sitio web y sus formularios.",
+  path: "/privacidad",
+});
+
 export default function PrivacidadPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">

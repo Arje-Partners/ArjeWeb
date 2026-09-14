@@ -12,6 +12,7 @@ import AnimatedPiece from "@/components/rosetta/AnimatedPiece";
 //   nivel 2 blanco y nivel 3 gris claro. Dos secciones seguidas nunca comparten fondo.
 // - Azul de marca y azul claro para todo lo normal y para el recorrido del dato.
 // - Ámbar solo para la intervención humana: bandeja de revisión, salidas a revisión y pasos donde interviene una persona.
+// - Ritmo vertical según lo que separa: mucho espacio antes de un cambio de tema, poco entre bloques que se leen seguidos.
 
 // Una sola familia de iconos: trazo 1,6 sobre rejilla de 24, extremos redondeados
 const Icon = ({ d, className = "w-5 h-5" }: { d: ReactNode; className?: string }) => (
@@ -362,7 +363,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 2 · El problema (nivel 3), compacto y justo detrás del hero */}
-      <section className="bg-surface-2 border-b border-line py-14">
+      <section className="bg-surface-2 border-b border-line py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] gap-10 lg:gap-14">
           <h2 className="text-2xl md:text-[27px] font-bold font-heading leading-tight">
             Mover datos a mano tiene un coste que nadie apunta en ninguna parte
@@ -383,7 +384,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 3 · Aplicaciones (nivel 2): la de facturas destaca en oscuro y a doble ancho; alturas desiguales */}
-      <section id="aplicaciones" className="bg-surface py-20 md:py-24">
+      <section id="aplicaciones" className="bg-surface pt-20 md:pt-24 pb-14 md:pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 xl:grid-cols-[620px_minmax(0,1fr)] gap-6 xl:gap-14 items-end mb-11">
             <div>
@@ -514,7 +515,7 @@ export default function RosettaIAPage() {
             <AnimatedPiece
               src="/animaciones/RosettaIA_anim_circuito.html"
               poster="/animaciones/RosettaIA_anim_circuito_final.webp"
-              title="Animación del circuito de facturas"
+              title="Circuito de facturas: la factura y el extracto del banco se juntan hasta dejar el documento compensado"
               fallback={
                 <div className="hidden md:grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_40px_190px_28px_minmax(0,280px)] gap-y-4 xl:items-center">
                   {/* Las dos corrientes */}
@@ -658,7 +659,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 6 · Casos de éxito (nivel 3): sin nombres de cliente, sin logotipos y sin testimonios */}
-      <section id="casos" className="bg-surface-2 py-20 md:py-24">
+      <section id="casos" className="bg-surface-2 pt-16 md:pt-20 pb-20 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-10">
             <Eyebrow className="mb-3.5">Casos de éxito</Eyebrow>
@@ -680,7 +681,7 @@ export default function RosettaIAPage() {
               <AnimatedPiece
                 src="/animaciones/RosettaIA_anim_integracion.html"
                 poster="/animaciones/RosettaIA_anim_integracion_final.webp"
-                title="Animación de las seis integraciones entre el ERP y la tesorería"
+                title="Seis integraciones entre Infor M3 y Embat: cinco de ida y una de vuelta"
                 fallback={
                   <div className="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)_200px] gap-5 lg:gap-7 items-stretch">
                     {[
@@ -745,7 +746,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 7 · Por qué es diferente (nivel 2): la frontera determinista y su tabla */}
-      <section className="bg-surface py-20 md:py-24">
+      <section className="bg-surface pt-20 md:pt-24 pb-14 md:pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Eyebrow className="mb-3.5">Por qué es diferente</Eyebrow>
@@ -819,7 +820,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 8 · Arquitectura (nivel 3): «Qué es» y «Cómo funciona» fundidos en una sola sección */}
-      <section id="como-funciona" className="bg-surface-2 border-y border-line py-20 md:py-24">
+      <section id="como-funciona" className="bg-surface-2 border-y border-line py-14 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[520px_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
           <div>
             <Eyebrow className="mb-3.5">Cómo funciona</Eyebrow>
@@ -870,7 +871,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 9 · Seguridad y cumplimiento (nivel 2) */}
-      <section className="bg-surface py-16 md:py-20">
+      <section className="bg-surface pt-14 md:pt-16 pb-20 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 mb-9">
             <Eyebrow>Seguridad y cumplimiento</Eyebrow>
@@ -894,7 +895,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 10 · Puesta en marcha (nivel 3) */}
-      <section className="bg-surface-2 border-t border-line py-20">
+      <section className="bg-surface-2 border-t border-line pt-20 md:pt-24 pb-14 md:pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-11">
             <Eyebrow className="mb-3.5">Puesta en marcha</Eyebrow>
@@ -918,7 +919,7 @@ export default function RosettaIAPage() {
       </section>
 
       {/* 11 · Preguntas frecuentes (nivel 2) */}
-      <section className="bg-surface py-20">
+      <section className="bg-surface pt-14 md:pt-16 pb-20 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-8 lg:gap-16 items-start">
           <div>
             <Eyebrow className="mb-3.5">FAQ</Eyebrow>

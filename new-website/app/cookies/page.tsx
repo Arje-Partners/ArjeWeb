@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Política de cookies | Arjé Partners",
+  description: "Qué cookies utiliza el sitio web de Arjé Partners, para qué sirven y cómo gestionarlas.",
+  path: "/cookies",
+});
+
 export default function CookiesPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">

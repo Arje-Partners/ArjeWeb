@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Aviso legal | Arjé Partners",
+  description: "Aviso legal del sitio web de Arjé Partners: titularidad, condiciones de uso y responsabilidades.",
+  path: "/legal",
+});
+
 export default function LegalPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">

@@ -77,7 +77,7 @@ export default function AnimatedPiece({
   return (
     <div ref={boxRef} className="relative w-full aspect-video overflow-hidden rounded-lg bg-ros-navy" aria-hidden="true">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={poster} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
+      <img src={poster} alt={title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       {active && (
         <iframe
           src={src}

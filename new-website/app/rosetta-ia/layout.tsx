@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { faqs } from "./faqs";
+import { pageMetadata, rosettaOgImage } from "@/lib/seo";
 
-// §1.1 · title y meta description reposicionados: cualquier sistema, no solo ERP y tesorería
-export const metadata: Metadata = {
-  title: "Rosetta IA — Conecta cualquier sistema con cualquier sistema | Arjé Partners",
+// El título repite el H1 de la página; la descripción es la del §1.1
+export const metadata: Metadata = pageMetadata({
+  title: "Rosetta IA — Todos tus sistemas, hablando el mismo idioma | Arjé Partners",
   description:
     "Rosetta IA conecta aplicaciones que no fueron pensadas para entenderse: ERP, bancos, tesorería, plataformas sectoriales o sistemas propios, sin modificarlos. Extractos, facturas, pagos y conciliación con cálculos deterministas y validación humana.",
-  keywords:
-    "integración de sistemas, integración ERP tesorería, conectar ERP con banco, Norma 43, ficheros SEPA, conciliación bancaria, digitalización de facturas, conciliación TPV",
-};
+  path: "/rosetta-ia",
+  image: rosettaOgImage,
+});
 
 const structuredData = [
   {

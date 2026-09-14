@@ -19,10 +19,20 @@ const inter = Inter({
   display: "swap",
 });
 
+// Base para las URL absolutas de Open Graph y canonical. El canonical y og:url van en cada página:
+// si se pusieran aquí, todas las páginas los heredarían apuntando a Inicio.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.arjepartners.com"),
   title: "Arjé Partners | Tus datos, donde tienen que estar",
   description: "Integración de sistemas y datos para empresas medianas y grandes: conectamos aplicaciones, transformamos, cargamos y entregamos la información donde se necesita. Más de 15 años haciéndolo, hoy con Rosetta IA.",
-  keywords: "treasury management, Rosetta IA, integración ERP, sistemas custom, tesorería, conciliación bancaria, Arjé Partners",
+  openGraph: {
+    siteName: "Arjé Partners",
+    type: "website",
+    locale: "es_ES",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
   icons: {
     icon: [
       { url: '/images/logo-arje-96x96.png', sizes: '96x96', type: 'image/png' },

@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Cumplimiento RGPD | Arjé Partners",
+  description: "Información sobre el tratamiento de datos en los formularios web de Arjé Partners.",
+  path: "/cumplimiento-rgpd",
+});
+
 export default function CumplimientoRGPDPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">

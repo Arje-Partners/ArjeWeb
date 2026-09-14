@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { articles } from "@/lib/articles";
+import { pageMetadata } from "@/lib/seo";
 
 // Helper function to parse basic markdown with bold and italic
 function parseMarkdown(text: string) {
@@ -62,6 +64,28 @@ function parseMarkdown(text: string) {
 // Generar las rutas estáticas
 export async function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }));
+}
+
+// Título, imagen y descripción de cada artículo; la descripción es el primer párrafo, sin marcado
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const article = articles[params.slug];
+  if (!article) return { title: "Artículo no encontrado | Arjé Partners", robots: { index: false } };
+
+  const firstParagraph =
+    String(article.content)
+      .split(/\n\s*\n/)
+      .map((block: string) => block.trim())
+      .find((block: string) => block && !block.startsWith("#")) ?? "";
+  const plain = firstParagraph.replace(/[*_`>#]/g, "").replace(/\s+/g, " ").trim();
+  const description = plain.length > 160 ? `${plain.slice(0, 157).replace(/\s+\S*$/, "")}…` : plain;
+
+  return pageMetadata({
+    title: `${article.title} | Arjé Partners`,
+    description,
+    path: `/insights/${params.slug}`,
+    type: "article",
+    ...(article.image && { image: { url: article.image, width: 1024, height: 1024, alt: article.title } }),
+  });
 }
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
